@@ -10,9 +10,10 @@ interface IProps {
   text?: string;
 }
 
-interface ISyledProps {
+interface IStyledProps {
   color?: string;
   mb?: string;
+  iconPosition?: string;
 }
 
 export const Card: FC<IProps> = ({
@@ -32,7 +33,7 @@ export const Card: FC<IProps> = ({
           <div className={classes[`cardTitle-${iconPosition}`]}>{title}</div>
         )}
         {text && (
-          <div className={classes[`cardTitle-${iconPosition}`]}>{text}</div>
+          <div className={classes[`cardText-${iconPosition}`]}>{text}</div>
         )}
       </div>
     </div>
@@ -41,10 +42,10 @@ export const Card: FC<IProps> = ({
 
 export const StyledCard = styled(Card)`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ iconPosition = "left" }: IStyledProps) => iconPosition};
   justify-content: center;
-  padding: 0px;
+  padding: 16px 0px;
   list-style: none;
-  color: ${({ color }: ISyledProps) => color || "inherit"};
-  margin-bottom: ${({ mb }: ISyledProps) => mb || "16px"};
+  color: ${({ color }: IStyledProps) => color || "inherit"};
+  margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
 `;

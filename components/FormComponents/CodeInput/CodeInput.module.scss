@@ -1,0 +1,37 @@
+.codeInput {
+  display: flex;
+  padding: 12px 0px;
+}
+
+.inputLabel {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 1.29;
+  letter-spacing: -0.15px;
+  color: #848592;
+  padding: 2px 0px;
+  margin: 0px;
+  text-align: left;
+}
+
+.input {
+  display: flex;
+  align-items: center;
+  background: unset;
+  color: #171717;
+  border: unset;
+  padding: 12px 0px;
+  border-bottom: 1px solid rgba(23, 23, 23, 0.24);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.32px;
+  width: 100%;
+  position: relative;
+  margin: 0px 8px;
+  text-align: center;
+
+  &::placeholder {
+    color: #D0D0D0;
+  }
+}

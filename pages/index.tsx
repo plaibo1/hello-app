@@ -5,7 +5,7 @@ import useTranslation from "next-translate/useTranslation";
 import { Layout } from "../components/LayoutComponents/Layout";
 import Container from "../components/LayoutComponents/Container";
 import {
-  Card,
+  StyledCard,
   StyledTitle1,
   StyledTitle2,
   StyledTitle4,
@@ -62,17 +62,64 @@ const Home: NextPage = () => {
             <Col md={12}>
               <StyledTitle2 textAlign="center">Что такое Hello</StyledTitle2>
               <StyledDivider mb="24px" />
-              <Card
-                icon={
-                  <Image
-                    src="/images/icon/people_search.svg"
-                    height={36}
-                    width={36}
-                    alt="icon"
+              <Row>
+                <Col md={6}>
+                  <StyledCard
+                    icon={
+                      <Image
+                        src="/images/icons/people_search.svg"
+                        height={36}
+                        width={36}
+                        alt="icon"
+                      />
+                    }
+                    title="Простой поиск"
+                    text="Простой и удобный поиск людей поблизости, использующий bluetooth и работающий в фоне"
                   />
-                }
-                text=""
-              />
+                </Col>
+                <Col md={6}>
+                  <StyledCard
+                    icon={
+                      <Image
+                        src="/images/icons/account_filter.svg"
+                        height={36}
+                        width={36}
+                        alt="icon"
+                      />
+                    }
+                    title="Фильтры по категориям"
+                    text="Система фильтрации, позволяющая тонко настроить поиск и находить только нужные вам контакты и знакомства"
+                  />
+                </Col>
+                <Col md={6}>
+                  <StyledCard
+                    icon={
+                      <Image
+                        src="/images/icons/message.svg"
+                        height={36}
+                        width={36}
+                        alt="icon"
+                      />
+                    }
+                    title="Обмен сообщениями"
+                    text="Короткие Push-сообщения, позволяющие быстро обмениваться своим профилем с другими людьми"
+                  />
+                </Col>
+                <Col md={6}>
+                  <StyledCard
+                    icon={
+                      <Image
+                        src="/images/icons/slide_settings.svg"
+                        height={36}
+                        width={36}
+                        alt="icon"
+                      />
+                    }
+                    title="Широкий выбор настроек"
+                    text="Настройки профилей и аккаунта, позволяющие настроить ваш опыт взаимодействия с приложением"
+                  />
+                </Col>
+              </Row>
             </Col>
           </Row>
         </Container>

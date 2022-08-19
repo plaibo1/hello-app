@@ -1,10 +1,15 @@
-.header {
+.footer {
   box-sizing: border-box;
-  padding: 10px 0px;
+  padding: 24px 0px;
 }
 
 .wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.copyrightWrapper {
+  color: #848592;
+  font-size: 11px;
 }

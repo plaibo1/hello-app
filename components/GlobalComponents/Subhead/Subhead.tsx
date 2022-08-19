@@ -6,7 +6,7 @@ interface IProps {
   children: any;
 }
 
-interface ISyledProps {
+interface IStyledProps {
   color?: string;
   mb?: string;
   textAlign?: string;
@@ -21,7 +21,7 @@ export const StyledSubhead = styled(Subhead)`
   font-size: 16px;
   line-height: 1.12;
   letter-spacing: 0.1px;
-  color: ${(props: ISyledProps) => props.color || "inherit"};
-  margin-bottom: ${({ mb }: ISyledProps) => mb || "16px"};
-  text-align: ${({ textAlign }: ISyledProps) => textAlign || "left"};
+  color: ${(props: IStyledProps) => props.color || "inherit"};
+  margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
+  text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
 `;
