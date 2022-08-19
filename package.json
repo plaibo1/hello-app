@@ -9,16 +9,25 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/styled-components": "^5.1.26",
+    "css-loader": "^6.7.1",
     "next": "12.2.5",
+    "next-translate": "^1.5.0",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-flexbox-grid": "^2.1.2",
+    "sass": "^1.54.4",
+    "styled-components": "^5.3.5"
   },
   "devDependencies": {
     "@types/node": "18.7.6",
     "@types/react": "18.0.17",
     "@types/react-dom": "18.0.6",
+    "babel-plugin-styled-components": "^2.0.7",
     "eslint": "8.22.0",
     "eslint-config-next": "12.2.5",
+    "next-images": "^1.8.4",
+    "next-transpile-modules": "^9.0.0",
     "typescript": "4.7.4"
   }
 }
