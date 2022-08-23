@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Logo, StyledLink, Avatar } from "../../GlobalComponents";
 import Container from "../Container";
 import { Context } from "../../../context";
@@ -6,7 +6,7 @@ import classes from "./Header.module.scss";
 import { Row, Col } from "react-flexbox-grid";
 
 const Header = () => {
-  const { state, dispatch } = useContext<any>(Context);
+  const { state } = useContext<any>(Context);
   return (
     <header className={classes.header}>
       <Container>
@@ -22,7 +22,9 @@ const Header = () => {
             <Row end="xs" middle="xs">
               <Col lg={12}>
                 {state.user.auth ? (
-                  <Avatar />
+                  <>
+                    <Avatar />
+                  </>
                 ) : (
                   <StyledLink href="/login">Войти</StyledLink>
                 )}

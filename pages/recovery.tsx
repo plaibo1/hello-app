@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import * as cookie from "cookie";
 import Head from "next/head";
 import Image from "next/image";
 import useTranslation from "next-translate/useTranslation";
@@ -16,6 +17,7 @@ import {
 import { RecoveryForm } from "../components/FormComponents";
 import classes from "../styles/Recovery.module.css";
 import { Row, Col } from "react-flexbox-grid";
+import { getSelfInfo } from "../services";
 
 const Recovery: NextPage = () => {
   const { t } = useTranslation("common");
@@ -32,6 +34,47 @@ const Recovery: NextPage = () => {
       </Container>
     </section>
   );
+};
+
+export const getServerSideProps = async ({ req, res }: any) => {
+  let initialState = {
+    user: {
+      auth: false,
+      data: {},
+      premium: {
+        autoPayment: false,
+        tariff: "",
+        unactivate: 0,
+      },
+    },
+  };
+  if (cookie.parse(req.headers.cookie).access_token) {
+    const userInfo = await getSelfInfo(
+      cookie.parse(req.headers.cookie).access_token
+    );
+    console.log(userInfo);
+    initialState = {
+      user: {
+        auth: true,
+        data: userInfo,
+        premium: {
+          autoPayment: false,
+          tariff: "",
+          unactivate: 0,
+        },
+      },
+    };
+    res.setHeader("location", "/account");
+    res.statusCode = 302;
+    res.end();
+    return {
+      props: { initialState },
+    };
+  }
+
+  return {
+    props: { initialState },
+  };
 };
 
 export default Recovery;

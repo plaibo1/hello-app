@@ -1,5 +1,12 @@
 .avatarWrapper {
-  cursor: pointer;
   display: flex;
   justify-content: flex-end;
+}
+
+.avatarButton {
+  background: unset;
+  border: unset;
+  padding: 0px;
+  display: flex;
+  position: relative;cursor: pointer;
 }

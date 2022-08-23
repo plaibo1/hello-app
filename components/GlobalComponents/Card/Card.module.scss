@@ -11,8 +11,16 @@
   justify-content: flex-start;
 }
 
-.iconWrapper-left {
-  margin-right: 8px;
+.iconWrapper {
+  &-top {
+    padding: 18px;
+    background: #F8F8F8;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
+  &-left {
+    margin-right: 8px;
+  }
 }
 
 .cardContent-left {
@@ -22,18 +30,26 @@
   justify-content: flex-start;
 }
 
-.cardTitle-left {
+.cardTitle {
   font-weight: 500;
   font-size: 16px;
-  line-height: 20px;
+  line-height: 1.25;
   letter-spacing: 0.2px;
   margin-bottom: 8px;
+  &-top {
+    text-align: center;
+  }
 }
 
-.cardText-left {
+.cardText {
   font-weight: 400;
   font-size: 16px;
-  line-height: 20px;
+  line-height: 1.25;
   letter-spacing: 0.1px;
   color: #848592;
+  &-top {
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.29;
+  }
 }

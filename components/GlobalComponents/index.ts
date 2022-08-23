@@ -5,6 +5,7 @@ export * from "./Logo";
 export * from "./LanguageSwitcher";
 export * from "./Avatar";
 export * from "./Button";
+export * from "./SubscribeStatus";
 
 export * from "./Link";
 

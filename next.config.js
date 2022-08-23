@@ -7,7 +7,7 @@ const nextConfig = {
   images: {
     domains: ["localhost", "flag.pk"],
   },
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
 };
 

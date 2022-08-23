@@ -1,92 +1,245 @@
-import React, { FC, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import {
   StyledTitle2,
   StyledButton,
-  StyledLink,
   StyledSubhead,
 } from "../../GlobalComponents";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { PhoneInput } from "../PhoneInput";
 import { CodeInput } from "../CodeInput";
-import { formatPhoneNumber } from "react-phone-number-input";
+import { PasswordInput } from "../PasswordInput";
+import {
+  formatPhoneNumber,
+  isValidPhoneNumber,
+  parsePhoneNumber,
+} from "react-phone-number-input";
 import { CountryCode } from "libphonenumber-js/types";
 import classes from "./RecoveryForm.module.scss";
+import { restore, codeConfirm, newPassword } from "../../../Utils/Auth";
+import { passwordSchema } from "../../../Schemas/Login";
 
 export const RecoveryForm = () => {
-  const [step, setStep] = useState<Number>(1);
+  const { push } = useRouter();
+  const [step, setStep] = useState<number>(1);
   const [phoneValue, setPhoneValue] = useState<string>("");
+  const [phoneError, setPhoneError] = useState<string>("");
+  const [passwordValue, setPasswordValue] = useState<string>("");
+  const [passwordError, setPasswordError] = useState<string>("");
   const [countryValue, setCountryValue] = useState<CountryCode>("RU");
-  const [codeValue, setCodeValue] = useState<Array<number | undefined>>([]);
+  const [codeValue, setCodeValue] = useState<
+    Array<number | string | undefined>
+  >([]);
+  const [codeError, setCodeError] = useState<string>("");
 
-  const handlePhoneInput = (value: any) => {
+  const handlePhoneInput = useCallback((value: any) => {
     setPhoneValue(value);
-  };
+  }, []);
 
-  const handleCodeInput = (index: number, target: any) => {
-    if (target.value.length >= target.maxLength) {
+  const handlePasswordInput = useCallback((event: any) => {
+    setPasswordValue(event.target.value);
+  }, []);
+
+  const handleCodeInput = useCallback((index: number, target: any) => {
+    if (
+      target.value === "" &&
+      target.value.length < target.maxLength &&
+      target.previousSibling
+    ) {
+      target.previousSibling.focus();
     }
-    setCodeValue((prevValue: (number | undefined)[]) => {
-      const newArray = [...prevValue];
-      newArray[index] = target.value;
-      return newArray;
-    });
+    if (target.value.length >= target.maxLength - 1 && target.nextSibling) {
+      target.nextSibling.focus();
+    }
+    console.log(target.value.length < target.maxLength);
+    if (target.value.length < target.maxLength)
+      setCodeValue((prevValue: (number | string | undefined)[]) => {
+        const newArray = [...prevValue];
+        newArray[index] = target.value;
+        return newArray;
+      });
+  }, []);
+
+  const handleCodeFocus = useCallback((event: any) => {}, []);
+
+  const handleSubmit = useCallback(() => {}, []);
+
+  const handleBack = useCallback(() => {
+    if (step === 1) {
+      push("/login");
+    } else {
+      setStep((prevStep) => prevStep - 1);
+    }
+  }, [step, push]);
+
+  useEffect(() => {
+    console.log(codeValue);
+  }, [codeValue]);
+
+  const handlePhoneForm = () => {
+    setPhoneError("");
+    if (isValidPhoneNumber(phoneValue)) {
+      const phoneParse = parsePhoneNumber(phoneValue);
+      restore({
+        phone: {
+          country: `+${phoneParse?.countryCallingCode}`,
+          number: phoneParse?.nationalNumber,
+        },
+      })
+        .then((data) => {
+          setStep(2);
+        })
+        .catch((error) => setPhoneError(error.message));
+    } else {
+      setPhoneError("Неверный формат телефона");
+    }
   };
 
-  console.log(formatPhoneNumber(phoneValue));
+  const handleCodeForm = () => {
+    setCodeError("");
+    if (!(codeValue.length < 4 || codeValue.includes(""))) {
+      const phoneParse = parsePhoneNumber(phoneValue);
+      codeConfirm({
+        code: codeValue.join(""),
+        confirmType: "restore",
+        phone: {
+          country: `+${phoneParse?.countryCallingCode}`,
+          number: phoneParse?.nationalNumber,
+        },
+      })
+        .then((data) => {
+          setStep(3);
+        })
+        .catch((error) => setCodeError(error));
+    } else {
+      setCodeError("Неверный формат кода");
+    }
+  };
 
-  if (step === 1) {
+  const handlePasswordForm = () => {
+    passwordSchema
+      .validate({
+        password: passwordValue,
+      })
+      .then((data) => {
+        newPassword({ newPassword: passwordValue })
+          .then((data) => {
+            push("/account");
+          })
+          .catch((error) => setPasswordError(error));
+      })
+      .catch((error) => {
+        console.log(error);
+        setPasswordError(error.errors);
+      });
+  };
+
+  const StepOne = () => {
     return (
-      <div className={classes.recoveryFormWrap}>
+      <>
         <StyledTitle2 textAlign="center" mb="12px">
           Восстановление пароля
         </StyledTitle2>
         <StyledSubhead color="#848592" textAlign="center">
           Введите номер телефона, который был привязан к вашему аккаунту.
         </StyledSubhead>
-        <form>
-          <PhoneInput
-            value={phoneValue}
-            onChange={handlePhoneInput}
-            countryValue={countryValue}
-            onChangeCountry={setCountryValue}
-          />
-          <StyledButton
-            type="submit"
-            color="white"
-            onClick={() => setStep(2)}
-            mt="12px"
-            mb="15px"
-          >
-            Далее
-          </StyledButton>
-        </form>
-      </div>
-    );
-  }
-  return (
-    <div className={classes.recoveryFormWrap}>
-      <StyledTitle2 textAlign="center" mb="12px">
-        Введите код из смс
-      </StyledTitle2>
-      <StyledSubhead color="#848592" textAlign="center">
-        Мы отправили его на номер{" "}
-        {phoneValue
-          ? formatPhoneNumber(phoneValue).replace(/(\d[ .-]?){6}$/, (x) =>
-              x.replace(/\d/g, "*")
-            )
-          : "ТЕСТОВЫЙ"}
-      </StyledSubhead>
-      <form>
-        <CodeInput value={codeValue} onChange={handleCodeInput} />
+        <PhoneInput
+          value={phoneValue}
+          onChange={handlePhoneInput}
+          countryValue={countryValue}
+          onChangeCountry={setCountryValue}
+          error={phoneError}
+        />
         <StyledButton
-          type="submit"
+          type="button"
           color="white"
-          disabled={true}
+          disabled={phoneValue ? phoneValue.length < 1 : true}
+          onClick={handlePhoneForm}
           mt="12px"
           mb="15px"
         >
           Далее
         </StyledButton>
+      </>
+    );
+  };
+
+  const StepTwo = () => {
+    return (
+      <>
+        <StyledTitle2 textAlign="center" mb="12px">
+          Введите код из смс
+        </StyledTitle2>
+        <StyledSubhead color="#848592" textAlign="center">
+          Мы отправили его на номер{" "}
+          {phoneValue
+            ? formatPhoneNumber(phoneValue).replace(/(\d[ .-]?){6}$/, (x) =>
+                x.replace(/\d/g, "*")
+              )
+            : "ТЕСТОВЫЙ"}
+        </StyledSubhead>
+        <CodeInput
+          value={codeValue}
+          onChange={handleCodeInput}
+          onFocus={handleCodeFocus}
+        />
+        {codeError && (
+          <div className={classes.errorTitle}>Введен неверный код</div>
+        )}
+        <StyledButton
+          type="button"
+          color="white"
+          disabled={codeValue.length < 4 || codeValue.includes("")}
+          onClick={handleCodeForm}
+          mt="12px"
+          mb="15px"
+        >
+          Далее
+        </StyledButton>
+      </>
+    );
+  };
+
+  const StepThree = () => {
+    return (
+      <>
+        <StyledTitle2 textAlign="center" mb="16px">
+          Новый пароль
+        </StyledTitle2>
+        <PasswordInput
+          value={passwordValue}
+          onChange={handlePasswordInput}
+          error={phoneError}
+        />
+        <StyledButton
+          type="button"
+          color="white"
+          disabled={!passwordValue}
+          onClick={handlePasswordForm}
+          mt="12px"
+          mb="15px"
+        >
+          Сохранить и войти
+        </StyledButton>
+      </>
+    );
+  };
+
+  return (
+    <>
+      <div className={classes.backArrow} onClick={handleBack}>
+        <Image
+          src="/images/icons/arrow_left.svg"
+          width={28}
+          height={28}
+          alt="Back to previous step"
+        />
+      </div>
+      <form className={classes.recoveryFormWrap}>
+        {step === 1 && StepOne()}
+        {step === 2 && StepTwo()}
+        {step === 3 && StepThree()}
       </form>
-    </div>
+    </>
   );
 };

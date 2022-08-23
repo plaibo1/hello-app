@@ -5,7 +5,8 @@ import { default as NextLink } from "next/link";
 interface IProps {
   className?: string;
   children: any;
-  href: string;
+  href?: string;
+  onClick?: () => void;
 }
 
 interface IStyledProps {
@@ -19,9 +20,9 @@ interface IStyledProps {
   display?: string;
 }
 
-export const Link: FC<IProps> = ({ className, children, href }) => {
+export const Link: FC<IProps> = ({ className, children, href, onClick }) => {
   return (
-    <NextLink href={href}>
+    <NextLink href={href || ""} onClick={onClick}>
       <a className={className}>{children}</a>
     </NextLink>
   );
@@ -35,7 +36,7 @@ export const StyledLink = styled(Link)`
   line-height: 1.25;
   letter-spacing: 0.16px;
   color: ${({ color }: IStyledProps) => color || "inherit"};
-  margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
+  margin-bottom: ${({ mb }: IStyledProps) => mb || "0px"};
   margin-right: ${({ mr }: IStyledProps) => mr || "0px"};
   text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
   width: ${({ width }: IStyledProps) => width || "auto"};

@@ -23,6 +23,7 @@ interface IStyledProps {
   border?: string;
   borderRadius?: string;
   display?: string;
+  padding?: string;
 }
 
 export const Button: FC<IProps> = ({
@@ -59,7 +60,7 @@ export const StyledButton = styled(Button)`
   text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
   background-color: ${({ backgroundColor }: IStyledProps) =>
     backgroundColor || "#4392BF"};
-  padding: 12px 117px;
+  padding: ${({ padding }: IStyledProps) => padding || "12px 117px"};
   border: ${({ border }: IStyledProps) => border || "unset"};
   border-radius: ${({ borderRadius }: IStyledProps) => borderRadius || "32px"};
   display: ${({ display }: IStyledProps) => display || "inline-block"};

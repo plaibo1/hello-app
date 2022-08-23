@@ -14,9 +14,10 @@ interface IProps {
   onChange: (value: any) => void;
   countryValue: CountryCode;
   onChangeCountry: (value: CountryCode) => void;
+  error: string;
 }
 
-const CountrySelect = ({ value, onChange, labels, ...rest }: any) => {
+const CountrySelect = ({ value, onChange, labels, error, ...rest }: any) => {
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -63,9 +64,10 @@ export const PhoneInput: FC<IProps> = ({
   onChange,
   countryValue,
   onChangeCountry,
+  error = "",
 }) => {
   return (
-    <label className={classes.phoneInput}>
+    <label className={`${classes.phoneInput} ${error && classes.error}`}>
       <p className={classes.inputLabel}>Телефон</p>
       <div className={classes.inputWrap}>
         <CountrySelect
@@ -80,6 +82,7 @@ export const PhoneInput: FC<IProps> = ({
           className={classes.input}
         />
       </div>
+      {error && <div className={classes.errorTitle}>{error}</div>}
     </label>
   );
 };

@@ -2,10 +2,12 @@
   height: 100vh;
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 .formWrap {
   background-color: white;
+  position: relative;
   height: 80vh;
   border-radius: 24px;
   padding: 30px;

@@ -14,6 +14,7 @@ interface IStyledProps {
   color?: string;
   mb?: string;
   iconPosition?: string;
+  padding?: string;
 }
 
 export const Card: FC<IProps> = ({
@@ -30,10 +31,22 @@ export const Card: FC<IProps> = ({
       )}
       <div className={classes[`cardContent-${iconPosition}`]}>
         {title && (
-          <div className={classes[`cardTitle-${iconPosition}`]}>{title}</div>
+          <div
+            className={`${classes.cardTitle} ${
+              classes[`cardTitle-${iconPosition}`]
+            }`}
+          >
+            {title}
+          </div>
         )}
         {text && (
-          <div className={classes[`cardText-${iconPosition}`]}>{text}</div>
+          <div
+            className={`${classes.cardText} ${
+              classes[`cardText-${iconPosition}`]
+            }`}
+          >
+            {text}
+          </div>
         )}
       </div>
     </div>
@@ -44,7 +57,7 @@ export const StyledCard = styled(Card)`
   display: flex;
   flex-direction: ${({ iconPosition = "left" }: IStyledProps) => iconPosition};
   justify-content: center;
-  padding: 16px 0px;
+  padding: ${({ padding }: IStyledProps) => padding || "16px 0px"};
   list-style: none;
   color: ${({ color }: IStyledProps) => color || "inherit"};
   margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};

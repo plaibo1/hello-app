@@ -9,6 +9,8 @@ interface IProps {
 interface IStyledProps {
   color?: string;
   mb?: string;
+  mr?: string;
+  mt?: string;
   textAlign?: string;
 }
 
@@ -23,5 +25,7 @@ export const StyledSubhead = styled(Subhead)`
   letter-spacing: 0.1px;
   color: ${(props: IStyledProps) => props.color || "inherit"};
   margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
+  margin-right: ${({ mr }: IStyledProps) => mr || "0px"};
+  margin-top: ${({ mt }: IStyledProps) => mt || "0px"};
   text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
 `;
