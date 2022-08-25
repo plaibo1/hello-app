@@ -13,8 +13,13 @@ import {
   StyledSubhead,
   StyledNumericList,
 } from "../components/GlobalComponents";
+import { checkAuth } from "../helpers/checkAuth";
 import classes from "../styles/Home.module.css";
 import { Row, Col } from "react-flexbox-grid";
+import { Functions } from "../components/HomeComponents/Functions";
+import { Benefits } from "../components/HomeComponents/Benefits";
+import { DownloadBlock } from "../components/HomeComponents/DownloadBlock";
+import { Connect } from "../components/HomeComponents/Connect";
 
 const Home: NextPage = () => {
   const { t } = useTranslation("common");
@@ -24,17 +29,39 @@ const Home: NextPage = () => {
         <Container>
           <Row>
             <Col md={6}>
-              <StyledTitle1>{t("Новые знакомства рядом с вами")}</StyledTitle1>
-              <StyledSubhead mb="48px">
-                {t(
-                  "Ищите новые знакомства и полезные контакты через bluetooth, в приложении Hello"
-                )}
-              </StyledSubhead>
-              <StyledTitle4>
-                {t(
-                  "Скачивайте приложение и присоединяйтесь с сообществу Hello"
-                )}
-              </StyledTitle4>
+              <Row>
+                <Col md={12}>
+                  <StyledTitle1>
+                    {t("Новые знакомства рядом с вами")}
+                  </StyledTitle1>
+                </Col>
+                <Col md={8}>
+                  <StyledSubhead mb="48px">
+                    {t(
+                      "Ищите новые знакомства и полезные контакты через bluetooth, в приложении Hello"
+                    )}
+                  </StyledSubhead>
+                </Col>
+                <Col md={12}>
+                  <StyledTitle4>
+                    {t(
+                      "Скачивайте приложение и присоединяйтесь с сообществу Hello"
+                    )}
+                  </StyledTitle4>
+                  <DownloadBlock color="white" />
+                </Col>
+              </Row>
+            </Col>
+            <Col md={6}>
+              <div className={classes.jumbotronImageWrap}>
+                <div className={classes.jumbotronImage}>
+                  <Image
+                    src="/images/home_banner.png"
+                    layout="fill"
+                    alt="Header image"
+                  />
+                </div>
+              </div>
             </Col>
           </Row>
         </Container>
@@ -43,13 +70,16 @@ const Home: NextPage = () => {
         <Container>
           <Row>
             <Col md={6}>
-              <StyledTitle2>Как работает Hello</StyledTitle2>
+              <StyledTitle2>
+                Как работает <span>Hello</span>
+              </StyledTitle2>
               <StyledDivider mb="24px" />
               <StyledNumericList
                 items={[
                   "Скачайте приложение на телефон",
                   "Зарегистрируйтесь и создайте личный или бизнес профиль",
                   "Включите bluetooth и начните искать интересных людей поблизости ",
+                  "Расширяйте сообщество Hello, рассказывая о нас друзьям и коллегам",
                 ]}
               />
             </Col>
@@ -60,7 +90,9 @@ const Home: NextPage = () => {
         <Container>
           <Row>
             <Col md={12}>
-              <StyledTitle2 textAlign="center">Что такое Hello</StyledTitle2>
+              <StyledTitle2 textAlign="center">
+                Что такое <span>Hello</span>
+              </StyledTitle2>
               <StyledDivider mb="24px" />
               <Row>
                 <Col md={6}>
@@ -124,8 +156,15 @@ const Home: NextPage = () => {
           </Row>
         </Container>
       </section>
+      <Functions />
+      <Benefits />
+      <Connect />
     </Layout>
   );
+};
+
+export const getServerSideProps = async ({ req, res, resolvedUrl }: any) => {
+  return checkAuth(req, res, resolvedUrl);
 };
 
 export default Home;

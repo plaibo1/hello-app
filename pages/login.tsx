@@ -9,9 +9,9 @@ import { Row, Col } from "react-flexbox-grid";
 import { Context } from "../context";
 import { useRouter } from "next/router";
 import { getSelfInfo } from "../services";
+import { checkAuth } from "../helpers/checkAuth";
 
 const Login: NextPage = (props: any) => {
-  console.log("props", props);
   const { t } = useTranslation("common");
   const { push } = useRouter();
   const { state, dispatch } = useContext<any>(Context);
@@ -31,45 +31,8 @@ const Login: NextPage = (props: any) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res }: any) => {
-  let initialState = {
-    user: {
-      auth: false,
-      data: {},
-      premium: {
-        autoPayment: false,
-        tariff: "",
-        unactivate: 0,
-      },
-    },
-  };
-  if (cookie.parse(req.headers.cookie).access_token) {
-    const userInfo = await getSelfInfo(
-      cookie.parse(req.headers.cookie).access_token
-    );
-    console.log(userInfo);
-    initialState = {
-      user: {
-        auth: true,
-        data: userInfo,
-        premium: {
-          autoPayment: false,
-          tariff: "",
-          unactivate: 0,
-        },
-      },
-    };
-    res.setHeader("location", "/account");
-    res.statusCode = 302;
-    res.end();
-    return {
-      props: { initialState },
-    };
-  }
-
-  return {
-    props: { initialState },
-  };
+export const getServerSideProps = async ({ req, res, resolvedUrl }: any) => {
+  return checkAuth(req, res, resolvedUrl);
 };
 
 export default Login;

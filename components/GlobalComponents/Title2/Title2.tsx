@@ -19,11 +19,14 @@ export const Title2: FC<IProps> = ({ className, children }) => {
 
 export const StyledTitle2 = styled(Title2)`
   font-weight: 600;
-  font-size: 24;
+  font-size: 24px;
   line-height: 1.12;
   letter-spacing: 0.1px;
   color: ${({ color }: IStyledProps) => color || "inherit"};
   margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
   margin-top: ${({ mt }: IStyledProps) => mt || "0px"};
   text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
+  & span {
+    color: #4392bf;
+  }
 `;

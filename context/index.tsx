@@ -1,7 +1,17 @@
-import { useState, useEffect, useReducer, createContext } from "react";
+import { useCallback, useReducer, createContext } from "react";
 import { user } from "./reducers/user";
-import { LoginSchema } from "../services/user";
-import { signIn, signOut, getSelfInfo } from "../services/user.service";
+import { LoginSchema, CodeConfirmSchema } from "../services/user";
+import { useRouter } from "next/router";
+import {
+  signIn,
+  signOut,
+  getSelfInfo,
+  codeConfirm as _codeConfirm,
+  startTrial as _startTrial,
+  selfStatus as _selfStatus,
+  changeTariff as _changeTariff,
+  cancelTariff as _cancelTariff,
+} from "../services/user.service";
 
 interface UserSchema {
   user: {
@@ -37,11 +47,50 @@ const combineReducers =
 
 // context provider
 const Provider = ({ children, initialProps = initialState }: any) => {
-  console.log(initialProps);
+  const { push } = useRouter();
   const [state, dispatch] = useReducer(combineReducers(user), initialProps); // pass more reducers combineReducers(user, blogs, products)
 
-  const login = async ({ phone, password }: LoginSchema) => {
-    return signIn({ phone, password })
+  const login = useCallback(
+    async ({ phone, password }: LoginSchema) => {
+      return signIn({ phone, password })
+        .then((userData) => {
+          return getSelfInfo()
+            .then((userInfo) => {
+              dispatch({
+                type: "LOGGED_IN_USER",
+                payload: { auth: true, data: userInfo },
+              });
+              if (userInfo.premium) {
+                return _selfStatus().then((premiumInfo) => {
+                  dispatch({
+                    type: "PREMIUM_STATUS",
+                    payload: premiumInfo,
+                  });
+                  push("/account");
+                  return premiumInfo;
+                });
+              }
+              push("/premium");
+              return userInfo;
+            })
+            .catch((error) => Promise.reject(error));
+        })
+        .catch((error) => Promise.reject(error));
+    },
+    [push]
+  );
+
+  const logout = useCallback(async () => {
+    return signOut()
+      .then(() => {
+        push("/");
+        dispatch({ type: "LOGGED_OUT_USER" });
+      })
+      .catch((error) => Promise.reject(error));
+  }, [push]);
+
+  const codeConfirm = useCallback(async (body: CodeConfirmSchema) => {
+    return _codeConfirm(body)
       .then((userData) => {
         return getSelfInfo()
           .then((userInfo) => {
@@ -49,23 +98,100 @@ const Provider = ({ children, initialProps = initialState }: any) => {
               type: "LOGGED_IN_USER",
               payload: { auth: true, data: userInfo },
             });
-            console.log(userData);
-            console.log(userInfo);
+            if (userInfo.premium) {
+              return _selfStatus().then((premiumInfo) => {
+                dispatch({
+                  type: "PREMIUM_STATUS",
+                  payload: premiumInfo,
+                });
+                return premiumInfo;
+              });
+            }
+            return userInfo;
           })
           .catch((error) => Promise.reject(error));
       })
       .catch((error) => Promise.reject(error));
-  };
+  }, []);
 
-  const logout = async () => {
-    return signOut()
-      .then(() => {
-        dispatch({ type: "LOGGED_OUT_USER" });
+  const startTrial = useCallback(async () => {
+    return _startTrial()
+      .then((userData) => {
+        return getSelfInfo()
+          .then((userInfo) => {
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: { auth: true, data: userInfo },
+            });
+            return _selfStatus().then((premiumInfo) => {
+              dispatch({
+                type: "PREMIUM_STATUS",
+                payload: premiumInfo,
+              });
+              push("/account");
+              return premiumInfo;
+            });
+          })
+          .catch((error) => Promise.reject(error));
       })
       .catch((error) => Promise.reject(error));
-  };
+  }, [push]);
 
-  const value = { state, dispatch, login, logout };
+  const changeTariff = useCallback(async (tariff: string) => {
+    return _changeTariff(tariff)
+      .then((userData) => {
+        push("/account");
+        return getSelfInfo()
+          .then((userInfo) => {
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: { auth: true, data: userInfo },
+            });
+            return _selfStatus().then((premiumInfo) => {
+              dispatch({
+                type: "PREMIUM_STATUS",
+                payload: premiumInfo,
+              });
+              return premiumInfo;
+            });
+          })
+          .catch((error) => Promise.reject(error));
+      })
+      .catch((error) => Promise.reject(error));
+  }, []);
+
+  const cancelTariff = useCallback(async (tariff: string) => {
+    return _cancelTariff()
+      .then((userData) => {
+        return getSelfInfo()
+          .then((userInfo) => {
+            dispatch({
+              type: "LOGGED_IN_USER",
+              payload: { auth: true, data: userInfo },
+            });
+            return _selfStatus().then((premiumInfo) => {
+              dispatch({
+                type: "PREMIUM_STATUS",
+                payload: premiumInfo,
+              });
+              return premiumInfo;
+            });
+          })
+          .catch((error) => Promise.reject(error));
+      })
+      .catch((error) => Promise.reject(error));
+  }, []);
+
+  const value = {
+    state,
+    dispatch,
+    login,
+    logout,
+    codeConfirm,
+    startTrial,
+    changeTariff,
+    cancelTariff,
+  };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 

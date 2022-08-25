@@ -15,8 +15,6 @@ export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
     setIsVisible((prevState) => !prevState);
   }, []);
 
-  console.log(error);
-
   return (
     <label className={`${classes.passwordInput}  ${error && classes.error}`}>
       <p className={classes.inputLabel}>Пароль</p>

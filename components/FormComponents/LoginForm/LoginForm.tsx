@@ -37,7 +37,8 @@ export const LoginForm = () => {
     setPasswordValue(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
     setLoginError("");
     setPhoneError("");
     setPasswordError("");
@@ -56,16 +57,11 @@ export const LoginForm = () => {
                 number: phoneParse?.nationalNumber,
               },
             });
-
-            console.log(loginPromise);
-            push("/account");
           } catch (error: any) {
-            console.log("TEST ERROR");
             setLoginError(error);
           }
         })
         .catch((error) => {
-          console.log(error);
           setPasswordError(error.errors);
         });
     } else {
@@ -92,7 +88,7 @@ export const LoginForm = () => {
         <StyledTitle2 textAlign="center" mt="4px">
           Вход
         </StyledTitle2>
-        <form>
+        <form onSubmit={(event) => handleSubmit(event)}>
           <PhoneInput
             value={phoneValue}
             onChange={handlePhoneInput}
@@ -111,10 +107,9 @@ export const LoginForm = () => {
             </div>
           )}
           <StyledButton
-            type="button"
+            type="submit"
             color="white"
             disabled={!(phoneValue && passwordValue)}
-            onClick={handleSubmit}
             mt="12px"
             mb="15px"
           >

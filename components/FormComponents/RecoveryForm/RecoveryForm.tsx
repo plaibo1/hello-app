@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import {
   StyledTitle2,
   StyledButton,
@@ -16,10 +16,12 @@ import {
 } from "react-phone-number-input";
 import { CountryCode } from "libphonenumber-js/types";
 import classes from "./RecoveryForm.module.scss";
-import { restore, codeConfirm, newPassword } from "../../../Utils/Auth";
+import { restorePassword, newPassword } from "../../../services";
 import { passwordSchema } from "../../../Schemas/Login";
+import { Context } from "../../../context";
 
 export const RecoveryForm = () => {
+  const { codeConfirm } = useContext<any>(Context);
   const { push } = useRouter();
   const [step, setStep] = useState<number>(1);
   const [phoneValue, setPhoneValue] = useState<string>("");
@@ -51,7 +53,6 @@ export const RecoveryForm = () => {
     if (target.value.length >= target.maxLength - 1 && target.nextSibling) {
       target.nextSibling.focus();
     }
-    console.log(target.value.length < target.maxLength);
     if (target.value.length < target.maxLength)
       setCodeValue((prevValue: (number | string | undefined)[]) => {
         const newArray = [...prevValue];
@@ -62,8 +63,6 @@ export const RecoveryForm = () => {
 
   const handleCodeFocus = useCallback((event: any) => {}, []);
 
-  const handleSubmit = useCallback(() => {}, []);
-
   const handleBack = useCallback(() => {
     if (step === 1) {
       push("/login");
@@ -72,15 +71,11 @@ export const RecoveryForm = () => {
     }
   }, [step, push]);
 
-  useEffect(() => {
-    console.log(codeValue);
-  }, [codeValue]);
-
   const handlePhoneForm = () => {
     setPhoneError("");
     if (isValidPhoneNumber(phoneValue)) {
       const phoneParse = parsePhoneNumber(phoneValue);
-      restore({
+      restorePassword({
         phone: {
           country: `+${phoneParse?.countryCallingCode}`,
           number: phoneParse?.nationalNumber,
@@ -107,10 +102,10 @@ export const RecoveryForm = () => {
           number: phoneParse?.nationalNumber,
         },
       })
-        .then((data) => {
+        .then(() => {
           setStep(3);
         })
-        .catch((error) => setCodeError(error));
+        .catch((error: any) => setCodeError(error));
     } else {
       setCodeError("Неверный формат кода");
     }
@@ -129,7 +124,6 @@ export const RecoveryForm = () => {
           .catch((error) => setPasswordError(error));
       })
       .catch((error) => {
-        console.log(error);
         setPasswordError(error.errors);
       });
   };
@@ -209,7 +203,7 @@ export const RecoveryForm = () => {
         <PasswordInput
           value={passwordValue}
           onChange={handlePasswordInput}
-          error={phoneError}
+          error={passwordError}
         />
         <StyledButton
           type="button"

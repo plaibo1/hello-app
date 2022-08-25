@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
-import * as cookie from "cookie";
-import Head from "next/head";
+import Dialog from "rc-dialog";
+import dayjs from "dayjs";
 import Image from "next/image";
 import useTranslation from "next-translate/useTranslation";
 import { Layout } from "../components/LayoutComponents/Layout";
@@ -12,84 +12,60 @@ import {
   StyledSubhead,
   StyledSubscribeStatus,
   StyledTitle2,
+  StyledTitle3,
   StyledTitle4,
 } from "../components/GlobalComponents";
 import classes from "../styles/Account.module.scss";
+import "rc-dialog/assets/index.css";
 import { Row, Col } from "react-flexbox-grid";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext, useState } from "react";
 
 import { Context } from "../context";
 import { useRouter } from "next/router";
-import { getSelfInfo } from "../services";
-
-const MOC_BENEFITS = [
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Безлимитный просмотр профилей",
-    text: "Смотрите и знакомьтесь без ограничений.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Избранные без ограничений",
-    text: "Добавляйте в список Избранных важные знакомства.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Черный список",
-    text: "Защитите себя от нежелательных знакомств.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Увеличенный срок хранения найденных профилей",
-    text: "Смотрите всех, кого нашел Hello, в любое удобное время.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Показ пола и ориентации только по вашему усмотрению",
-    text: "Показывайте пол и ориентацию только схожим с вами людям.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Уникальные профили",
-    text: "Выделяйтесь среди всех с возможностью кастомизировать карточки профилей.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Отключение входящих сообщений",
-    text: "Ограничьте отправку вам сообщений, для спокойной работы и отдыха.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Отображение вашего профиля только нужным вам людям",
-    text: "Скрывайте свой профиль от нежелательных категорий пользователей.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Добавление в телефонную книгу всех полезных знакомств",
-    text: "Экспортируйте всю полезную информацию из найденных профилей к себе на устройство.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Гиперссылки в профилях",
-    text: "Переходите к коллегам и партнерам интересующих вас людей в один клик.",
-  },
-  {
-    icon: "/images/icons/benefit_eye.svg",
-    title: "Уникальный значок подписчика",
-    text: "Добавьте значок Premium рядом с именем.",
-  },
-];
+import { getBindCardUrl, getSelfInfo } from "../services";
+import { checkAuth } from "../helpers/checkAuth";
+import { StyledBody2 } from "../components/GlobalComponents/Body2";
+import { TARIFFS } from "../constants/tariffs";
+import { MOC_BENEFITS } from "../constants/benefits";
 
 const Account: NextPage = () => {
-  const { push } = useRouter();
+  const { replace, push } = useRouter();
   const { t } = useTranslation("common");
-  const { state } = useContext<any>(Context);
+  const { state, cancelTariff } = useContext<any>(Context);
+  const [bindCardUrl, setBindCardUrl] = useState<string>("");
+  const [modalOpen, setModalOpen] = useState<boolean>(false);
+
+  console.log(state);
+
+  const handleModalOpen = () => {
+    setModalOpen(true);
+    //changeTariff(tariff).catch((error: any) => setError(error));
+  };
+
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
+
+  const handleCancelSubscribe = () => {
+    cancelTariff()
+      .then(() => {
+        setModalOpen(false);
+      })
+      .catch((error: any) => console.log(error));
+  };
+
+  useEffect(() => {
+    getBindCardUrl().then((url) => {
+      console.log(url);
+      setBindCardUrl(url.paymentUrl);
+    });
+  }, []);
 
   return (
     <Layout>
       <section className={classes.profileSubscribe}>
         <Container>
-          <Row between="xs">
+          <Row between="xs" middle="xs">
             <Col md={6}>
               <Row start="xs">
                 <Col md={12}>
@@ -97,35 +73,113 @@ const Account: NextPage = () => {
                     <StyledTitle4 mr="8px" mb="0px">
                       Hello Premium
                     </StyledTitle4>
-                    <StyledSubhead mt="0px" mb="0px" mr="24px" color="#848592">
-                      3 месяца
+                    <StyledSubhead
+                      mt="0px"
+                      mb="0px"
+                      mr="24px"
+                      color="#848592"
+                      textTransform="capitalize"
+                    >
+                      {TARIFFS[state.user.premium.tariff]}
                     </StyledSubhead>
-                    <StyledSubscribeStatus active={true} />
+                    <StyledSubscribeStatus
+                      active={
+                        state.user.premium.autoPayment ||
+                        state.user.premium.tariff === "trial"
+                      }
+                    />
                   </div>
+                </Col>
+              </Row>
+              <Row start="xs">
+                <Col md={12}>
+                  <StyledBody2
+                    className={classes.premiumDuration}
+                    color="#848592"
+                  >
+                    <span className={classes.payButton}>
+                      <Image
+                        src="/images/icons/pay_button.svg"
+                        width={28}
+                        height={28}
+                        alt="Pay button"
+                      />
+                    </span>
+                    {`${
+                      state.user.premium.tariff === "trial"
+                        ? "Бесплатно до"
+                        : state.user.premium.autoPayment
+                        ? "Следующая оплата"
+                        : "Действует до"
+                    } ${dayjs
+                      .unix(state.user.premium.unactivate)
+                      .format("DD.MM.YYYY")}${
+                      state.user.premium.tariff === "trial"
+                        ? ", далее по тарифу"
+                        : ""
+                    }`}
+                  </StyledBody2>
                 </Col>
               </Row>
             </Col>
             <Col md={6}>
-              <Row end="xs">
-                <Col md={5}>
-                  <StyledButton
-                    backgroundColor="#FAFAFA"
-                    color="#171717"
-                    padding="12px 47px"
-                  >
-                    Изменить тариф
-                  </StyledButton>
-                </Col>
-                <Col md={12}>
-                  <StyledButton
-                    backgroundColor="unset"
-                    color="#BF434A"
-                    padding="12px 35px"
-                    mb="0px"
-                  >
-                    Отменить подписку
-                  </StyledButton>
-                </Col>
+              <Row end="md" center="xs" middle="xs">
+                {state.user.premium.autoPayment && (
+                  <Col md={12}>
+                    <StyledButton
+                      backgroundColor="#FAFAFA"
+                      color="#171717"
+                      padding="12px 47px"
+                      onClick={() => push("/tariff")}
+                    >
+                      Изменить тариф
+                    </StyledButton>
+                  </Col>
+                )}
+                {state.user.premium.tariff === "trial" &&
+                  !state.user.premium.autoPayment && (
+                    <Col md={12}>
+                      <StyledButton
+                        backgroundColor="#FAFAFA"
+                        color="#171717"
+                        padding="12px 47px"
+                        onClick={() =>
+                          replace(`${bindCardUrl}&successURL=test.com`)
+                        }
+                      >
+                        Привязать карту
+                      </StyledButton>
+                    </Col>
+                  )}
+                {state.user.premium.tariff !== "trial" &&
+                  !state.user.premium.autoPayment && (
+                    <Col md={12}>
+                      <StyledButton
+                        backgroundColor="#4392BF"
+                        color="#FFFFFF"
+                        padding="12px 47px"
+                        mb="0px"
+                        onClick={() => push("/tariff")}
+                        blueButton={true}
+                      >
+                        Подключить подписку
+                      </StyledButton>
+                    </Col>
+                  )}
+                {state.user.premium.tariff !== "trial" &&
+                  state.user.premium.autoPayment && (
+                    <Col md={12}>
+                      <StyledButton
+                        backgroundColor="unset"
+                        color="#BF434A"
+                        padding="12px 35px"
+                        mb="0px"
+                        onClick={handleModalOpen}
+                      >
+                        Отменить подписку
+                      </StyledButton>
+                    </Col>
+                  )}
               </Row>
             </Col>
           </Row>
@@ -136,7 +190,7 @@ const Account: NextPage = () => {
           <Row>
             <Col md={12}>
               <StyledTitle2 textAlign="center">
-                Откройте все преимущества Hello Premium
+                Откройте все преимущества <span>Hello Premium</span>
               </StyledTitle2>
               <StyledDivider mb="24px" />
             </Col>
@@ -166,54 +220,64 @@ const Account: NextPage = () => {
           </Row>
         </Container>
       </section>
+      <Dialog
+        onClose={handleModalClose}
+        visible={modalOpen}
+        className={classes.modalWrapper}
+        modalRender={() => (
+          <div className={classes.modalContent}>
+            <div className={classes.modalClose} onClick={handleModalClose}>
+              <Image
+                src="/images/icons/dismiss.svg"
+                width={24}
+                height={24}
+                alt="Close modal"
+              />
+            </div>
+            <StyledTitle3 mb="12px" textAlign="center">
+              Отменить подписку?
+            </StyledTitle3>
+            <StyledSubhead mb="12px" textAlign="center">
+              {`${
+                state.user.premium.tariff === "trial"
+                  ? "Бесплатно до"
+                  : state.user.premium.autoPayment
+                  ? "Следующая оплата"
+                  : "Действует до"
+              } ${dayjs
+                .unix(state.user.premium.unactivate)
+                .format("DD.MM.YYYY")}${
+                state.user.premium.tariff === "trial" ? ", далее по тарифу" : ""
+              }`}
+            </StyledSubhead>
+            <StyledSubhead mb="24px" textAlign="center" color="#848592">
+              После все привилегии станут недоступны
+            </StyledSubhead>
+            <StyledButton
+              blueButton
+              mb="4px"
+              padding="12px 54.5px"
+              onClick={handleModalClose}
+            >
+              Оставить подписку
+            </StyledButton>
+            <StyledButton
+              color="#BF434A"
+              backgroundColor="unset"
+              padding="12px 0px"
+              onClick={handleCancelSubscribe}
+            >
+              Отменить подписку
+            </StyledButton>
+          </div>
+        )}
+      ></Dialog>
     </Layout>
   );
 };
 
-export const getServerSideProps = async ({ req, res }: any) => {
-  let initialState = {
-    user: {
-      auth: false,
-      data: {},
-      premium: {
-        autoPayment: false,
-        tariff: "",
-        unactivate: 0,
-      },
-    },
-  };
-  if (cookie.parse(req.headers.cookie).access_token) {
-    const userInfo = await getSelfInfo(
-      cookie.parse(req.headers.cookie).access_token
-    );
-    console.log("userInfo", userInfo);
-    initialState = {
-      user: {
-        auth: true,
-        data: userInfo,
-        premium: {
-          autoPayment: false,
-          tariff: "",
-          unactivate: 0,
-        },
-      },
-    };
-    if (!userInfo.premium) {
-      res.setHeader("location", "/premium");
-      res.statusCode = 302;
-      res.end();
-    }
-    return {
-      props: { initialState },
-    };
-  }
-  res.setHeader("location", "/login");
-  res.statusCode = 302;
-  res.end();
-
-  return {
-    props: { initialState },
-  };
+export const getServerSideProps = async ({ req, res, resolvedUrl }: any) => {
+  return checkAuth(req, res, resolvedUrl);
 };
 
 export default Account;

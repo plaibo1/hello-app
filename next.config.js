@@ -5,7 +5,7 @@ const withTM = require("next-transpile-modules")(["react-flexbox-grid"]);
 
 const nextConfig = {
   images: {
-    domains: ["localhost", "flag.pk"],
+    domains: ["localhost", "flag.pk", "storage.googleapis.com"],
   },
   reactStrictMode: false,
   swcMinify: true,

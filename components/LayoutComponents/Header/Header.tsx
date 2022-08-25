@@ -11,16 +11,16 @@ const Header = () => {
     <header className={classes.header}>
       <Container>
         <Row middle="xs">
-          <Col lg={4} lgOffset={4}>
+          <Col xs={4} xsOffset={4}>
             <Row center="xs">
-              <Col lg={12}>
+              <Col xs={12}>
                 <Logo />
               </Col>
             </Row>
           </Col>
-          <Col lg={4}>
+          <Col xs={4}>
             <Row end="xs" middle="xs">
-              <Col lg={12}>
+              <Col xs={12}>
                 {state.user.auth ? (
                   <>
                     <Avatar />

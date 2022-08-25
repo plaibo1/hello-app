@@ -18,12 +18,16 @@ export const Body2: FC<IProps> = ({ className, children }) => {
 };
 
 export const StyledBody2 = styled(Body2)`
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 1.29;
-  letter-spacing: 0.16px;
-  color: ${({ color }: IStyledProps) => color || "inherit"};
-  margin-bottom: ${({ mb }: IStyledProps) => mb || "0px"};
-  margin-top: ${({ mt }: IStyledProps) => mt || "0px"};
-  text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
+  ${({ color, mb, mt, textAlign }: IStyledProps) => `
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 1.29;
+    letter-spacing: 0.16px;
+    color: ${color || "inherit"};
+    margin-bottom: ${mb || "0px"};
+    margin-top: ${mt || "0px"};
+    text-align: ${textAlign || "left"};`}
+  & span {
+    color: #4392bf;
+  }
 `;

@@ -7,7 +7,7 @@ interface IProps {
   children: any;
   type?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: any;
 }
 
 interface IStyledProps {
@@ -24,6 +24,9 @@ interface IStyledProps {
   borderRadius?: string;
   display?: string;
   padding?: string;
+  gradientBackground?: boolean;
+  blueButton?: boolean;
+  whiteButton?: boolean;
 }
 
 export const Button: FC<IProps> = ({
@@ -46,27 +49,102 @@ export const Button: FC<IProps> = ({
 };
 
 export const StyledButton = styled(Button)`
+  ${({
+    fontSize,
+    underline,
+    color,
+    mb,
+    mr,
+    ml,
+    mt,
+    textAlign,
+    backgroundColor,
+    padding,
+    border,
+    borderRadius,
+    display,
+    gradientBackground,
+    blueButton,
+    whiteButton,
+  }: IStyledProps) => `
   font-weight: 400;
-  font-size: ${({ fontSize }: IStyledProps) => fontSize || "16px"};
-  text-decoration: ${({ underline }: IStyledProps) =>
-    underline ? "underline" : "unset"};
+  font-size: ${fontSize || "16px"};
+  text-decoration: ${underline ? "underline" : "unset"};
   line-height: 1.25;
   letter-spacing: 0.16px;
-  color: ${({ color }: IStyledProps) => color || "inherit"};
-  margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
-  margin-right: ${({ mr }: IStyledProps) => mr || "0px"};
-  margin-left: ${({ ml }: IStyledProps) => ml || "0px"};
-  margin-top: ${({ mt }: IStyledProps) => mt || "0px"};
-  text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
-  background-color: ${({ backgroundColor }: IStyledProps) =>
-    backgroundColor || "#4392BF"};
-  padding: ${({ padding }: IStyledProps) => padding || "12px 117px"};
-  border: ${({ border }: IStyledProps) => border || "unset"};
-  border-radius: ${({ borderRadius }: IStyledProps) => borderRadius || "32px"};
-  display: ${({ display }: IStyledProps) => display || "inline-block"};
+  color: ${color || "inherit"};
+  margin-bottom: ${mb || "16px"};
+  margin-right: ${mr || "0px"};
+  margin-left: ${ml || "0px"};
+  margin-top: ${mt || "0px"};
+  text-align: ${textAlign || "left"};
+  padding: ${padding || "12px 117px"};
+  border: ${border || "unset"};
+  border-radius: ${borderRadius || "32px"};
+  display: ${display || "inline-block"};
   cursor: pointer;
-  &:disabled {
-    background-color: ${({ backgroundColor }: IStyledProps) =>
-      backgroundColor ? `${backgroundColor}66` : "#4392BF66"};
-  }
+  ${
+    gradientBackground
+      ? `
+      transition: 0.3s;
+    background: linear-gradient(112.34deg, #4375BF 0%, #45B7D0 30%, #45B7D0 70%, #4375BF 100%), #3664A9;
+    background-size: 200% 100%;
+    background-position: 00% 50%;
+    &:hover {
+      background-position: 100% 50%;
+    }
+    &:focus {
+      background: #3664A9;
+    }
+    &:active {
+      background: #4392BF;
+    }
+    `
+      : blueButton
+      ? `
+    background-color: #4392BF;
+    color: white;
+    &:hover {
+      background-color: #397EA6;
+      color: white;
+    }
+    &:focus {
+      background-color: #397EA6;
+      color: white;
+    }
+    &:active {
+      background-color: #57AFE0;
+      color: white;
+    }
+    &:disabled {
+      background-color: "#4392BF66";
+    }`
+      : whiteButton
+      ? `
+    background-color: #FFFFFF;
+    color: #171717;
+    &:hover {
+      background-color: #F5F5F5;
+      color: #171717;
+    }
+    &:focus {
+      background-color: #F5F5F5;
+      color: #171717;
+    }
+    &:active {
+      background-color: #E6E6E6;
+      color: #171717;
+    }
+    &:disabled {
+      background-color: #FFFFFF66;
+    }`
+      : `
+    background-color: ${backgroundColor || "#4392BF"};
+    &:disabled {
+      background-color: ${
+        backgroundColor ? `${backgroundColor}66` : "#4392BF66"
+      };
+    }
+  `
+  }`}
 `;

@@ -8,29 +8,39 @@ import { ProfileMenu } from "../ProfileMenu";
 
 interface IProps {
   open: boolean;
+  onClose: () => void;
 }
 
-export const ProfileModal: FC<IProps> = ({ open }) => {
+export const ProfileModal: FC<IProps> = ({ open, onClose }) => {
   const { state } = useContext<any>(Context);
   return open ? (
-    <div className={classes.profileModal}>
-      <Link href="/account">
-        <a className={classes.profileMain}>
-          <Image
-            src={`/images/icons/avatar.svg`}
-            className={classes.avatarIcon}
-            height={72}
-            width={72}
-            alt="icon"
-          />
-          <StyledBody2 textAlign="center" mt="8px">
-            {state.user.data.firstName
-              ? `${state.user.data.firstName} ${state.user.data.lastName}`
-              : "Тест Тестов"}
-          </StyledBody2>
-        </a>
-      </Link>
-      <ProfileMenu />
-    </div>
+    <>
+      <div className={classes.profileBack} onClick={onClose}></div>
+      <div className={classes.profileModal}>
+        <Link href={`/${state.user.data.premium ? "account" : "premium"}`}>
+          <a className={classes.profileMain}>
+            <div className={classes.imageWrap}>
+              <Image
+                src={`${
+                  state.user.data.photo
+                    ? state.user.data.photo
+                    : "/images/icons/avatar.svg"
+                }`}
+                className={classes.avatarIcon}
+                height={72}
+                width={72}
+                alt="icon"
+              />
+            </div>
+            <StyledBody2 textAlign="center" mt="8px">
+              {state.user.data.firstName
+                ? `${state.user.data.firstName} ${state.user.data.lastName}`
+                : "Имя не указано"}
+            </StyledBody2>
+          </a>
+        </Link>
+        <ProfileMenu />
+      </div>
+    </>
   ) : null;
 };

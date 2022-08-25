@@ -17,7 +17,7 @@ export const NumericList: FC<IProps> = ({ className, items }) => {
     <ul className={className}>
       {items.map((item, index) => (
         <li key={item} className={classes.listItem}>
-          <div className={classes.numberWrapper}>{index}</div>
+          <div className={classes.numberWrapper}>{index + 1}</div>
           <div className={classes.content}>{item}</div>
         </li>
       ))}

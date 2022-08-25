@@ -9,9 +9,7 @@ export const ProfileMenu = () => {
   const { push } = useRouter();
   const { dispatch, logout } = useContext<any>(Context);
   const handleLogout = () => {
-    logout().then(() => {
-      push("/");
-    });
+    logout();
   };
   return (
     <div className={classes.profileMenu}>
@@ -23,13 +21,15 @@ export const ProfileMenu = () => {
         mb="0px"
         padding="0px"
       >
-        <Image
-          src={`/images/icons/door_arrow.svg`}
-          className={classes.linkIcon}
-          height={20}
-          width={20}
-          alt="icon"
-        />
+        <div className={classes.iconWrap}>
+          <Image
+            src={`/images/icons/door_arrow.svg`}
+            className={classes.linkIcon}
+            height={20}
+            width={20}
+            alt="icon"
+          />
+        </div>
         Выйти
       </StyledButton>
     </div>

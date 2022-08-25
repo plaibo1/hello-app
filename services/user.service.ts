@@ -1,4 +1,9 @@
-import { LoginSchema } from "./user.d";
+import {
+  LoginSchema,
+  PhoneSchema,
+  CodeConfirmSchema,
+  NewPasswordScheme,
+} from "./user.d";
 import * as cookie from "cookie";
 import axios from "axios";
 
@@ -14,7 +19,6 @@ export const signIn = async ({ password, phone }: LoginSchema) => {
       },
     })
     .then((res) => {
-      console.log(res);
       document.cookie = `access_token=${res.data.response.credentials.access_token}`;
       document.cookie = `refresh_token=${res.data.response.credentials.refresh_token}`;
       return res.data.response;
@@ -45,15 +49,174 @@ export const signOut = (token?: string) => {
     });
 };
 
+export const restorePassword = (phone: PhoneSchema) => {
+  return axios
+    .post(`${baseUrl}/auth/restore`, {
+      phone,
+      validateStatus: function (status: any) {
+        return status > 199 || status < 300; // Resolve only if the status code is less than 500
+      },
+    })
+    .then((res) => {
+      return res.data.response;
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
+export const codeConfirm = (body: CodeConfirmSchema) => {
+  return axios
+    .post(`${baseUrl}/auth/codeConfirm`, {
+      body,
+      validateStatus: function (status: any) {
+        return status > 199 || status < 300; // Resolve only if the status code is less than 500
+      },
+    })
+    .then((res) => {
+      document.cookie = `access_token=`;
+      document.cookie = `refresh_token=`;
+      return res.data.response;
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
+export const newPassword = (body: NewPasswordScheme) => {
+  return axios
+    .post(
+      `${baseUrl}/api/newPassword`,
+      {
+        body,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
+        },
+        validateStatus: function (status: any) {
+          return status > 199 || status < 300; // Resolve only if the status code is less than 500
+        },
+      }
+    )
+    .then((res) => {
+      return res.data.response;
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
 export const getSelfInfo = async (token?: string) => {
-  console.log(
-    "Bearer " + (token || cookie.parse(document.cookie).access_token)
-  );
   return axios
     .get(`${baseUrl}/user/self`, {
       headers: {
         Authorization:
           "Bearer " + (token || cookie.parse(document.cookie).access_token), //the token is a variable which holds the token
+      },
+      validateStatus: function (status: any) {
+        return status >= 200 && status < 300; // Resolve only if the status code is less than 500
+      },
+    })
+    .then((res) => {
+      console.log(res.status);
+      if (res.status >= 200 && res.status < 300) {
+        return res.data.response;
+      } else {
+        return Promise.reject(res.statusText);
+      }
+    })
+    .catch((error) => {
+      document.cookie = `access_token=`;
+      document.cookie = `refresh_token=`;
+      return Promise.reject(error);
+    });
+};
+
+export const startTrial = async () => {
+  return axios
+    .get(`${baseUrl}/user/pay/startTrial`, {
+      headers: {
+        Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
+      },
+      validateStatus: function (status: any) {
+        return status > 199 || status < 300; // Resolve only if the status code is less than 500
+      },
+    })
+    .then((res) => {
+      return res.data.response;
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
+export const changeTariff = async (tariff: string) => {
+  return axios
+    .post(
+      `${baseUrl}/user/pay/changeTariff`,
+      {
+        tariff,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
+        },
+        validateStatus: function (status: any) {
+          return status > 199 || status < 300; // Resolve only if the status code is less than 500
+        },
+      }
+    )
+    .then((res) => {
+      return res.data.response;
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
+export const cancelTariff = async () => {
+  return axios
+    .get(`${baseUrl}/user/pay/cancelTariff`, {
+      headers: {
+        Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
+      },
+      validateStatus: function (status: any) {
+        return status > 199 || status < 300; // Resolve only if the status code is less than 500
+      },
+    })
+    .then((res) => {
+      return res.data.response;
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
+export const selfStatus = async (token?: string) => {
+  return axios
+    .get(`${baseUrl}/user/pay/selfStatus`, {
+      headers: {
+        Authorization:
+          "Bearer " + (token || cookie.parse(document.cookie).access_token), //the token is a variable which holds the token
+      },
+      validateStatus: function (status: any) {
+        return status > 199 || status < 300; // Resolve only if the status code is less than 500
+      },
+    })
+    .then((res) => {
+      return res.data.response;
+    })
+    .catch((error) => {
+      return Promise.reject(error);
+    });
+};
+
+export const getBindCardUrl = async () => {
+  return axios
+    .get(`${baseUrl}/user/pay/bindCard`, {
+      headers: {
+        Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
       },
       validateStatus: function (status: any) {
         return status > 199 || status < 300; // Resolve only if the status code is less than 500
