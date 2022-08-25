@@ -52,7 +52,7 @@ export const signOut = (token?: string) => {
 export const restorePassword = (phone: PhoneSchema) => {
   return axios
     .post(`${baseUrl}/auth/restore`, {
-      phone,
+      phone: { ...phone },
       validateStatus: function (status: any) {
         return status > 199 || status < 300; // Resolve only if the status code is less than 500
       },
@@ -67,15 +67,22 @@ export const restorePassword = (phone: PhoneSchema) => {
 
 export const codeConfirm = (body: CodeConfirmSchema) => {
   return axios
-    .post(`${baseUrl}/auth/codeConfirm`, {
-      body,
-      validateStatus: function (status: any) {
-        return status > 199 || status < 300; // Resolve only if the status code is less than 500
+    .post(
+      `${baseUrl}/auth/codeConfirm`,
+      {
+        code: body.code,
+        confirmType: body.confirmType,
+        phone: body.phone,
       },
-    })
+      {
+        validateStatus: function (status: any) {
+          return status > 199 || status < 300; // Resolve only if the status code is less than 500
+        },
+      }
+    )
     .then((res) => {
-      document.cookie = `access_token=`;
-      document.cookie = `refresh_token=`;
+      document.cookie = `access_token=${res.data.response.credentials.access_token}`;
+      document.cookie = `refresh_token=${res.data.response.credentials.refresh_token}`;
       return res.data.response;
     })
     .catch((error) => {
@@ -88,7 +95,7 @@ export const newPassword = (body: NewPasswordScheme) => {
     .post(
       `${baseUrl}/api/newPassword`,
       {
-        body,
+        newPassword: body.newPassword,
       },
       {
         headers: {
@@ -119,7 +126,6 @@ export const getSelfInfo = async (token?: string) => {
       },
     })
     .then((res) => {
-      console.log(res.status);
       if (res.status >= 200 && res.status < 300) {
         return res.data.response;
       } else {

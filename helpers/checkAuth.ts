@@ -11,16 +11,13 @@ const accessLinks = {
     redirect: "/premium",
   },
   withoutLogin: {
-    access: ["/", "/login", "/recovery"],
+    access: ["/", "/premium", "/login", "/recovery"],
     redirect: "/login",
   },
 };
 
 export const redirect = (page: string, profileStatus: any, res: any) => {
   const statusObject = (accessLinks as any)[profileStatus];
-  console.log(profileStatus);
-  console.log(accessLinks);
-  console.log(statusObject);
   if (!statusObject.access.includes(page)) {
     res.setHeader("location", statusObject.redirect);
     res.statusCode = 302;
@@ -47,7 +44,6 @@ export const checkAuth = async (req: any, res: any, query: string) => {
       const userInfo = await getSelfInfo(
         cookie.parse(req.headers.cookie).access_token
       );
-      console.log(userInfo);
       initialState.user.auth = true;
       initialState.user.data = userInfo;
       if (userInfo && userInfo.premium) {
@@ -66,7 +62,6 @@ export const checkAuth = async (req: any, res: any, query: string) => {
       profileStatus = "withoutPremium";
     }
   }
-  console.log(initialState);
   redirect(page, profileStatus, res);
 
   return {

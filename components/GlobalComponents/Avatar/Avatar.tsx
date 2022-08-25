@@ -1,7 +1,6 @@
-import React, { FC, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import Image from "next/image";
 import classes from "./Avatar.module.scss";
-import Link from "next/link";
 import { ProfileModal } from "../../AccountComponents/ProfileModal";
 import { Context } from "../../../context";
 

@@ -1,8 +1,6 @@
 import type { NextPage } from "next";
 import { Layout } from "../components/LayoutComponents/Layout";
 import { checkAuth } from "../helpers/checkAuth";
-import { Jumbotron } from "../components/PremiumComponents/Jumbotron";
-import { Benefits } from "../components/PremiumComponents/Benefits";
 import { ChangeTariff } from "../components/TariffComponents/ChangeTariff";
 
 const Premium: NextPage = () => {

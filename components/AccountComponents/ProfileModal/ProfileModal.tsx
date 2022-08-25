@@ -1,7 +1,7 @@
 import React, { FC, useContext } from "react";
 import Image from "next/image";
 import classes from "./ProfileModal.module.scss";
-import { StyledBody2 } from "../../GlobalComponents/Body2";
+import { StyledBody2 } from "../../GlobalComponents";
 import { Context } from "../../../context";
 import Link from "next/link";
 import { ProfileMenu } from "../ProfileMenu";

@@ -1,11 +1,5 @@
 import React, { useContext, useRef, FC } from "react";
-import {
-  StyledButton,
-  StyledDivider,
-  StyledSubhead,
-  StyledTitle1,
-  StyledTitle2,
-} from "../../GlobalComponents";
+import { StyledTitle2 } from "../../GlobalComponents";
 import { Context } from "../../../context";
 import Container from "../../LayoutComponents/Container";
 import { Row, Col } from "react-flexbox-grid";
@@ -21,7 +15,7 @@ interface IProps {
 
 export const ChooseTariff: FC<IProps> = ({ containerRef }) => {
   const { t } = useTranslation("common");
-  const { state, startTrial } = useContext<any>(Context);
+  const { state } = useContext<any>(Context);
   const currentTariffRef = useRef(state.user.premium.tariff);
 
   return (

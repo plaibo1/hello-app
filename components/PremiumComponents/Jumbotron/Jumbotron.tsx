@@ -1,11 +1,9 @@
-import React, { useContext, FC } from "react";
+import React, { FC } from "react";
 import {
   StyledButton,
   StyledSubhead,
   StyledTitle1,
 } from "../../GlobalComponents";
-import Image from "next/image";
-import { Context } from "../../../context";
 import Container from "../../LayoutComponents/Container";
 import { Row, Col } from "react-flexbox-grid";
 import useTranslation from "next-translate/useTranslation";

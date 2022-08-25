@@ -2,12 +2,10 @@ import React, { FC, useContext } from "react";
 import Image from "next/image";
 import classes from "./ProfileMenu.module.scss";
 import { StyledButton } from "../../GlobalComponents";
-import { useRouter } from "next/router";
 import { Context } from "../../../context";
 
 export const ProfileMenu = () => {
-  const { push } = useRouter();
-  const { dispatch, logout } = useContext<any>(Context);
+  const { logout } = useContext<any>(Context);
   const handleLogout = () => {
     logout();
   };

@@ -24,4 +24,8 @@ export const StyledTitle1 = styled(Title1)`
   color: ${({ color }: IStyledProps) => color || "inherit"};
   margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
   text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
+  @media screen and (max-width: 1300px) {
+    font-size: 28px;
+    line-height: 1.14;
+  }
 `;

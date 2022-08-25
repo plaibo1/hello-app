@@ -1,14 +1,12 @@
 import React, { FC } from "react";
 import Image from "next/image";
-import "swiper/css";
-import "swiper/css/pagination";
 import classes from "./DownloadBlock.module.scss";
 
 interface IProps {
-  color: "white" | "black";
+  color?: "white" | "black";
 }
 
-export const DownloadBlock = ({ color = "black" }) => {
+export const DownloadBlock: FC<IProps> = ({ color = "black" }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.qrWrap}>

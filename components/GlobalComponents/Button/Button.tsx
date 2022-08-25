@@ -1,7 +1,5 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { default as NextLink } from "next/link";
-
 interface IProps {
   className?: string;
   children: any;
@@ -68,6 +66,7 @@ export const StyledButton = styled(Button)`
     whiteButton,
   }: IStyledProps) => `
   font-weight: 400;
+  max-width: 100%;
   font-size: ${fontSize || "16px"};
   text-decoration: ${underline ? "underline" : "unset"};
   line-height: 1.25;

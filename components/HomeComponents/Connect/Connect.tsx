@@ -3,8 +3,6 @@ import { Col, Row } from "react-flexbox-grid";
 import Image from "next/image";
 import { StyledSubhead, StyledTitle2 } from "../../GlobalComponents";
 import Container from "../../LayoutComponents/Container";
-import "swiper/css";
-import "swiper/css/pagination";
 import classes from "./Connect.module.scss";
 import { DownloadBlock } from "../DownloadBlock";
 

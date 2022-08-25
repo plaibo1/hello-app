@@ -1,5 +1,4 @@
-import React, { FC, useState } from "react";
-import Image from "next/image";
+import React, { FC } from "react";
 import classes from "./CodeInput.module.scss";
 
 interface IProps {
@@ -9,12 +8,6 @@ interface IProps {
 }
 
 export const CodeInput: FC<IProps> = ({ value, onChange, onFocus }) => {
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  const handleVisible = () => {
-    setIsVisible((prevState) => !prevState);
-  };
-
   return (
     <label className={classes.codeInput}>
       <input

@@ -76,10 +76,8 @@ export const RecoveryForm = () => {
     if (isValidPhoneNumber(phoneValue)) {
       const phoneParse = parsePhoneNumber(phoneValue);
       restorePassword({
-        phone: {
-          country: `+${phoneParse?.countryCallingCode}`,
-          number: phoneParse?.nationalNumber,
-        },
+        country: `+${phoneParse?.countryCallingCode}`,
+        number: phoneParse?.nationalNumber,
       })
         .then((data) => {
           setStep(2);

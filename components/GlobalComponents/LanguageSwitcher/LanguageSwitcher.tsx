@@ -9,13 +9,6 @@ interface IProps {
   className?: string;
 }
 
-interface IStyledProps {
-  backgroundColor?: string;
-  height?: string;
-  mb?: string;
-  mt?: string;
-}
-
 export const LanguageSwitcher: FC<IProps> = ({ className }) => {
   const { locale } = useRouter();
   return (
@@ -25,7 +18,7 @@ export const LanguageSwitcher: FC<IProps> = ({ className }) => {
       </div>
       <div className={classes.languageIcon}>
         <Image
-          src={`/images/lang_icons/flag_${locale}.svg`}
+          src={`/images/lang_icons/flag_ru.svg`}
           height={16}
           width={16}
           alt="icon"

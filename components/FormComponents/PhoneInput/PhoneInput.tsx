@@ -3,9 +3,6 @@ import Image from "next/image";
 import { getCountries, getCountryCallingCode } from "react-phone-number-input";
 import Input from "react-phone-number-input/input";
 import ru from "react-phone-number-input/locale/ru.json";
-import flags from "react-phone-number-input/flags";
-import { Logo, StyledTitle2 } from "../../GlobalComponents";
-import CustomSelect from "./CustomSelect";
 import { CountryCode } from "libphonenumber-js/types";
 import classes from "./PhoneInput.module.scss";
 

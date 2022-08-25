@@ -1,9 +1,8 @@
 import React from "react";
-import { StyledLink } from "../../GlobalComponents";
+import { StyledLink, StyledLanguageSwitcher } from "../../GlobalComponents";
 import Container from "../Container";
 import classes from "./Footer.module.scss";
 import { Row, Col } from "react-flexbox-grid";
-import { StyledLanguageSwitcher } from "../../GlobalComponents/LanguageSwitcher";
 
 const Footer = () => {
   return (

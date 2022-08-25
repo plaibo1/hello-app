@@ -29,9 +29,13 @@ export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
         />
         <div className={classes.isVisibleButton} onClick={handleVisible}>
           <Image
-            src="/images/icons/toggle_password.svg"
-            width={44}
-            height={44}
+            src={
+              isVisible
+                ? "/images/icons/hide_password.svg"
+                : "/images/icons/show_password.svg"
+            }
+            width={30}
+            height={30}
             alt="Toggle password visible"
           />
         </div>

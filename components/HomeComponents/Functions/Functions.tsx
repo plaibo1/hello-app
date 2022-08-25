@@ -1,22 +1,15 @@
 import React, { useState } from "react";
 import { Col, Row } from "react-flexbox-grid";
-import {
-  StyledCard,
-  StyledDivider,
-  StyledTitle2,
-} from "../../GlobalComponents";
+import { StyledDivider, StyledTitle2 } from "../../GlobalComponents";
 import Container from "../../LayoutComponents/Container";
 import Image from "next/image";
-import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import classes from "./Functions.module.scss";
-import { MOC_BENEFITS } from "../../../constants/benefits";
 import { MOC_FUNCTIONS } from "../../../constants/functions";
 
 export const Functions = () => {
-  const swiperSlider = useSwiperSlide();
   const [activeSlide, setActiveSlide] = useState<number>(1);
   const [swiper, setSwiper] = useState<any>(null);
   const slideTo = (index: number) => {
@@ -126,7 +119,6 @@ export const Functions = () => {
                         src={item.phoneImage}
                         width={220}
                         height={450}
-                        unoptimized
                         alt="Function image"
                       />
                     </div>

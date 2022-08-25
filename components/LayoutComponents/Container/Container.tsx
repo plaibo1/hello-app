@@ -16,6 +16,14 @@ export const Container = styled(ContainerWrap)`
   margin-right: auto;
   padding-right: 8px;
   padding-left: 8px;
+  @media (min-width: 730px) {
+    width: 728px;
+    max-width: 100%;
+  }
+  @media (min-width: 960px) {
+    width: 944px;
+    max-width: 100%;
+  }
   @media (min-width: 1350px) {
     width: 1300px;
     max-width: 100%;

@@ -1,4 +1,4 @@
-import React, { FC, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Logo,
   StyledTitle2,
@@ -10,18 +10,14 @@ import { useRouter } from "next/router";
 import { PhoneInput } from "../PhoneInput";
 import { PasswordInput } from "../PasswordInput";
 import { CountryCode } from "libphonenumber-js/types";
-import {
-  isValidPhoneNumber,
-  getCountryCallingCode,
-  parsePhoneNumber,
-} from "react-phone-number-input";
+import { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
 import classes from "./LoginForm.module.scss";
 import { Context } from "../../../context";
 import { passwordSchema } from "../../../Schemas/Login";
 
 export const LoginForm = () => {
   const { push } = useRouter();
-  const { dispatch, login } = useContext<any>(Context);
+  const { login } = useContext<any>(Context);
   const [phoneValue, setPhoneValue] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
   const [countryValue, setCountryValue] = useState<CountryCode>("RU");
@@ -47,7 +43,7 @@ export const LoginForm = () => {
         .validate({
           password: passwordValue,
         })
-        .then(async (data) => {
+        .then(async () => {
           const phoneParse = parsePhoneNumber(phoneValue);
           try {
             const loginPromise = await login({

@@ -1,11 +1,5 @@
 import React, { useContext, useRef } from "react";
-import {
-  StyledButton,
-  StyledDivider,
-  StyledSubhead,
-  StyledTitle1,
-  StyledTitle2,
-} from "../../GlobalComponents";
+import { StyledTitle2 } from "../../GlobalComponents";
 import { Context } from "../../../context";
 import Container from "../../LayoutComponents/Container";
 import { Row, Col } from "react-flexbox-grid";
@@ -17,7 +11,7 @@ import { TariffCard } from "../TariffCard";
 
 export const ChangeTariff = () => {
   const { t } = useTranslation("common");
-  const { state, startTrial } = useContext<any>(Context);
+  const { state } = useContext<any>(Context);
   const currentTariffRef = useRef(state.user.premium.tariff);
 
   return (

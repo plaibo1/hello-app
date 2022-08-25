@@ -2,6 +2,8 @@ export * from "./Divider";
 export * from "./NumericList";
 export * from "./Card";
 export * from "./Logo";
+export * from "./Body2";
+export * from "./ListItem";
 export * from "./LanguageSwitcher";
 export * from "./Avatar";
 export * from "./Button";

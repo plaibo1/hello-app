@@ -1,17 +1,17 @@
 export interface PhoneSchema {
-  phone: {
-    country: string;
-    number: NationalNumber | undefined;
-  };
+  country: string;
+  number: NationalNumber | undefined;
 }
 
-export interface LoginSchema extends PhoneSchema {
+export interface LoginSchema {
   password: string;
+  phone: PhoneSchema;
 }
 
-export interface CodeConfirmSchema extends PhoneSchema {
+export interface CodeConfirmSchema {
   code: string;
   confirmType: string;
+  phone: PhoneSchema;
 }
 
 export interface NewPasswordScheme {

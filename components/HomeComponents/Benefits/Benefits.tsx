@@ -1,30 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { Col, Row } from "react-flexbox-grid";
 import {
   StyledButton,
-  StyledCard,
+  StyledListItem,
   StyledDivider,
   StyledTitle2,
+  StyledBody2,
 } from "../../GlobalComponents";
 import Container from "../../LayoutComponents/Container";
 import Image from "next/image";
-import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
-import "swiper/css";
-import "swiper/css/pagination";
 import classes from "./Benefits.module.scss";
-import { HOME_BENEFITS, MOC_BENEFITS } from "../../../constants/benefits";
-import { MOC_FUNCTIONS } from "../../../constants/functions";
-import { StyledListItem } from "../../GlobalComponents/ListItem";
-import { StyledBody2 } from "../../GlobalComponents/Body2";
+import { HOME_BENEFITS } from "../../../constants/benefits";
+import { useRouter } from "next/router";
 
 export const Benefits = () => {
-  const swiperSlider = useSwiperSlide();
-  const [activeSlide, setActiveSlide] = useState<number>(1);
-  const [swiper, setSwiper] = useState<any>(null);
-  const slideTo = (index: number) => {
-    swiper.slideTo(index);
-  };
+  const { push } = useRouter();
   return (
     <section className={classes.wrapper}>
       <Container>
@@ -77,6 +67,7 @@ export const Benefits = () => {
               mr="auto"
               display="block"
               gradientBackground
+              onClick={() => push("/premium")}
             >
               Подробнее
             </StyledButton>
