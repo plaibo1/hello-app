@@ -22,7 +22,11 @@ interface IProps {
 
 export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
   const { replace, push } = useRouter();
-  const { state } = useContext<any>(Context);
+  const {
+    state: {
+      user: { premium, data },
+    },
+  } = useContext<any>(Context);
   const [bindCardUrl, setBindCardUrl] = useState<string>("");
 
   useEffect(() => {
@@ -50,16 +54,14 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       color="#848592"
                       textTransform="capitalize"
                     >
-                      {TARIFFS[state.user.premium.tariff]}
+                      {TARIFFS[premium.tariff]}
                     </StyledSubhead>
                   </div>
                   <StyledSubscribeStatus
                     active={
-                      state.user.premium.autoPayment ||
-                      state.user.premium.tariff === "trial"
+                      premium.autoPayment || premium.tariff === "trial"
                         ? "active"
-                        : state.user.premium.unactivate === 0 ||
-                          !state.user.data.premium
+                        : premium.unactivate === 0 || !data.premium
                         ? "paused"
                         : "stopped"
                     }
@@ -77,7 +79,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                   <span className={classes.payButton}>
                     <Image
                       src={
-                        state.user.premium.isBlocked
+                        premium.isBlocked
                           ? "/images/icons/pay_fail.svg"
                           : "/images/icons/pay_button.svg"
                       }
@@ -86,41 +88,40 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       alt="Pay button"
                     />
                   </span>
-                  {state.user.premium.isBlocked
+                  {premium.isBlocked
                     ? "Платеж не прошел"
                     : `${
-                        state.user.premium.tariff === "trial"
+                        premium.tariff === "trial"
                           ? "Бесплатно до"
-                          : state.user.premium.autoPayment
+                          : premium.autoPayment
                           ? "Следующая оплата"
-                          : state.user.premium.unactivate === 0
+                          : premium.unactivate === 0
                           ? "Привяжите карту к вашему аккаунту и оплатите тариф, для возобновления подписки"
                           : "Действует до"
                       } ${
-                        state.user.premium.unactivate === 0
+                        premium.unactivate === 0
                           ? ""
                           : `${dayjs
-                              .unix(state.user.premium.unactivate)
+                              .unix(premium.unactivate)
                               .format("DD.MM.YYYY")}${
-                              state.user.premium.tariff === "trial"
+                              premium.tariff === "trial"
                                 ? ", далее по тарифу"
                                 : ""
                             }`
                       }`}
                 </StyledBody2>
               </Col>
-              {((state.user.premium.tariff === "trial" &&
-                !state.user.premium.autoPayment) ||
-                state.user.premium.isBlocked) && (
+              {((premium.tariff === "trial" && !premium.autoPayment) ||
+                premium.isBlocked) && (
                 <Col md={12}>
                   <StyledBody2
                     className={classes.premiumDuration}
                     color="#848592"
-                    fontSize={state.user.premium.isBlocked ? "12px" : "16px"}
+                    fontSize={premium.isBlocked ? "12px" : "16px"}
                     mt="16px"
                     xl={{ mb: "24px", mt: "0px" }}
                   >
-                    {state.user.premium.isBlocked
+                    {premium.isBlocked
                       ? "Оплата подписки не была произведена, проверьте выбранный способ оплаты и попробуйте еще раз"
                       : "Привяжите карту к вашему аккаунту для использования подписки после пробного периода"}
                   </StyledBody2>
@@ -130,7 +131,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
           </Col>
           <Col lg={6}>
             <Row end="lg" center="xs" middle="xs">
-              {state.user.premium.autoPayment && (
+              {premium.autoPayment && (
                 <Col md={12}>
                   <StyledButton
                     backgroundColor="#FAFAFA"
@@ -143,24 +144,23 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                   </StyledButton>
                 </Col>
               )}
-              {state.user.premium.tariff === "trial" &&
-                !state.user.premium.autoPayment && (
-                  <Col md={12}>
-                    <StyledButton
-                      backgroundColor="#FAFAFA"
-                      color="#171717"
-                      padding="12px 47px"
-                      onClick={() =>
-                        replace(`${bindCardUrl}&successURL=test.com`)
-                      }
-                    >
-                      Привязать карту
-                    </StyledButton>
-                  </Col>
-                )}
-              {state.user.premium.tariff !== "trial" &&
-                !state.user.premium.autoPayment &&
-                state.user.premium.unactivate === 0 && (
+              {premium.tariff === "trial" && !premium.autoPayment && (
+                <Col md={12}>
+                  <StyledButton
+                    backgroundColor="#FAFAFA"
+                    color="#171717"
+                    padding="12px 47px"
+                    onClick={() =>
+                      replace(`${bindCardUrl}&successURL=test.com`)
+                    }
+                  >
+                    Привязать карту
+                  </StyledButton>
+                </Col>
+              )}
+              {premium.tariff !== "trial" &&
+                !premium.autoPayment &&
+                premium.unactivate === 0 && (
                   <Col md={12}>
                     <StyledButton
                       backgroundColor="#4392BF"
@@ -184,10 +184,10 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     </StyledButton>
                   </Col>
                 )}
-              {state.user.premium.tariff !== "trial" &&
-                !state.user.premium.autoPayment &&
-                state.user.premium.unactivate !== 0 &&
-                !state.user.premium.isBlocked && (
+              {premium.tariff !== "trial" &&
+                !premium.autoPayment &&
+                premium.unactivate !== 0 &&
+                !premium.isBlocked && (
                   <Col md={12}>
                     <StyledButton
                       backgroundColor="#4392BF"
@@ -202,10 +202,10 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     </StyledButton>
                   </Col>
                 )}
-              {state.user.premium.tariff !== "trial" &&
-                !state.user.premium.autoPayment &&
-                state.user.premium.unactivate !== 0 &&
-                state.user.premium.isBlocked && (
+              {premium.tariff !== "trial" &&
+                !premium.autoPayment &&
+                premium.unactivate !== 0 &&
+                premium.isBlocked && (
                   <Col md={12}>
                     <StyledButton
                       backgroundColor="#4392BF"
@@ -228,20 +228,19 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     </StyledButton>
                   </Col>
                 )}
-              {state.user.premium.tariff !== "trial" &&
-                state.user.premium.autoPayment && (
-                  <Col md={12}>
-                    <StyledButton
-                      backgroundColor="unset"
-                      color="#BF434A"
-                      padding="12px 35px"
-                      mb="0px"
-                      onClick={handleModalOpen}
-                    >
-                      Отменить подписку
-                    </StyledButton>
-                  </Col>
-                )}
+              {premium.tariff !== "trial" && premium.autoPayment && (
+                <Col md={12}>
+                  <StyledButton
+                    backgroundColor="unset"
+                    color="#BF434A"
+                    padding="12px 35px"
+                    mb="0px"
+                    onClick={handleModalOpen}
+                  >
+                    Отменить подписку
+                  </StyledButton>
+                </Col>
+              )}
             </Row>
           </Col>
         </Row>

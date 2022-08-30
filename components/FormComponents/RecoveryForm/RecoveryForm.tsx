@@ -28,7 +28,6 @@ export const RecoveryForm = () => {
   const [phoneError, setPhoneError] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
-  const [countryValue, setCountryValue] = useState<CountryCode>("RU");
   const [codeValue, setCodeValue] = useState<
     Array<number | string | undefined>
   >([]);
@@ -41,6 +40,13 @@ export const RecoveryForm = () => {
   const handlePasswordInput = useCallback((event: any) => {
     setPasswordValue(event.target.value);
   }, []);
+
+  const handleFirstFocus = () => {
+    console.log(phoneValue);
+    if (!phoneValue) {
+      setPhoneValue("+7");
+    }
+  };
 
   const handleCodeInput = useCallback((index: number, target: any) => {
     if (
@@ -71,7 +77,7 @@ export const RecoveryForm = () => {
     }
   }, [step, push]);
 
-  const handlePhoneForm = () => {
+  const handlePhoneForm = useCallback(() => {
     setPhoneError("");
     if (isValidPhoneNumber(phoneValue)) {
       const phoneParse = parsePhoneNumber(phoneValue);
@@ -86,9 +92,9 @@ export const RecoveryForm = () => {
     } else {
       setPhoneError("Неверный формат телефона");
     }
-  };
+  }, [phoneValue]);
 
-  const handleCodeForm = () => {
+  const handleCodeForm = useCallback(() => {
     setCodeError("");
     if (!(codeValue.length < 4 || codeValue.includes(""))) {
       const phoneParse = parsePhoneNumber(phoneValue);
@@ -107,9 +113,9 @@ export const RecoveryForm = () => {
     } else {
       setCodeError("Неверный формат кода");
     }
-  };
+  }, [codeConfirm, codeValue, phoneValue]);
 
-  const handlePasswordForm = () => {
+  const handlePasswordForm = useCallback(() => {
     passwordSchema
       .validate({
         password: passwordValue,
@@ -124,7 +130,21 @@ export const RecoveryForm = () => {
       .catch((error) => {
         setPasswordError(error.errors);
       });
-  };
+  }, [passwordValue, push]);
+
+  const handleFormSubmit = useCallback(
+    (event: any) => {
+      event.preventDefault();
+      if (step === 1) {
+        handlePhoneForm();
+      } else if (step === 2) {
+        handleCodeForm();
+      } else if (step === 3) {
+        handlePasswordForm();
+      }
+    },
+    [handleCodeForm, handlePasswordForm, handlePhoneForm, step]
+  );
 
   const StepOne = () => {
     return (
@@ -138,15 +158,13 @@ export const RecoveryForm = () => {
         <PhoneInput
           value={phoneValue}
           onChange={handlePhoneInput}
-          countryValue={countryValue}
-          onChangeCountry={setCountryValue}
           error={phoneError}
+          onFocus={handleFirstFocus}
         />
         <StyledButton
-          type="button"
+          type="submit"
           color="white"
           disabled={phoneValue ? phoneValue.length < 1 : true}
-          onClick={handlePhoneForm}
           mt="12px"
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
@@ -180,10 +198,9 @@ export const RecoveryForm = () => {
           <div className={classes.errorTitle}>Введен неверный код</div>
         )}
         <StyledButton
-          type="button"
+          type="submit"
           color="white"
           disabled={codeValue.length < 4 || codeValue.includes("")}
-          onClick={handleCodeForm}
           mt="12px"
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
@@ -206,10 +223,9 @@ export const RecoveryForm = () => {
           error={passwordError}
         />
         <StyledButton
-          type="button"
+          type="submit"
           color="white"
           disabled={!passwordValue}
-          onClick={handlePasswordForm}
           mt="12px"
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
@@ -230,7 +246,7 @@ export const RecoveryForm = () => {
           alt="Back to previous step"
         />
       </div>
-      <form className={classes.recoveryFormWrap}>
+      <form className={classes.recoveryFormWrap} onSubmit={handleFormSubmit}>
         {step === 1 && StepOne()}
         {step === 2 && StepTwo()}
         {step === 3 && StepThree()}

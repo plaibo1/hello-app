@@ -20,7 +20,6 @@ export const LoginForm = () => {
   const { login } = useContext<any>(Context);
   const [phoneValue, setPhoneValue] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
-  const [countryValue, setCountryValue] = useState<CountryCode>("RU");
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [loginError, setLoginError] = useState<string>("");
@@ -31,6 +30,13 @@ export const LoginForm = () => {
 
   const handlePasswordInput = (event: any) => {
     setPasswordValue(event.target.value);
+  };
+
+  const handleFirstFocus = () => {
+    console.log(phoneValue);
+    if (!phoneValue) {
+      setPhoneValue("+7");
+    }
   };
 
   const handleSubmit = (event: any) => {
@@ -92,8 +98,7 @@ export const LoginForm = () => {
           <PhoneInput
             value={phoneValue}
             onChange={handlePhoneInput}
-            countryValue={countryValue}
-            onChangeCountry={setCountryValue}
+            onFocus={handleFirstFocus}
             error={phoneError}
           />
           <PasswordInput

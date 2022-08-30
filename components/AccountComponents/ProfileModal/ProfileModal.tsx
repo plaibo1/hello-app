@@ -25,7 +25,7 @@ export const ProfileModal: FC<IProps> = ({ open, onClose }) => {
               : "premium"
           }`}
         >
-          <a className={classes.profileMain}>
+          <a className={classes.profileMain} onClick={onClose}>
             <div className={classes.imageWrap}>
               <Image
                 src={`${
