@@ -21,8 +21,10 @@ export const Jumbotron: FC<IProps> = ({ onButtonClick }) => {
       <Container>
         <Row>
           <Col md={6}>
-            <StyledTitle1>{t("Hello Premium")}</StyledTitle1>
-            <StyledSubhead mb="24px">
+            <StyledTitle1 md={{ textAlign: "center" }}>
+              {t("Hello Premium")}
+            </StyledTitle1>
+            <StyledSubhead mb="24px" md={{ textAlign: "center" }}>
               {t(
                 "Черный список, настройки приватности, безлимитный просмотр профилей и еще множество возможностей."
               )}

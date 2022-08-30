@@ -8,6 +8,7 @@ import useTranslation from "next-translate/useTranslation";
 import classes from "./ChangeTariff.module.scss";
 import { MOC_TARIFFS } from "../../../constants/tariffs";
 import { TariffCard } from "../TariffCard";
+import { useRouter } from "next/router";
 
 export const ChangeTariff = () => {
   const { t } = useTranslation("common");
@@ -20,14 +21,25 @@ export const ChangeTariff = () => {
         <Row>
           <Col md={12}>
             <StyledTitle2 textAlign="center" mb="24px">
-              {t("Смена тарифа")}
+              {t(
+                `${
+                  state.user.premium.tariff !== "trial" &&
+                  !state.user.premium.autoPayment &&
+                  state.user.premium.unactivate === 0
+                    ? "Выберите тариф"
+                    : "Смена тарифа"
+                }`
+              )}
             </StyledTitle2>
           </Col>
         </Row>
         <Row>
           {MOC_TARIFFS.map((tariff) => {
             return (
-              tariff.id !== currentTariffRef.current && (
+              ((state.user.premium.tariff !== "trial" &&
+                !state.user.premium.autoPayment &&
+                state.user.premium.unactivate !== 0) ||
+                tariff.id !== currentTariffRef.current) && (
                 <Col lg={4} key={tariff.id}>
                   <TariffCard tariff={tariff} />
                 </Col>

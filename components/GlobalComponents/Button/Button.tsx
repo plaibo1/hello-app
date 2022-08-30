@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import styled from "styled-components";
+import { xl as xlSize, md as mdSize } from "../../../constants/windowWidth";
 interface IProps {
   className?: string;
   children: any;
@@ -25,6 +26,12 @@ interface IStyledProps {
   gradientBackground?: boolean;
   blueButton?: boolean;
   whiteButton?: boolean;
+  width?: string;
+}
+
+interface AdaptiveStyledProps extends IStyledProps {
+  xl?: IStyledProps;
+  md?: IStyledProps;
 }
 
 export const Button: FC<IProps> = ({
@@ -64,7 +71,10 @@ export const StyledButton = styled(Button)`
     gradientBackground,
     blueButton,
     whiteButton,
-  }: IStyledProps) => `
+    xl,
+    md,
+    width,
+  }: AdaptiveStyledProps) => `
   font-weight: 400;
   max-width: 100%;
   font-size: ${fontSize || "16px"};
@@ -82,6 +92,7 @@ export const StyledButton = styled(Button)`
   border-radius: ${borderRadius || "32px"};
   display: ${display || "inline-block"};
   cursor: pointer;
+  width: ${width || "auto"};
   ${
     gradientBackground
       ? `
@@ -145,5 +156,22 @@ export const StyledButton = styled(Button)`
       };
     }
   `
-  }`}
+  }
+  @media screen and (max-width: ${xlSize}) {
+    font-size: ${xl?.fontSize || fontSize || "15px"};
+    line-height: 1.33;
+    margin-bottom: ${xl?.mb || mb || "16px"};
+    padding: ${xl?.padding || padding || "12px 117px"};
+    width: ${xl?.width || width || "auto"};
+    text-align: ${xl?.textAlign || textAlign || "left"};
+  }
+  @media screen and (max-width: ${mdSize}) {
+    font-size: ${md?.fontSize || xl?.fontSize || fontSize || "15px"};
+    line-height: 1.33;
+    margin-bottom: ${md?.mb || xl?.mb || mb || "16px"};
+    padding: ${md?.padding || xl?.padding || padding || "12px 117px"};
+    width: ${md?.width || xl?.width || width || "auto"};
+    text-align: ${md?.textAlign || xl?.textAlign || textAlign || "left"};
+  }
+  `}
 `;

@@ -29,10 +29,10 @@ export const ChooseTariff: FC<IProps> = ({ containerRef }) => {
           </Col>
         </Row>
         <Row>
-          {MOC_TARIFFS.map((tariff) => {
+          {MOC_TARIFFS.map((tariff, index) => {
             return (
               tariff.id !== currentTariffRef.current && (
-                <Col lg={4} key={tariff.id}>
+                <Col md={(index + 1) % 3 === 0 ? 12 : 6} lg={4} key={tariff.id}>
                   <TariffCard tariff={tariff} />
                 </Col>
               )

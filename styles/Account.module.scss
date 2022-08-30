@@ -1,11 +1,21 @@
+@import "/styles/variables.scss";
+
 .modalWrapper {
-  width: 638px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 100%;
-  margin: auto;
+  div>& {
+
+    max-width: 100%;
+    width: 638px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 100%;
+    margin: auto;
+  
+    @media (max-width: $xl) {
+      width: 536px;
+    }
+  }
 }
 
 .modalContent {
@@ -17,11 +27,15 @@
   border-radius: 16px;
   padding: 44px 67px 24px 67px;width: 100%;
   position: relative;
+
+  @media (max-width: $xl) {
+    padding: 44px 12px 12px 12px;
+  }
 }
 
 .modalClose {
   position: absolute;
-  right: 61px;
+  right: 10px;
   top: 10px;
   cursor: pointer;
 }

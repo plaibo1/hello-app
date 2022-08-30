@@ -7,9 +7,12 @@ body {
 }
 
 a {
+  font-family: 'Roboto', sans-serif;
   color: inherit;
   text-decoration: none;
 }
+
+button {font-family: 'Roboto', sans-serif;}
 
 * {
   box-sizing: border-box;
@@ -24,4 +27,8 @@ a {
     color: white;
     background: black;
   }
+}
+
+.rc-dialog {
+  width: inherit
 }

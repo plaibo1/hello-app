@@ -13,11 +13,11 @@ export const HowItWork = () => {
     <section className={classes.wrapper}>
       <Container>
         <Row>
-          <Col md={6}>
-            <StyledTitle2>
+          <Col lg={8} xl={6}>
+            <StyledTitle2 md={{ textAlign: "center" }}>
               Как работает <span>Hello</span>
             </StyledTitle2>
-            <StyledDivider mb="24px" />
+            <StyledDivider mb="24px" xl={{ width: "354px" }} />
             <StyledNumericList
               items={[
                 "Скачайте приложение на телефон",

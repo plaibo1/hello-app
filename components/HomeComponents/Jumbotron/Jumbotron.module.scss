@@ -1,20 +1,44 @@
+@import "/styles/variables.scss";
+
 .wrapper {
-  padding-top: 117px;
+  padding-top: 92px;
   padding-bottom: 117px;
   background: linear-gradient(154.71deg, rgba(67, 117, 191, 0.9) 2.78%, rgba(67, 169, 191, 0.693) 90.98%);
   border-radius: 24px;
   margin-bottom: 8px;
   color: white;
+  @media (max-width: $xl) {
+    padding-top: 60px;
+    padding-bottom: 85px;
+    background: linear-gradient(154.71deg, rgba(67, 117, 191, 0.9) 2.78%, rgba(67, 169, 191, 0.693) 90.98%);
+  }
+  @media (max-width: $lg) {
+    padding-top: 36px;
+    padding-bottom: 58px;
+  }
+  @media (max-width: $md) {
+    text-align: center;
+  }
 }
 .jumbotronImageWrap {
   width: 535px;
   margin: auto;
   max-width: 100%;
+  @media (max-width: $xl) {
+    width: 320px;
+  }
 }
 
 .jumbotronImage {
   padding-top: 133.74%;
-  margin-top: -44px;
+  margin-top: -20px;
   margin-bottom: -440px;
   filter: drop-shadow(10px 12px 35px rgba(0, 0, 0, 0.15)) drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.15));
+  @media (max-width: $xl) {
+    margin-top: -13px;
+  }
+  @media (max-width: $md) {
+    margin-top: 48px;
+    margin-bottom: -215px;
+  }
 }

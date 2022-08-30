@@ -1,6 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
 import classes from "./Card.module.scss";
+import { xl as xlSize } from "../../../constants/windowWidth";
 
 interface IProps {
   className?: string;
@@ -15,6 +16,10 @@ interface IStyledProps {
   mb?: string;
   iconPosition?: string;
   padding?: string;
+}
+
+interface AdaptiveStyledProps extends IStyledProps {
+  xl?: IStyledProps;
 }
 
 export const Card: FC<IProps> = ({
@@ -54,11 +59,17 @@ export const Card: FC<IProps> = ({
 };
 
 export const StyledCard = styled(Card)`
-  display: flex;
-  flex-direction: ${({ iconPosition = "left" }: IStyledProps) => iconPosition};
-  justify-content: center;
-  padding: ${({ padding }: IStyledProps) => padding || "16px 0px"};
-  list-style: none;
-  color: ${({ color }: IStyledProps) => color || "inherit"};
-  margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
+  ${({ padding, color, mb, xl }: AdaptiveStyledProps) => `
+    display: flex;
+    padding: ${padding || "16px 0px"};
+    list-style: none;
+    color: ${color || "inherit"};
+    margin-bottom: ${mb || "16px"};
+
+    @media screen and (max-width: ${xlSize}) {
+      padding: ${xl?.padding || padding || "16px 0px"};
+      color: ${xl?.color || color || "inherit"};
+      margin-bottom: ${xl?.mb || mb || "16px"};
+    }
+  `}
 `;

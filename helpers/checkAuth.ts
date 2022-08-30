@@ -1,5 +1,5 @@
 import * as cookie from "cookie";
-import { getSelfInfo, selfStatus } from "../services";
+import { getSelfInfo } from "../services";
 
 const accessLinks = {
   withPremium: {
@@ -45,18 +45,16 @@ export const checkAuth = async (req: any, res: any, query: string) => {
         cookie.parse(req.headers.cookie).access_token
       );
       initialState.user.auth = true;
-      initialState.user.data = userInfo;
-      if (userInfo && userInfo.premium) {
-        const premiumInfo = await selfStatus(
-          cookie.parse(req.headers.cookie).access_token
-        );
-        initialState.user.premium = premiumInfo;
-      }
+      initialState.user.data = userInfo.selfProfile;
+      initialState.user.premium = userInfo.premiumStatus;
     } catch (error) {}
   }
 
   if (initialState.user.auth) {
-    if (initialState.user.data && (initialState.user.data as any).premium) {
+    if (
+      (initialState.user.data && (initialState.user.data as any).premium) ||
+      (initialState.user.data as any).trial
+    ) {
       profileStatus = "withPremium";
     } else {
       profileStatus = "withoutPremium";

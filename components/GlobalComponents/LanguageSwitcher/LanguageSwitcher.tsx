@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { useRouter } from "next/router";
 import classes from "./Language.module.scss";
 import { COUNTRY_LIST } from "../../../constants/country";
+import { md } from "../../../constants/windowWidth";
 
 interface IProps {
   className?: string;
@@ -31,4 +32,7 @@ export const LanguageSwitcher: FC<IProps> = ({ className }) => {
 export const StyledLanguageSwitcher = styled(LanguageSwitcher)`
   display: flex;
   align-items: center;
+  @media (max-width: ${md}) {
+    margin-bottom: 8px;
+  }
 `;

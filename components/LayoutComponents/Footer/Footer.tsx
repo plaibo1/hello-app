@@ -9,18 +9,30 @@ const Footer = () => {
     <footer className={classes.footer}>
       <Container>
         <Row middle="xs">
-          <Col lg={2}>
+          <Col md={2}>
             <StyledLanguageSwitcher />
           </Col>
-          <Col lg={5}>
+          <Col md={8} xl={5}>
             <div className={classes.copyrightWrapper}>
-              <StyledLink href="/policy" fontSize="11px" underline mr="4px">
+              <StyledLink
+                href="/policy"
+                fontSize="11px"
+                underline
+                mr="4px"
+                md={{ mb: "4px" }}
+              >
                 Пользовательское соглашение
               </StyledLink>
-              <StyledLink href="/policy" fontSize="11px" underline mr="4px">
+              <StyledLink
+                href="/policy"
+                fontSize="11px"
+                underline
+                mr="4px"
+                md={{ mb: "4px" }}
+              >
                 Политика конфиденциальности
               </StyledLink>
-              © 2022 «Hello» 14+
+              <span>© 2022 «Hello» 14+</span>
             </div>
           </Col>
         </Row>

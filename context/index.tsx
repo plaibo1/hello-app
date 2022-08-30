@@ -8,9 +8,9 @@ import {
   getSelfInfo,
   codeConfirm as _codeConfirm,
   startTrial as _startTrial,
-  selfStatus as _selfStatus,
   changeTariff as _changeTariff,
   cancelTariff as _cancelTariff,
+  tariffPayment as _tariffPayment,
 } from "../services/user.service";
 
 interface UserSchema {
@@ -51,29 +51,61 @@ const Provider = ({ children, initialProps = initialState }: any) => {
   const [state, dispatch] = useReducer(combineReducers(user), initialProps); // pass more reducers combineReducers(user, blogs, products)
 
   const login = useCallback(
-    async ({ phone, password }: LoginSchema) => {
+    async (
+      { phone, password }: LoginSchema,
+      start_trial?: boolean,
+      tariff?: string
+    ) => {
       return signIn({ phone, password })
         .then((userData) => {
-          return getSelfInfo()
-            .then((userInfo) => {
-              dispatch({
-                type: "LOGGED_IN_USER",
-                payload: { auth: true, data: userInfo },
-              });
-              if (userInfo.premium) {
-                return _selfStatus().then((premiumInfo) => {
-                  dispatch({
-                    type: "PREMIUM_STATUS",
-                    payload: premiumInfo,
+          if (start_trial) {
+            return getSelfInfo()
+              .then((userInfo) => {
+                if (
+                  !userInfo.selfProfile.premium &&
+                  !userInfo.selfProfile.trial
+                ) {
+                  return startTrial()
+                    .then(() => {
+                      return changeTariff(tariff || "")
+                        .then(() => {
+                          push({
+                            pathname: "/account",
+                            query: { show_modal: true },
+                          });
+                        })
+                        .catch((error) => Promise.reject(error));
+                    })
+                    .catch((error) => Promise.reject(error));
+                } else {
+                  push({
+                    pathname: "/account",
                   });
-                  push("/account");
-                  return premiumInfo;
+                  return userInfo;
+                }
+              })
+              .catch((error) => Promise.reject(error));
+          } else {
+            return getSelfInfo()
+              .then((userInfo) => {
+                const redirect_link = `${
+                  userInfo.selfProfile.premium || userInfo.selfProfile.trial
+                    ? "/account"
+                    : "/premium"
+                }`;
+                dispatch({
+                  type: "LOGGED_IN_USER",
+                  payload: {
+                    auth: true,
+                    data: userInfo.selfProfile,
+                    premium: userInfo.premiumStatus,
+                  },
                 });
-              }
-              push("/premium");
-              return userInfo;
-            })
-            .catch((error) => Promise.reject(error));
+                push(redirect_link);
+                return userInfo;
+              })
+              .catch((error) => Promise.reject(error));
+          }
         })
         .catch((error) => Promise.reject(error));
     },
@@ -96,17 +128,12 @@ const Provider = ({ children, initialProps = initialState }: any) => {
           .then((userInfo) => {
             dispatch({
               type: "LOGGED_IN_USER",
-              payload: { auth: true, data: userInfo },
+              payload: {
+                auth: true,
+                data: userInfo.selfProfile,
+                premium: userInfo.premiumStatus,
+              },
             });
-            if (userInfo.premium) {
-              return _selfStatus().then((premiumInfo) => {
-                dispatch({
-                  type: "PREMIUM_STATUS",
-                  payload: premiumInfo,
-                });
-                return premiumInfo;
-              });
-            }
             return userInfo;
           })
           .catch((error) => Promise.reject(error));
@@ -121,21 +148,18 @@ const Provider = ({ children, initialProps = initialState }: any) => {
           .then((userInfo) => {
             dispatch({
               type: "LOGGED_IN_USER",
-              payload: { auth: true, data: userInfo },
+              payload: {
+                auth: true,
+                data: userInfo.selfProfile,
+                premium: userInfo.premiumStatus,
+              },
             });
-            return _selfStatus().then((premiumInfo) => {
-              dispatch({
-                type: "PREMIUM_STATUS",
-                payload: premiumInfo,
-              });
-              push("/account");
-              return premiumInfo;
-            });
+            return userInfo;
           })
           .catch((error) => Promise.reject(error));
       })
       .catch((error) => Promise.reject(error));
-  }, [push]);
+  }, []);
 
   const changeTariff = useCallback(async (tariff: string) => {
     return _changeTariff(tariff)
@@ -145,17 +169,23 @@ const Provider = ({ children, initialProps = initialState }: any) => {
           .then((userInfo) => {
             dispatch({
               type: "LOGGED_IN_USER",
-              payload: { auth: true, data: userInfo },
+              payload: {
+                auth: true,
+                data: userInfo.selfProfile,
+                premium: userInfo.premiumStatus,
+              },
             });
-            return _selfStatus().then((premiumInfo) => {
-              dispatch({
-                type: "PREMIUM_STATUS",
-                payload: premiumInfo,
-              });
-              return premiumInfo;
-            });
+            return userInfo;
           })
           .catch((error) => Promise.reject(error));
+      })
+      .catch((error) => Promise.reject(error));
+  }, []);
+
+  const tariffPayment = useCallback(async (tariff: string) => {
+    return _tariffPayment(tariff)
+      .then((paymentUrl) => {
+        return paymentUrl;
       })
       .catch((error) => Promise.reject(error));
   }, []);
@@ -167,15 +197,13 @@ const Provider = ({ children, initialProps = initialState }: any) => {
           .then((userInfo) => {
             dispatch({
               type: "LOGGED_IN_USER",
-              payload: { auth: true, data: userInfo },
+              payload: {
+                auth: true,
+                data: userInfo.selfProfile,
+                premium: userInfo.premiumStatus,
+              },
             });
-            return _selfStatus().then((premiumInfo) => {
-              dispatch({
-                type: "PREMIUM_STATUS",
-                payload: premiumInfo,
-              });
-              return premiumInfo;
-            });
+            return userInfo;
           })
           .catch((error) => Promise.reject(error));
       })
@@ -191,6 +219,7 @@ const Provider = ({ children, initialProps = initialState }: any) => {
     startTrial,
     changeTariff,
     cancelTariff,
+    tariffPayment,
   };
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

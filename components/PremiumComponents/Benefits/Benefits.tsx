@@ -1,18 +1,30 @@
 import React from "react";
 import { Col, Row } from "react-flexbox-grid";
-import {
-  StyledCard,
-  StyledDivider,
-  StyledTitle2,
-} from "../../GlobalComponents";
+import { StyledDivider, StyledTitle2 } from "../../GlobalComponents";
 import Container from "../../LayoutComponents/Container";
-import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import classes from "./Benefits.module.scss";
-import { MOC_BENEFITS } from "../../../constants/benefits";
+import dynamic from "next/dynamic";
+import ContentLoader from "react-content-loader";
+
+const DynamicSwiper = dynamic(() => import("../SwiperWrap/") as any, {
+  ssr: false,
+  loading: () => (
+    <ContentLoader
+      speed={2}
+      width={312}
+      height={164}
+      viewBox="0 0 312 164"
+      backgroundColor="#f3f3f3"
+      foregroundColor="#ecebeb"
+    >
+      <rect x="0" y="80" rx="3" ry="3" width="312" height="6" />
+      <rect x="0" y="110" rx="3" ry="3" width="312" height="6" />
+      <circle cx="156" cy="36" r="36" />
+    </ContentLoader>
+  ),
+});
 
 export const Benefits = () => {
   return (
@@ -27,41 +39,9 @@ export const Benefits = () => {
           </Col>
         </Row>
         <Row>
-          <Swiper
-            slidesPerView={4}
-            spaceBetween={20}
-            modules={[Pagination]}
-            loop={true}
-            slidesPerGroup={4}
-            pagination={{
-              clickable: true,
-              bulletClass: `${classes.swiperBullet}`,
-              bulletActiveClass: `${classes.swiperBulletActive}`,
-            }}
-            scrollbar={{ draggable: true }}
-          >
-            {MOC_BENEFITS.map((benefit) => {
-              return (
-                <SwiperSlide key={benefit.title}>
-                  <StyledCard
-                    icon={
-                      <Image
-                        src={benefit.icon}
-                        height={36}
-                        width={36}
-                        alt="icon"
-                      />
-                    }
-                    title={benefit.title}
-                    text={benefit.text}
-                    iconPosition="top"
-                    padding="0px"
-                    mb="50px"
-                  />
-                </SwiperSlide>
-              );
-            })}
-          </Swiper>
+          <div style={{ width: "100%" }}>
+            <DynamicSwiper />
+          </div>
         </Row>
       </Container>
     </section>

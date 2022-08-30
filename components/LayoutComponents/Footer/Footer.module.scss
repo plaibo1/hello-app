@@ -1,3 +1,5 @@
+@import "/styles/variables.scss";
+
 .footer {
   box-sizing: border-box;
   padding: 24px 0px;
@@ -12,4 +14,15 @@
 .copyrightWrapper {
   color: #848592;
   font-size: 11px;
+  @media (max-width: $xl) {
+    text-align: center;
+  }
+  @media (max-width: $md) {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+  &>* {
+    margin-bottom: 4px;
+  }
 }

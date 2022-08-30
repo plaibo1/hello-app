@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import Image from "next/image";
 import styled from "styled-components";
 import classes from "./ListItem.module.scss";
+import { xl as xlSize } from "../../../constants/windowWidth";
 
 interface IProps {
   className?: string;
@@ -11,6 +12,10 @@ interface IProps {
 interface IStyledProps {
   color?: string;
   mb?: string;
+}
+
+interface AdaptiveStyledProps extends IStyledProps {
+  xl?: IStyledProps;
 }
 
 export const ListItem: FC<IProps> = ({ className, text }) => {
@@ -30,10 +35,16 @@ export const ListItem: FC<IProps> = ({ className, text }) => {
 };
 
 export const StyledListItem = styled(ListItem)`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0px;
-  margin-bottom: ${({ mb }: IStyledProps) => mb || "12px"};
-  color: ${({ color }: IStyledProps) => color || "#848592"};
+  ${({ color, mb, xl }: AdaptiveStyledProps) => `
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    margin-bottom: ${mb || "12px"};
+    color: ${color || "#848592"};
+    @media screen and (max-width: ${xlSize}) {
+      margin-bottom: ${xl?.mb || mb || "12px"};
+      color: ${xl?.color || color || "#848592"};
+    }
+  `}
 `;

@@ -1,49 +1,38 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Col, Row } from "react-flexbox-grid";
-import {
-  StyledDivider,
-  StyledTitle2,
-  StyledCard,
-} from "../../GlobalComponents";
+import { StyledDivider, StyledTitle2 } from "../../GlobalComponents";
 import Container from "../../LayoutComponents/Container";
-import Image from "next/image";
+import "swiper/css";
+import "swiper/css/pagination";
 import classes from "./Benefits.module.scss";
-import { MOC_BENEFITS } from "../../../constants/benefits";
+import dynamic from "next/dynamic";
+import { Context } from "../../../context";
+
+const DynamicSwiper = dynamic(() => import("../SwiperWrap/") as any, {
+  ssr: false,
+});
 
 export const Benefits = () => {
+  const { state } = useContext<any>(Context);
   return (
     <section className={classes.wrapper}>
       <Container>
         <Row>
           <Col md={12}>
-            <StyledTitle2 textAlign="center">
-              Откройте все преимущества <span>Hello Premium</span>
-            </StyledTitle2>
+            {state.user.data.premium ? (
+              <StyledTitle2 textAlign="center">
+                Все привилегии подписки
+              </StyledTitle2>
+            ) : (
+              <StyledTitle2 textAlign="center">
+                Откройте все преимущества <span>Hello Premium</span>
+              </StyledTitle2>
+            )}
             <StyledDivider mb="24px" />
           </Col>
         </Row>
         <Row>
-          {MOC_BENEFITS.map((benefit) => {
-            return (
-              <Col md={3} key={benefit.title}>
-                <StyledCard
-                  icon={
-                    <Image
-                      src={benefit.icon}
-                      height={36}
-                      width={36}
-                      alt="icon"
-                    />
-                  }
-                  title={benefit.title}
-                  text={benefit.text}
-                  iconPosition="top"
-                  padding="0px"
-                  mb="50px"
-                />
-              </Col>
-            );
-          })}
+          <DynamicSwiper />
         </Row>
       </Container>
     </section>

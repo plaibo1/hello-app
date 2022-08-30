@@ -34,8 +34,8 @@ export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
                 ? "/images/icons/hide_password.svg"
                 : "/images/icons/show_password.svg"
             }
-            width={30}
-            height={30}
+            width={20}
+            height={20}
             alt="Toggle password visible"
           />
         </div>

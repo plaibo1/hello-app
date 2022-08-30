@@ -1,6 +1,11 @@
+@import "/styles/variables.scss";
+
 .wrapper {
   display: flex;
   align-items: center;
+  @media (max-width: $xl) {
+    justify-content: center;
+  }
 }
 .imageWrap {
   width: 333px;
@@ -15,6 +20,10 @@
   display: inline-flex;
   margin-right: 30px;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: $xl) {
+    display: none;
+  }
 }
 .qr {
   display: inline-flex;
@@ -30,6 +39,9 @@
   color: #FFFFFF;
   margin: 0px;
   margin-bottom: 11px;
+  @media (max-width: $xl) {
+    display: none;
+  }
 }
 .storesWrap {
   display: flex;

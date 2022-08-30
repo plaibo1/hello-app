@@ -149,6 +149,7 @@ export const RecoveryForm = () => {
           onClick={handlePhoneForm}
           mt="12px"
           mb="15px"
+          md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
         >
           Далее
         </StyledButton>
@@ -185,6 +186,7 @@ export const RecoveryForm = () => {
           onClick={handleCodeForm}
           mt="12px"
           mb="15px"
+          md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
         >
           Далее
         </StyledButton>
@@ -210,6 +212,7 @@ export const RecoveryForm = () => {
           onClick={handlePasswordForm}
           mt="12px"
           mb="15px"
+          md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
         >
           Сохранить и войти
         </StyledButton>

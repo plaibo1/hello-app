@@ -1,3 +1,5 @@
+@import "/styles/variables.scss";
+
 .listIcon {
   display: inline-flex;
   margin-right: 8px;
@@ -7,4 +9,9 @@
   font-size: 14px;
   line-height: 1.29;
   letter-spacing: 0.16px;
+
+  @media (max-width: $xl) {
+    font-size: 13px;
+    line-height: 1.23;
+  }
 }

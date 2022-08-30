@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Image from "next/image";
 import classes from "./Avatar.module.scss";
 import { ProfileModal } from "../../AccountComponents/ProfileModal";
@@ -14,6 +14,14 @@ export const Avatar = () => {
   const profileCloseHandle = () => {
     setProfileOpen(false);
   };
+
+  useEffect(() => {
+    if (window.innerWidth < 765) {
+      document.querySelector("body")!.style.overflow = profileOpen
+        ? "hidden"
+        : "auto";
+    }
+  }, [profileOpen]);
   return (
     <div className={classes.avatarWrapper}>
       <button className={classes.avatarButton} onClick={profileOpenHandle}>

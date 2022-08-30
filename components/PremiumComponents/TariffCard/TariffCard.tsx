@@ -26,6 +26,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
   const { push } = useRouter();
   const { state, startTrial } = useContext<any>(Context);
   const {
+    id,
     free,
     title,
     benefitPercent,
@@ -35,7 +36,12 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
   } = tariff;
 
   const handleStartTrial = () => {
-    startTrial();
+    startTrial().then(() => {
+      push({
+        pathname: "/account",
+        query: { show_modal: true },
+      });
+    });
   };
 
   return (
@@ -43,13 +49,18 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
       <div className={classes.textWrap}>
         <h3 className={classes.title}>{title}</h3>
         <div className={classes.description}>
-          <StyledSubhead display="inline" fontSize="16px">
+          <StyledSubhead
+            display="inline"
+            fontSize="16px"
+            md={{ fontSize: "14px" }}
+          >
             {free}
           </StyledSubhead>
           <StyledSubhead
             display="inline"
             color="#848592"
             fontSize="16px"
+            md={{ fontSize: "14px" }}
           >{`, ${freeDescription}`}</StyledSubhead>
         </div>
         <StyledDivider />
@@ -70,8 +81,19 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
       <StyledButton
         textAlign="center"
         color="white"
+        mb="0px"
         padding="12px 36.5px"
-        onClick={() => (state.user.auth ? handleStartTrial() : push("/login"))}
+        onClick={() =>
+          state.user.auth
+            ? handleStartTrial()
+            : push(
+                {
+                  pathname: "/login",
+                  query: { start_trial: true, tariff: id },
+                },
+                "login"
+              )
+        }
         gradientBackground={true}
       >
         Попробовать бесплатно

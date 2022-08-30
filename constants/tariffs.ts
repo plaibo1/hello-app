@@ -4,7 +4,7 @@ export const MOC_TARIFFS = [
     free: "1 месяц бесплатно",
     freeDescription: "каждый следующий месяц - по тарифу",
     id: "month",
-    modalTitle: "Перейти на 1 месячную подписку?",
+    modalTitle: "Перейти на ежемесячную подписку?",
     modalDescription: "Далее каждый месяц — по тарифу",
   },
   {
@@ -26,7 +26,7 @@ export const MOC_TARIFFS = [
     benefitDescription: "выгода по сравнению с тарифом 1 месяц",
     benefitBackground: "#A351F5",
     id: "year",
-    modalTitle: "Перейти на годовую подписку?",
+    modalTitle: "Перейти на ежегодную подписку?",
     modalDescription: "Далее каждый год — по тарифу",
   },
 ];

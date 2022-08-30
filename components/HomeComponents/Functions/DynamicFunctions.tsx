@@ -1,0 +1,256 @@
+import React, { useState } from "react";
+import Image from "next/image";
+import "swiper/css";
+import "swiper/css/pagination";
+import { useMediaQuery } from "usehooks-ts";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper";
+import { Col, Row } from "react-flexbox-grid";
+import classes from "./Functions.module.scss";
+import { MOC_FUNCTIONS } from "../../../constants/functions";
+
+const DynamicFunctions = () => {
+  const matches = useMediaQuery("(max-width:765px)");
+  const [activeSlide, setActiveSlide] = useState<number>(1);
+  const [swiper, setSwiper] = useState<any>(null);
+  const slideTo = (index: number) => {
+    swiper.slideTo(index);
+  };
+  return (
+    <Row>
+      {matches ? (
+        <Col md={4} xl={6}>
+          <Swiper
+            slidesPerView={1}
+            spaceBetween={0}
+            centeredSlides={true}
+            loop={true}
+            style={{ paddingBottom: "48px", paddingTop: "24px" }}
+            onSwiper={setSwiper}
+            onSlideChange={(item) => setActiveSlide(item.realIndex)}
+            scrollbar={{ draggable: true }}
+            modules={[Pagination]}
+            pagination={{
+              clickable: true,
+              bulletClass: `${classes.swiperBullet}`,
+              bulletActiveClass: `${classes.swiperBulletActive}`,
+            }}
+          >
+            {MOC_FUNCTIONS.map((item, index) => {
+              return (
+                <SwiperSlide key={item.title}>
+                  <div className={classes.sliderImage}>
+                    <Image
+                      src={item.phoneImage}
+                      width={220}
+                      height={450}
+                      alt="Function image"
+                    />
+                  </div>
+                  <div
+                    className={`${classes.sliderItem} ${
+                      activeSlide === index ? classes.sliderItemActive : ""
+                    }`}
+                  >
+                    <div className={classes.sliderTitle}>
+                      <span className={classes.sliderTitleIcon}>
+                        <Image
+                          src={item.titleIcon}
+                          width={20}
+                          height={20}
+                          alt="Function icon"
+                        />
+                      </span>
+                      <span className={classes.sliderTitleSpan}>
+                        {item.title}
+                      </span>
+                    </div>
+                    <div className={classes.sliderText}>{item.description}</div>
+                  </div>
+                </SwiperSlide>
+              );
+            })}
+          </Swiper>
+        </Col>
+      ) : (
+        <>
+          <Col md={4} xl={3}>
+            <div className={classes.sliderColumn}>
+              <div
+                className={`${classes.sliderItem} ${
+                  activeSlide === 0 ? classes.sliderItemActive : ""
+                }`}
+                onClick={() => slideTo(1)}
+              >
+                <div className={classes.sliderTitle}>
+                  <span className={classes.sliderTitleIcon}>
+                    <Image
+                      src={MOC_FUNCTIONS[0].titleIcon}
+                      width={20}
+                      height={20}
+                      alt="Function icon"
+                    />
+                  </span>
+                  <span className={classes.sliderTitleSpan}>
+                    {MOC_FUNCTIONS[0].title}
+                  </span>
+                </div>
+                <div className={classes.sliderText}>
+                  {MOC_FUNCTIONS[0].description}
+                </div>
+              </div>
+              <div
+                className={`${classes.sliderItem} ${
+                  activeSlide === 1 ? classes.sliderItemActive : ""
+                }`}
+                onClick={() => slideTo(2)}
+              >
+                <div className={classes.sliderTitle}>
+                  <span className={classes.sliderTitleIcon}>
+                    <Image
+                      src={MOC_FUNCTIONS[1].titleIcon}
+                      width={20}
+                      height={20}
+                      alt="Function icon"
+                    />
+                  </span>
+                  <span className={classes.sliderTitleSpan}>
+                    {MOC_FUNCTIONS[1].title}
+                  </span>
+                </div>
+                <div className={classes.sliderText}>
+                  {MOC_FUNCTIONS[1].description}
+                </div>
+              </div>
+              <div
+                className={`${classes.sliderItem} ${
+                  activeSlide === 2 ? classes.sliderItemActive : ""
+                }`}
+                onClick={() => slideTo(3)}
+              >
+                <div className={classes.sliderTitle}>
+                  <span className={classes.sliderTitleIcon}>
+                    <Image
+                      src={MOC_FUNCTIONS[2].titleIcon}
+                      width={20}
+                      height={20}
+                      alt="Function icon"
+                    />
+                  </span>
+                  <span className={classes.sliderTitleSpan}>
+                    {MOC_FUNCTIONS[2].title}
+                  </span>
+                </div>
+                <div className={classes.sliderText}>
+                  {MOC_FUNCTIONS[2].description}
+                </div>
+              </div>
+            </div>
+          </Col>
+          <Col md={4} xl={6}>
+            <Swiper
+              slidesPerView={1}
+              spaceBetween={0}
+              centeredSlides={true}
+              loop={true}
+              style={{ paddingBottom: "48px", paddingTop: "24px" }}
+              onSwiper={setSwiper}
+              onSlideChange={(item) => setActiveSlide(item.realIndex)}
+              scrollbar={{ draggable: true }}
+            >
+              {MOC_FUNCTIONS.map((item) => {
+                return (
+                  <SwiperSlide key={item.title}>
+                    <div className={classes.sliderImage}>
+                      <Image
+                        src={item.phoneImage}
+                        width={220}
+                        height={450}
+                        alt="Function image"
+                      />
+                    </div>
+                  </SwiperSlide>
+                );
+              })}
+            </Swiper>
+          </Col>
+          <Col md={4} xl={3}>
+            <div className={classes.sliderColumn}>
+              <div
+                className={`${classes.sliderItem} ${
+                  activeSlide === 3 ? classes.sliderItemActive : ""
+                }`}
+                onClick={() => slideTo(4)}
+              >
+                <div className={classes.sliderTitle}>
+                  <span className={classes.sliderTitleIcon}>
+                    <Image
+                      src={MOC_FUNCTIONS[3].titleIcon}
+                      width={20}
+                      height={20}
+                      alt="Function icon"
+                    />
+                  </span>
+                  <span className={classes.sliderTitleSpan}>
+                    {MOC_FUNCTIONS[3].title}
+                  </span>
+                </div>
+                <div className={classes.sliderText}>
+                  {MOC_FUNCTIONS[3].description}
+                </div>
+              </div>
+              <div
+                className={`${classes.sliderItem} ${
+                  activeSlide === 4 ? classes.sliderItemActive : ""
+                }`}
+                onClick={() => slideTo(5)}
+              >
+                <div className={classes.sliderTitle}>
+                  <span className={classes.sliderTitleIcon}>
+                    <Image
+                      src={MOC_FUNCTIONS[4].titleIcon}
+                      width={20}
+                      height={20}
+                      alt="Function icon"
+                    />
+                  </span>
+                  <span className={classes.sliderTitleSpan}>
+                    {MOC_FUNCTIONS[4].title}
+                  </span>
+                </div>
+                <div className={classes.sliderText}>
+                  {MOC_FUNCTIONS[4].description}
+                </div>
+              </div>
+              <div
+                className={`${classes.sliderItem} ${
+                  activeSlide === 5 ? classes.sliderItemActive : ""
+                }`}
+                onClick={() => slideTo(6)}
+              >
+                <div className={classes.sliderTitle}>
+                  <span className={classes.sliderTitleIcon}>
+                    <Image
+                      src={MOC_FUNCTIONS[5].titleIcon}
+                      width={20}
+                      height={20}
+                      alt="Function icon"
+                    />
+                  </span>
+                  <span className={classes.sliderTitleSpan}>
+                    {MOC_FUNCTIONS[5].title}
+                  </span>
+                </div>
+                <div className={classes.sliderText}>
+                  {MOC_FUNCTIONS[5].description}
+                </div>
+              </div>
+            </div>
+          </Col>
+        </>
+      )}
+    </Row>
+  );
+};
+
+export default DynamicFunctions;

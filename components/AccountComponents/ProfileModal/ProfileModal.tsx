@@ -16,8 +16,15 @@ export const ProfileModal: FC<IProps> = ({ open, onClose }) => {
   return open ? (
     <>
       <div className={classes.profileBack} onClick={onClose}></div>
+      <div className={classes.profileClose} onClick={onClose}></div>
       <div className={classes.profileModal}>
-        <Link href={`/${state.user.data.premium ? "account" : "premium"}`}>
+        <Link
+          href={`/${
+            state.user.data.premium || state.user.data.trial
+              ? "account"
+              : "premium"
+          }`}
+        >
           <a className={classes.profileMain}>
             <div className={classes.imageWrap}>
               <Image

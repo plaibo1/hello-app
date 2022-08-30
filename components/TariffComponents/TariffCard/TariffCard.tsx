@@ -13,6 +13,8 @@ import Dialog from "rc-dialog";
 import classes from "./TariffCard.module.scss";
 import "rc-dialog/assets/index.css";
 import { TARIFFS } from "../../../constants/tariffs";
+import { useRouter } from "next/router";
+import { iif } from "rxjs";
 
 interface IProps {
   tariff: {
@@ -29,7 +31,8 @@ interface IProps {
 }
 
 export const TariffCard: FC<IProps> = ({ tariff }) => {
-  const { state, changeTariff } = useContext<any>(Context);
+  const { replace } = useRouter();
+  const { state, changeTariff, tariffPayment } = useContext<any>(Context);
   const [error, setError] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const userTariffRef = useRef(state.user.premium.tariff);
@@ -52,6 +55,14 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
 
   const handleModalClose = () => {
     setModalOpen(false);
+  };
+
+  const handleTariffPayment = (tariff: string) => {
+    tariffPayment(tariff)
+      .then((data: any) => {
+        replace(data.paymentUrl);
+      })
+      .catch((error: any) => setError(error));
   };
 
   const handleChangeTariff = (tariff: string) => {
@@ -89,7 +100,13 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
         textAlign="center"
         color="white"
         padding="12px 36.5px"
-        onClick={handleModalOpen}
+        onClick={() =>
+          state.user.premium.tariff !== "trial" &&
+          !state.user.premium.autoPayment &&
+          state.user.premium.unactivate === 0
+            ? handleTariffPayment(id)
+            : handleModalOpen()
+        }
         gradientBackground={true}
       >
         Перейти
@@ -114,9 +131,11 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
             <StyledSubhead mb="12px" textAlign="center">
               {`Оплата будет произведена ${dayjs
                 .unix(state.user.premium.unactivate)
-                .format("DD.MM.YYYY")}, после окончания подписки “${
-                TARIFFS[userTariffRef.current]
-              }”`}
+                .format("DD.MM.YYYY")}, после ${
+                state.user.premium.tariff === "trial"
+                  ? "пробного периода"
+                  : "истечения подписки"
+              } “${TARIFFS[userTariffRef.current]}”`}
             </StyledSubhead>
             <StyledSubhead mb="24px" textAlign="center" color="#848592">
               {modalDescription}
@@ -132,6 +151,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
               color="#4392BF"
               backgroundColor="unset"
               padding="12px 0px"
+              mb="0px"
               onClick={handleModalClose}
             >
               Остаться на своей подписке

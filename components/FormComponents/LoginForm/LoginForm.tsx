@@ -16,7 +16,7 @@ import { Context } from "../../../context";
 import { passwordSchema } from "../../../Schemas/Login";
 
 export const LoginForm = () => {
-  const { push } = useRouter();
+  const { push, query } = useRouter();
   const { login } = useContext<any>(Context);
   const [phoneValue, setPhoneValue] = useState<string>("");
   const [phoneError, setPhoneError] = useState<string>("");
@@ -46,13 +46,17 @@ export const LoginForm = () => {
         .then(async () => {
           const phoneParse = parsePhoneNumber(phoneValue);
           try {
-            const loginPromise = await login({
-              password: passwordValue,
-              phone: {
-                country: `+${phoneParse?.countryCallingCode}`,
-                number: phoneParse?.nationalNumber,
+            const loginPromise = await login(
+              {
+                password: passwordValue,
+                phone: {
+                  country: `+${phoneParse?.countryCallingCode}`,
+                  number: phoneParse?.nationalNumber,
+                },
               },
-            });
+              query.start_trial,
+              query.tariff
+            );
           } catch (error: any) {
             setLoginError(error);
           }

@@ -1,3 +1,5 @@
+@import "/styles/variables.scss";
+
 .wrapper {
   padding-top: 24px;
   padding-bottom: 12px;
@@ -9,12 +11,29 @@
   display: flex;
   align-items: center;
   margin-bottom: 24px;
+  @media (max-width: $lg) {
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
 }
 .premiumDuration {
   display: flex;
   align-items: center;
+  @media (max-width: $lg) {
+    margin-bottom: 24px;
+  }
 }
 .payButton {
   display: flex;
   margin-right: 8px;
+  min-width: 28px;
+}
+.leftWrap {
+  display: flex;
+  align-items: center;
+  @media (max-width: $lg) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
