@@ -1,5 +1,5 @@
 interface CountryList {
-  [key: string]: any;
+  [key: string]: string;
 }
 
 export const COUNTRY_LIST: CountryList = {

@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
 
 interface IProps {
   className?: string;
-  children: any;
+  children: ReactNode;
 }
 
 interface IStyledProps {

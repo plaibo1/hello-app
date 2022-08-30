@@ -19,7 +19,7 @@ export const signIn = async ({ password, phone }: LoginSchema) => {
         web: true,
       },
       {
-        validateStatus: function (status: any) {
+        validateStatus: function (status: number) {
           return status > 199 || status < 300; // Resolve only if the status code is less than 500
         },
       }
@@ -41,7 +41,7 @@ export const signOut = (token?: string) => {
         Authorization:
           "Bearer " + (token || cookie.parse(document.cookie).access_token), //the token is a variable which holds the token
       },
-      validateStatus: function (status: any) {
+      validateStatus: function (status: number) {
         return status > 199 || status < 300; // Resolve only if the status code is less than 500
       },
     })
@@ -64,7 +64,7 @@ export const restorePassword = (phone: PhoneSchema) => {
         web: true,
       },
       {
-        validateStatus: function (status: any) {
+        validateStatus: function (status: number) {
           return status > 199 || status < 300; // Resolve only if the status code is less than 500
         },
       }
@@ -88,7 +88,7 @@ export const codeConfirm = (body: CodeConfirmSchema) => {
         web: true,
       },
       {
-        validateStatus: function (status: any) {
+        validateStatus: function (status: number) {
           return status > 199 || status < 300; // Resolve only if the status code is less than 500
         },
       }
@@ -114,7 +114,7 @@ export const newPassword = (body: NewPasswordScheme) => {
         headers: {
           Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
         },
-        validateStatus: function (status: any) {
+        validateStatus: function (status: number) {
           return status > 199 || status < 300; // Resolve only if the status code is less than 500
         },
       }
@@ -134,7 +134,7 @@ export const getSelfInfo = async (token?: string) => {
         Authorization:
           "Bearer " + (token || cookie.parse(document.cookie).access_token), //the token is a variable which holds the token
       },
-      validateStatus: function (status: any) {
+      validateStatus: function (status: number) {
         return status >= 200 && status < 300; // Resolve only if the status code is less than 500
       },
     })
@@ -158,7 +158,7 @@ export const startTrial = async () => {
       headers: {
         Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
       },
-      validateStatus: function (status: any) {
+      validateStatus: function (status: number) {
         return status > 199 || status < 300; // Resolve only if the status code is less than 500
       },
     })
@@ -181,7 +181,7 @@ export const changeTariff = async (tariff: string) => {
         headers: {
           Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
         },
-        validateStatus: function (status: any) {
+        validateStatus: function (status: number) {
           return status > 199 || status < 300; // Resolve only if the status code is less than 500
         },
       }
@@ -209,7 +209,7 @@ export const tariffPayment = async (tariff: string) => {
         headers: {
           Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
         },
-        validateStatus: function (status: any) {
+        validateStatus: function (status: number) {
           return status > 199 || status < 300; // Resolve only if the status code is less than 500
         },
       }
@@ -232,7 +232,7 @@ export const cancelTariff = async () => {
       headers: {
         Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
       },
-      validateStatus: function (status: any) {
+      validateStatus: function (status: number) {
         return status > 199 || status < 300; // Resolve only if the status code is less than 500
       },
     })
@@ -250,7 +250,7 @@ export const getBindCardUrl = async () => {
       headers: {
         Authorization: "Bearer " + cookie.parse(document.cookie).access_token, //the token is a variable which holds the token
       },
-      validateStatus: function (status: any) {
+      validateStatus: function (status: number) {
         return status > 199 || status < 300; // Resolve only if the status code is less than 500
       },
     })

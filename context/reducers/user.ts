@@ -1,4 +1,6 @@
-export function user(state: any, action: any) {
+import { StateSchema, ActionSchema } from "../index";
+
+export function user(state: StateSchema, action: ActionSchema) {
   switch (action.type) {
     case "LOGGED_IN_USER":
       return { ...state, user: { ...state.user, ...action.payload } };

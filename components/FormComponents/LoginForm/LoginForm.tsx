@@ -9,7 +9,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import { PhoneInput } from "../PhoneInput";
 import { PasswordInput } from "../PasswordInput";
-import { CountryCode } from "libphonenumber-js/types";
+import { E164Number } from "libphonenumber-js/types.d";
 import { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
 import classes from "./LoginForm.module.scss";
 import { Context } from "../../../context";
@@ -18,17 +18,17 @@ import { passwordSchema } from "../../../Schemas/Login";
 export const LoginForm = () => {
   const { push, query } = useRouter();
   const { login } = useContext<any>(Context);
-  const [phoneValue, setPhoneValue] = useState<string>("");
+  const [phoneValue, setPhoneValue] = useState<E164Number | undefined>("");
   const [phoneError, setPhoneError] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [loginError, setLoginError] = useState<string>("");
 
-  const handlePhoneInput = (value: any) => {
+  const handlePhoneInput = (value: E164Number | undefined) => {
     setPhoneValue(value);
   };
 
-  const handlePasswordInput = (event: any) => {
+  const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(event.target.value);
   };
 
@@ -39,12 +39,12 @@ export const LoginForm = () => {
     }
   };
 
-  const handleSubmit = (event: any) => {
+  const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     setLoginError("");
     setPhoneError("");
     setPasswordError("");
-    if (isValidPhoneNumber(phoneValue)) {
+    if (phoneValue && isValidPhoneNumber(phoneValue)) {
       passwordSchema
         .validate({
           password: passwordValue,

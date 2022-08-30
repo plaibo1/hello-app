@@ -4,7 +4,7 @@ import classes from "./PasswordInput.module.scss";
 
 interface IProps {
   value: string;
-  onChange: (value: any) => void;
+  onChange: (value: React.ChangeEvent<HTMLInputElement>) => void;
   error: string;
 }
 

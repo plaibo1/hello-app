@@ -1,9 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
 import { xl as xlSize, md as mdSize } from "../../../constants/windowWidth";
 interface IProps {
   className?: string;
-  children: any;
+  children: ReactNode;
   type?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
   onClick?: any;

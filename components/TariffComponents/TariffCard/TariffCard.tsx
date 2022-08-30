@@ -35,7 +35,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
   const { state, changeTariff, tariffPayment } = useContext<any>(Context);
   const [error, setError] = useState<string>("");
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const userTariffRef = useRef(state.user.premium.tariff);
+  const userTariffRef = useRef<string>(state.user.premium.tariff);
   const {
     id,
     free,
@@ -50,7 +50,6 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
 
   const handleModalOpen = () => {
     setModalOpen(true);
-    //changeTariff(tariff).catch((error: any) => setError(error));
   };
 
   const handleModalClose = () => {
@@ -59,14 +58,14 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
 
   const handleTariffPayment = (tariff: string) => {
     tariffPayment(tariff)
-      .then((data: any) => {
+      .then((data: { paymentUrl: string }) => {
         replace(data.paymentUrl);
       })
-      .catch((error: any) => setError(error));
+      .catch((error: string) => setError(error));
   };
 
   const handleChangeTariff = (tariff: string) => {
-    changeTariff(tariff).catch((error: any) => setError(error));
+    changeTariff(tariff).catch((error: string) => setError(error));
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, FC } from "react";
+import React, { useContext, useRef, FC, RefObject } from "react";
 import { StyledTitle2 } from "../../GlobalComponents";
 import { Context } from "../../../context";
 import Container from "../../LayoutComponents/Container";
@@ -10,7 +10,7 @@ import { MOC_TARIFFS } from "../../../constants/tariffs";
 import { TariffCard } from "../TariffCard";
 
 interface IProps {
-  containerRef: any;
+  containerRef: RefObject<HTMLElement>;
 }
 
 export const ChooseTariff: FC<IProps> = ({ containerRef }) => {

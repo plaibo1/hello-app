@@ -31,7 +31,15 @@ export const MOC_TARIFFS = [
   },
 ];
 
-export const TARIFFS: any = {
+interface TarippsSchema {
+  [key: string]: string;
+  month: string;
+  quarter: string;
+  year: string;
+  trial: string;
+}
+
+export const TARIFFS: TarippsSchema = {
   month: "1 месяц",
   quarter: "3 месяца",
   year: "1 год",

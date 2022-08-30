@@ -1,11 +1,11 @@
 import Head from "next/head";
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 
 import Header from "../Header";
 import Footer from "../Footer";
 
 interface IProps {
-  children: any;
+  children: ReactNode;
   meta?: {
     title: string;
     description: string;

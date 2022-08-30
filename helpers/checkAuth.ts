@@ -1,7 +1,27 @@
+import { StateSchema } from "context";
 import * as cookie from "cookie";
+import { IncomingMessage, ServerResponse } from "http";
 import { getSelfInfo } from "../services";
 
-const accessLinks = {
+interface AccessSchema {
+  [key: string]: {
+    [key: string]: string[] | string;
+  };
+  withPremium: {
+    access: string[];
+    redirect: string;
+  };
+  withoutPremium: {
+    access: string[];
+    redirect: string;
+  };
+  withoutLogin: {
+    access: string[];
+    redirect: string;
+  };
+}
+
+const accessLinks: AccessSchema = {
   withPremium: {
     access: ["/account", "/tariff"],
     redirect: "/account",
@@ -16,8 +36,12 @@ const accessLinks = {
   },
 };
 
-export const redirect = (page: string, profileStatus: any, res: any) => {
-  const statusObject = (accessLinks as any)[profileStatus];
+export const redirect = (
+  page: string,
+  profileStatus: string,
+  res: ServerResponse
+) => {
+  const statusObject = accessLinks[profileStatus];
   if (!statusObject.access.includes(page)) {
     res.setHeader("location", statusObject.redirect);
     res.statusCode = 302;
@@ -25,8 +49,12 @@ export const redirect = (page: string, profileStatus: any, res: any) => {
   }
 };
 
-export const checkAuth = async (req: any, res: any, query: string) => {
-  let initialState = {
+export const checkAuth = async (
+  req: IncomingMessage & { cookies: Partial<{ [key: string]: string }> },
+  res: ServerResponse,
+  query: string
+) => {
+  let initialState: StateSchema = {
     user: {
       auth: false,
       data: {},
@@ -52,8 +80,8 @@ export const checkAuth = async (req: any, res: any, query: string) => {
 
   if (initialState.user.auth) {
     if (
-      (initialState.user.data && (initialState.user.data as any).premium) ||
-      (initialState.user.data as any).trial
+      (initialState.user.data && initialState.user.data.premium) ||
+      initialState.user.data.trial
     ) {
       profileStatus = "withPremium";
     } else {

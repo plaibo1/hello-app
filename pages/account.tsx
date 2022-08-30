@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import Dialog from "rc-dialog";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -159,7 +159,11 @@ const Account: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async ({ req, res, resolvedUrl }: any) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
   return checkAuth(req, res, resolvedUrl);
 };
 

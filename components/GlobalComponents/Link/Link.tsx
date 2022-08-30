@@ -1,11 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
 import { default as NextLink } from "next/link";
 import { md as mdSize } from "../../../constants/windowWidth";
 
 interface IProps {
   className?: string;
-  children: any;
+  children: ReactNode;
   href?: string;
   onClick?: () => void;
 }

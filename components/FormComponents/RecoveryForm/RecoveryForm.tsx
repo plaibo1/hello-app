@@ -14,7 +14,7 @@ import {
   isValidPhoneNumber,
   parsePhoneNumber,
 } from "react-phone-number-input";
-import { CountryCode } from "libphonenumber-js/types";
+import { E164Number } from "libphonenumber-js/types.d";
 import classes from "./RecoveryForm.module.scss";
 import { restorePassword, newPassword } from "../../../services";
 import { passwordSchema } from "../../../Schemas/Login";
@@ -24,7 +24,7 @@ export const RecoveryForm = () => {
   const { codeConfirm } = useContext<any>(Context);
   const { push } = useRouter();
   const [step, setStep] = useState<number>(1);
-  const [phoneValue, setPhoneValue] = useState<string>("");
+  const [phoneValue, setPhoneValue] = useState<E164Number | undefined>("");
   const [phoneError, setPhoneError] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
@@ -33,13 +33,16 @@ export const RecoveryForm = () => {
   >([]);
   const [codeError, setCodeError] = useState<string>("");
 
-  const handlePhoneInput = useCallback((value: any) => {
+  const handlePhoneInput = useCallback((value: E164Number | undefined) => {
     setPhoneValue(value);
   }, []);
 
-  const handlePasswordInput = useCallback((event: any) => {
-    setPasswordValue(event.target.value);
-  }, []);
+  const handlePasswordInput = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPasswordValue(event.target.value);
+    },
+    []
+  );
 
   const handleFirstFocus = () => {
     console.log(phoneValue);
@@ -48,26 +51,29 @@ export const RecoveryForm = () => {
     }
   };
 
-  const handleCodeInput = useCallback((index: number, target: any) => {
-    if (
-      target.value === "" &&
-      target.value.length < target.maxLength &&
-      target.previousSibling
-    ) {
-      target.previousSibling.focus();
-    }
-    if (target.value.length >= target.maxLength - 1 && target.nextSibling) {
-      target.nextSibling.focus();
-    }
-    if (target.value.length < target.maxLength)
-      setCodeValue((prevValue: (number | string | undefined)[]) => {
-        const newArray = [...prevValue];
-        newArray[index] = target.value;
-        return newArray;
-      });
-  }, []);
+  const handleCodeInput = useCallback(
+    (index: number, target: HTMLInputElement) => {
+      if (
+        target.value === "" &&
+        target.value.length < target.maxLength &&
+        target.previousSibling
+      ) {
+        (target.previousSibling as HTMLInputElement).focus();
+      }
+      if (target.value.length >= target.maxLength - 1 && target.nextSibling) {
+        (target.nextSibling as HTMLInputElement).focus();
+      }
+      if (target.value.length < target.maxLength)
+        setCodeValue((prevValue: (number | string | undefined)[]) => {
+          const newArray = [...prevValue];
+          newArray[index] = target.value;
+          return newArray;
+        });
+    },
+    []
+  );
 
-  const handleCodeFocus = useCallback((event: any) => {}, []);
+  const handleCodeFocus = useCallback((event: React.FocusEvent) => {}, []);
 
   const handleBack = useCallback(() => {
     if (step === 1) {
@@ -79,7 +85,7 @@ export const RecoveryForm = () => {
 
   const handlePhoneForm = useCallback(() => {
     setPhoneError("");
-    if (isValidPhoneNumber(phoneValue)) {
+    if (phoneValue && isValidPhoneNumber(phoneValue)) {
       const phoneParse = parsePhoneNumber(phoneValue);
       restorePassword({
         country: `+${phoneParse?.countryCallingCode}`,
@@ -96,7 +102,7 @@ export const RecoveryForm = () => {
 
   const handleCodeForm = useCallback(() => {
     setCodeError("");
-    if (!(codeValue.length < 4 || codeValue.includes(""))) {
+    if (phoneValue && !(codeValue.length < 4 || codeValue.includes(""))) {
       const phoneParse = parsePhoneNumber(phoneValue);
       codeConfirm({
         code: codeValue.join(""),
@@ -133,7 +139,7 @@ export const RecoveryForm = () => {
   }, [passwordValue, push]);
 
   const handleFormSubmit = useCallback(
-    (event: any) => {
+    (event: React.FormEvent) => {
       event.preventDefault();
       if (step === 1) {
         handlePhoneForm();

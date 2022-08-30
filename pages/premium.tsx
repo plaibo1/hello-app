@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { useRef } from "react";
 import { Layout } from "../components/LayoutComponents/Layout";
 import { checkAuth } from "../helpers/checkAuth";
@@ -7,10 +7,10 @@ import { Benefits } from "../components/PremiumComponents/Benefits";
 import { ChooseTariff } from "../components/PremiumComponents/ChooseTariff";
 
 const Premium: NextPage = () => {
-  const chooseTariffRef = useRef();
+  const chooseTariffRef = useRef<HTMLElement>(null);
   const handleButtonClick = () => {
     if (chooseTariffRef.current) {
-      (chooseTariffRef.current as any).scrollIntoView({
+      chooseTariffRef.current.scrollIntoView({
         block: "start",
         behavior: "smooth",
       });
@@ -25,7 +25,11 @@ const Premium: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async ({ req, res, resolvedUrl }: any) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
   return checkAuth(req, res, resolvedUrl);
 };
 

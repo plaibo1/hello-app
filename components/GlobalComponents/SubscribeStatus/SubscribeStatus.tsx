@@ -15,7 +15,7 @@ interface IStyledProps {
 }
 
 interface StatusType {
-  [key: string]: any;
+  [key: string]: ReactElement | string;
   active: ReactElement;
   stopped: string;
   paused: string;

@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { Layout } from "../components/LayoutComponents/Layout";
 import { checkAuth } from "../helpers/checkAuth";
 import { Functions } from "../components/HomeComponents/Functions";
@@ -21,7 +21,11 @@ const Home: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async ({ req, res, resolvedUrl }: any) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
   return checkAuth(req, res, resolvedUrl);
 };
 

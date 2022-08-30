@@ -1,4 +1,4 @@
-import { useCallback, useReducer, createContext } from "react";
+import { useCallback, useReducer, createContext, ReactNode } from "react";
 import { user } from "./reducers/user";
 import { LoginSchema, CodeConfirmSchema } from "../services/user";
 import { useRouter } from "next/router";
@@ -13,15 +13,23 @@ import {
   tariffPayment as _tariffPayment,
 } from "../services/user.service";
 
-interface UserSchema {
-  user: {
-    auth: boolean;
-    data: Record<string, any>;
-  };
+export interface UserSchema {
+  auth: boolean;
+  data: Record<string, any>;
+  premium: Record<string, any> | undefined;
+}
+
+export interface StateSchema {
+  user: UserSchema;
+}
+
+export interface ActionSchema {
+  type: string;
+  payload?: UserSchema | Record<string, any>;
 }
 
 // initial state
-const initialState: any = {
+const initialState: StateSchema = {
   user: {
     auth: false,
     data: {},
@@ -36,17 +44,27 @@ const initialState: any = {
 // create context
 const Context = createContext({});
 
+type ReducersSchema = (state: StateSchema, action: ActionSchema) => StateSchema;
+
 // combine reducer function
 const combineReducers =
-  (...reducers: any[]) =>
-  (state: any, action: any) => {
+  (...reducers: ReducersSchema[]) =>
+  (state: StateSchema, action: ActionSchema) => {
     for (let i = 0; i < reducers.length; i++)
       state = reducers[i](state, action);
     return state;
   };
 
+interface ProviderSchema {
+  children: ReactNode;
+  initialProps: StateSchema;
+}
+
 // context provider
-const Provider = ({ children, initialProps = initialState }: any) => {
+const Provider = ({
+  children,
+  initialProps = initialState,
+}: ProviderSchema) => {
   const { push } = useRouter();
   const [state, dispatch] = useReducer(combineReducers(user), initialProps); // pass more reducers combineReducers(user, blogs, products)
 

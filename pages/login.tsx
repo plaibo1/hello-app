@@ -1,11 +1,9 @@
-import type { NextPage } from "next";
-import Container from "../components/LayoutComponents/Container";
+import type { GetServerSideProps, NextPage } from "next";
 import { LoginForm } from "../components/FormComponents";
 import classes from "../styles/Login.module.scss";
-import { Row, Col } from "react-flexbox-grid";
 import { checkAuth } from "../helpers/checkAuth";
 
-const Login: NextPage = (props: any) => {
+const Login: NextPage = () => {
   return (
     <section className={classes.signIn}>
       <div className={classes.formWrap}>
@@ -15,7 +13,11 @@ const Login: NextPage = (props: any) => {
   );
 };
 
-export const getServerSideProps = async ({ req, res, resolvedUrl }: any) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  res,
+  resolvedUrl,
+}) => {
   return checkAuth(req, res, resolvedUrl);
 };
 

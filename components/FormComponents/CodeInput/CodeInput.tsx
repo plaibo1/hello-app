@@ -3,8 +3,8 @@ import classes from "./CodeInput.module.scss";
 
 interface IProps {
   value: Array<number | string | undefined>;
-  onChange: (index: number, value: any) => void;
-  onFocus: (event: any) => void;
+  onChange: (index: number, target: HTMLInputElement) => void;
+  onFocus: (event: React.FocusEvent) => void;
 }
 
 export const CodeInput: FC<IProps> = ({ value, onChange, onFocus }) => {
