@@ -7,9 +7,10 @@ import Footer from "../Footer";
 interface IProps {
   children: ReactNode;
   meta?: {
-    title: string;
-    description: string;
+    title?: string;
+    description?: string;
   };
+  fullHeight?: boolean;
 }
 
 const initialMeta = {
@@ -17,7 +18,11 @@ const initialMeta = {
   description: "meta description",
 };
 
-export const Layout: FC<IProps> = ({ children, meta = initialMeta }) => {
+export const Layout: FC<IProps> = ({
+  children,
+  meta = initialMeta,
+  fullHeight = false,
+}) => {
   return (
     <>
       <Head>
@@ -28,9 +33,9 @@ export const Layout: FC<IProps> = ({ children, meta = initialMeta }) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+      {!fullHeight && <Header />}
       <main>{children}</main>
-      <Footer />
+      {!fullHeight && <Footer />}
     </>
   );
 };

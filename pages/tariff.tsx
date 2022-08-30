@@ -5,7 +5,7 @@ import { ChangeTariff } from "../components/TariffComponents/ChangeTariff";
 
 const Premium: NextPage = () => {
   return (
-    <Layout>
+    <Layout meta={{ title: "Восстановление аккаунта" }}>
       <ChangeTariff />
     </Layout>
   );

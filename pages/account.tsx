@@ -55,7 +55,7 @@ const Account: NextPage = () => {
   }, [query.show_modal]);
 
   return (
-    <Layout>
+    <Layout meta={{ title: "Личный кабинет - Hello" }}>
       <ProfileStatus handleModalOpen={handleCancelModalOpen} />
       <Benefits />
       <Dialog

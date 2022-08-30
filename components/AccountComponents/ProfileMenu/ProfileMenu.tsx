@@ -7,7 +7,11 @@ import { Context } from "../../../context";
 export const ProfileMenu = () => {
   const { logout } = useContext<any>(Context);
   const handleLogout = () => {
-    logout();
+    logout().then(() => {
+      if (window.innerWidth < 765) {
+        document.querySelector("body")!.style.overflow = "auto";
+      }
+    });
   };
   return (
     <div className={classes.profileMenu}>

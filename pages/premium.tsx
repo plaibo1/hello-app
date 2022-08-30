@@ -17,7 +17,7 @@ const Premium: NextPage = () => {
     }
   };
   return (
-    <Layout>
+    <Layout meta={{ title: "Личный кабинет - Hello" }}>
       <Jumbotron onButtonClick={handleButtonClick} />
       <Benefits />
       <ChooseTariff containerRef={chooseTariffRef} />

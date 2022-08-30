@@ -10,7 +10,7 @@ import { WhatIsIt } from "../components/HomeComponents/WhatIsIt";
 
 const Home: NextPage = () => {
   return (
-    <Layout>
+    <Layout meta={{ title: "Hello - Новые знакомства рядом с вами" }}>
       <Jumbotron />
       <HowItWork />
       <WhatIsIt />

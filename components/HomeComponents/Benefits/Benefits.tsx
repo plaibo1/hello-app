@@ -27,6 +27,7 @@ export const Benefits = () => {
                   textAlign="center"
                   mb="24px"
                   xl={{ textAlign: "left", lineHeight: "1.33" }}
+                  md={{ textAlign: "center" }}
                 >
                   Больше возможностей с подпиской <span>Premium</span>
                 </StyledTitle2>
