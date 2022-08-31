@@ -13,8 +13,10 @@ import classes from "./Benefits.module.scss";
 import adaptiveClasses from "/styles/Adaptive.module.scss";
 import { HOME_BENEFITS } from "../../../constants/benefits";
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 export const Benefits = () => {
+  const { t } = useTranslation("common");
   const { push } = useRouter();
   return (
     <section className={classes.wrapper}>
@@ -28,9 +30,15 @@ export const Benefits = () => {
                   mb="24px"
                   xl={{ textAlign: "left", lineHeight: "1.33" }}
                   md={{ textAlign: "center" }}
-                >
-                  Больше возможностей с подпиской <span>Premium</span>
-                </StyledTitle2>
+                  dangerouslySetInnerHTML={{
+                    __html: t(
+                      "Больше возможностей с подпиской <span>Premium</span>",
+                      {
+                        interpolation: { escapeValue: false },
+                      }
+                    ),
+                  }}
+                />
                 <div
                   className={`${adaptiveClasses["visible-xl"]} ${adaptiveClasses["hidden-md"]}`}
                 >
@@ -92,10 +100,15 @@ export const Benefits = () => {
                   color="#848592"
                   mb="20px"
                   xl={{ fontSize: "13px" }}
-                >
-                  Получите <span>Premium бесплатно</span> на 1 месяц и получите
-                  новый опыт взаимодействия с приложением.
-                </StyledBody2>
+                  dangerouslySetInnerHTML={{
+                    __html: t(
+                      "Получите <span>Premium бесплатно</span> на 1 месяц и получите новый опыт взаимодействия с приложением.",
+                      {
+                        interpolation: { escapeValue: false },
+                      }
+                    ),
+                  }}
+                />
                 <StyledButton
                   color="white"
                   padding="12px 100.5px"
@@ -105,7 +118,7 @@ export const Benefits = () => {
                   gradientBackground
                   onClick={() => push("/premium")}
                 >
-                  Подробнее
+                  {t("Подробнее")}
                 </StyledButton>
               </Col>
             </Row>

@@ -15,6 +15,7 @@ import "rc-dialog/assets/index.css";
 import { TARIFFS } from "../../../constants/tariffs";
 import { useRouter } from "next/router";
 import { iif } from "rxjs";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   tariff: {
@@ -31,6 +32,7 @@ interface IProps {
 }
 
 export const TariffCard: FC<IProps> = ({ tariff }) => {
+  const { t } = useTranslation("common");
   const { replace } = useRouter();
   const { state, changeTariff, tariffPayment } = useContext<any>(Context);
   const [error, setError] = useState<string>("");
@@ -56,16 +58,17 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
     setModalOpen(false);
   };
 
-  const handleTariffPayment = (tariff: string) => {
-    tariffPayment(tariff)
-      .then((data: { paymentUrl: string }) => {
-        replace(data.paymentUrl);
-      })
-      .catch((error: string) => setError(error));
+  const handleTariffPayment = async (tariff: string) => {
+    try {
+      const { paymentUrl } = await tariffPayment(tariff);
+      replace(paymentUrl);
+    } catch (error: any) {
+      setError(error);
+    }
   };
 
-  const handleChangeTariff = (tariff: string) => {
-    changeTariff(tariff).catch((error: string) => setError(error));
+  const handleChangeTariff = async (tariff: string) => {
+    await changeTariff(tariff);
   };
 
   return (
@@ -73,13 +76,11 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
       <h3 className={classes.title}>{title}</h3>
       <div className={classes.description}>
         <StyledSubhead display="inline" fontSize="14px">
-          {free}
+          {t(free)}
         </StyledSubhead>
-        <StyledSubhead
-          display="inline"
-          color="#848592"
-          fontSize="14px"
-        >{`, ${freeDescription}`}</StyledSubhead>
+        <StyledSubhead display="inline" color="#848592" fontSize="14px">{`, ${t(
+          freeDescription
+        )}`}</StyledSubhead>
       </div>
       <StyledDivider />
       {benefitPercent && benefitDescription && (
@@ -88,10 +89,10 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
             className={classes.benefitPercent}
             style={{ backgroundColor: benefitBackground }}
           >
-            {benefitPercent}
+            {t(benefitPercent)}
           </span>
           <span className={classes.benefitDescription}>
-            {benefitDescription}
+            {t(benefitDescription)}
           </span>
         </div>
       )}
@@ -108,7 +109,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
         }
         gradientBackground={true}
       >
-        Перейти
+        {t("Перейти")}
       </StyledButton>
       <Dialog
         onClose={handleModalClose}
@@ -125,10 +126,10 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
               />
             </div>
             <StyledTitle3 mb="12px" textAlign="center">
-              {modalTitle}
+              {t(modalTitle)}
             </StyledTitle3>
             <StyledSubhead mb="12px" textAlign="center">
-              {`Оплата будет произведена ${dayjs
+              {`${t("Оплата будет произведена")} ${dayjs
                 .unix(state.user.premium.unactivate)
                 .format("DD.MM.YYYY")}, после ${
                 state.user.premium.tariff === "trial"
@@ -137,14 +138,14 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
               } “${TARIFFS[userTariffRef.current]}”`}
             </StyledSubhead>
             <StyledSubhead mb="24px" textAlign="center" color="#848592">
-              {modalDescription}
+              {t(modalDescription)}
             </StyledSubhead>
             <StyledButton
               blueButton
               mb="4px"
               onClick={() => handleChangeTariff(id)}
             >
-              Перейти
+              {t("Перейти")}
             </StyledButton>
             <StyledButton
               color="#4392BF"
@@ -153,7 +154,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
               mb="0px"
               onClick={handleModalClose}
             >
-              Остаться на своей подписке
+              {t("Остаться на своей подписке")}
             </StyledButton>
           </div>
         )}

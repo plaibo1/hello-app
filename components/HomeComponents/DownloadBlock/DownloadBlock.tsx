@@ -1,12 +1,14 @@
 import React, { FC } from "react";
 import Image from "next/image";
 import classes from "./DownloadBlock.module.scss";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   color?: "white" | "black";
 }
 
 export const DownloadBlock: FC<IProps> = ({ color = "black" }) => {
+  const { t } = useTranslation("common");
   return (
     <div className={classes.wrapper}>
       <div className={classes.qrWrap}>
@@ -19,7 +21,7 @@ export const DownloadBlock: FC<IProps> = ({ color = "black" }) => {
           className={classes.downloadTitle}
           style={{ color: color === "black" ? "#171717" : "white" }}
         >
-          Наведите камеру на QR-код, чтобы скачать
+          {t("Наведите камеру на QR-код, чтобы скачать")}
         </p>
         <div className={classes.storesWrap}>
           <div className={classes.storeItem}>

@@ -8,16 +8,23 @@ import {
 } from "../../GlobalComponents";
 import Container from "../../LayoutComponents/Container";
 import classes from "./WhatIsIt.module.scss";
+import useTranslation from "next-translate/useTranslation";
 
 export const WhatIsIt = () => {
+  const { t } = useTranslation("common");
   return (
     <section className={classes.wrapper}>
       <Container>
         <Row>
           <Col md={12}>
-            <StyledTitle2 textAlign="center">
-              Что такое <span>Hello</span>
-            </StyledTitle2>
+            <StyledTitle2
+              textAlign="center"
+              dangerouslySetInnerHTML={{
+                __html: t("Что такое <span>Hello</span>", {
+                  interpolation: { escapeValue: false },
+                }),
+              }}
+            />
             <StyledDivider mb="24px" />
             <Row>
               <Col md={6}>

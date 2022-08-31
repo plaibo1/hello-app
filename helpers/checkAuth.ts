@@ -1,40 +1,8 @@
+import { accessLinks } from "constants/access";
 import { StateSchema } from "context";
 import * as cookie from "cookie";
 import { IncomingMessage, ServerResponse } from "http";
 import { getSelfInfo } from "../services";
-
-interface AccessSchema {
-  [key: string]: {
-    [key: string]: string[] | string;
-  };
-  withPremium: {
-    access: string[];
-    redirect: string;
-  };
-  withoutPremium: {
-    access: string[];
-    redirect: string;
-  };
-  withoutLogin: {
-    access: string[];
-    redirect: string;
-  };
-}
-
-const accessLinks: AccessSchema = {
-  withPremium: {
-    access: ["/account", "/tariff"],
-    redirect: "/account",
-  },
-  withoutPremium: {
-    access: ["/premium"],
-    redirect: "/premium",
-  },
-  withoutLogin: {
-    access: ["/", "/premium", "/login", "/recovery"],
-    redirect: "/login",
-  },
-};
 
 export const redirect = (
   page: string,
@@ -75,7 +43,9 @@ export const checkAuth = async (
       initialState.user.auth = true;
       initialState.user.data = userInfo.selfProfile;
       initialState.user.premium = userInfo.premiumStatus;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   if (initialState.user.auth) {

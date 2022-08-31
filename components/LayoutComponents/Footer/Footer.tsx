@@ -3,8 +3,10 @@ import { StyledLink, StyledLanguageSwitcher } from "../../GlobalComponents";
 import Container from "../Container";
 import classes from "./Footer.module.scss";
 import { Row, Col } from "react-flexbox-grid";
+import useTranslation from "next-translate/useTranslation";
 
 const Footer = () => {
+  const { t } = useTranslation("common");
   return (
     <footer className={classes.footer}>
       <Container>
@@ -21,7 +23,7 @@ const Footer = () => {
                 mr="4px"
                 md={{ mb: "4px" }}
               >
-                Пользовательское соглашение
+                {t("Пользовательское соглашение")}
               </StyledLink>
               <StyledLink
                 href="/policy"
@@ -30,9 +32,9 @@ const Footer = () => {
                 mr="4px"
                 md={{ mb: "4px" }}
               >
-                Политика конфиденциальности
+                {t("Политика конфиденциальности")}
               </StyledLink>
-              <span>© 2022 «Hello» 14+</span>
+              <span>{t("© 2022 «Hello» 14+")}</span>
             </div>
           </Col>
         </Row>

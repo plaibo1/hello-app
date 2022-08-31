@@ -4,12 +4,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useMediaQuery } from "usehooks-ts";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+import { Pagination, Autoplay } from "swiper";
 import { Col, Row } from "react-flexbox-grid";
 import classes from "./Functions.module.scss";
 import { MOC_FUNCTIONS } from "../../../constants/functions";
+import useTranslation from "next-translate/useTranslation";
 
 const DynamicFunctions = () => {
+  const { t } = useTranslation("common");
   const matches = useMediaQuery("(max-width:765px)");
   const [activeSlide, setActiveSlide] = useState<number>(1);
   const [swiper, setSwiper] = useState<any>(null);
@@ -25,11 +27,12 @@ const DynamicFunctions = () => {
             spaceBetween={0}
             centeredSlides={true}
             loop={true}
+            modules={[Pagination, Autoplay]}
+            autoplay={{ delay: 2500 }}
             style={{ paddingBottom: "48px", paddingTop: "24px" }}
             onSwiper={setSwiper}
             onSlideChange={(item) => setActiveSlide(item.realIndex)}
             scrollbar={{ draggable: true }}
-            modules={[Pagination]}
             pagination={{
               clickable: true,
               bulletClass: `${classes.swiperBullet}`,
@@ -62,10 +65,12 @@ const DynamicFunctions = () => {
                         />
                       </span>
                       <span className={classes.sliderTitleSpan}>
-                        {item.title}
+                        {t(item.title)}
                       </span>
                     </div>
-                    <div className={classes.sliderText}>{item.description}</div>
+                    <div className={classes.sliderText}>
+                      {t(item.description)}
+                    </div>
                   </div>
                 </SwiperSlide>
               );
@@ -92,11 +97,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {MOC_FUNCTIONS[0].title}
+                    {t(MOC_FUNCTIONS[0].title)}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {MOC_FUNCTIONS[0].description}
+                  {t(MOC_FUNCTIONS[0].description)}
                 </div>
               </div>
               <div
@@ -115,11 +120,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {MOC_FUNCTIONS[1].title}
+                    {t(MOC_FUNCTIONS[1].title)}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {MOC_FUNCTIONS[1].description}
+                  {t(MOC_FUNCTIONS[1].description)}
                 </div>
               </div>
               <div
@@ -138,11 +143,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {MOC_FUNCTIONS[2].title}
+                    {t(MOC_FUNCTIONS[2].title)}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {MOC_FUNCTIONS[2].description}
+                  {t(MOC_FUNCTIONS[2].description)}
                 </div>
               </div>
             </div>
@@ -157,6 +162,8 @@ const DynamicFunctions = () => {
               onSwiper={setSwiper}
               onSlideChange={(item) => setActiveSlide(item.realIndex)}
               scrollbar={{ draggable: true }}
+              modules={[Autoplay]}
+              autoplay={{ delay: 2500 }}
             >
               {MOC_FUNCTIONS.map((item) => {
                 return (
@@ -192,11 +199,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {MOC_FUNCTIONS[3].title}
+                    {t(MOC_FUNCTIONS[3].title)}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {MOC_FUNCTIONS[3].description}
+                  {t(MOC_FUNCTIONS[3].description)}
                 </div>
               </div>
               <div
@@ -215,11 +222,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {MOC_FUNCTIONS[4].title}
+                    {t(MOC_FUNCTIONS[4].title)}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {MOC_FUNCTIONS[4].description}
+                  {t(MOC_FUNCTIONS[4].description)}
                 </div>
               </div>
               <div
@@ -238,11 +245,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {MOC_FUNCTIONS[5].title}
+                    {t(MOC_FUNCTIONS[5].title)}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {MOC_FUNCTIONS[5].description}
+                  {t(MOC_FUNCTIONS[5].description)}
                 </div>
               </div>
             </div>

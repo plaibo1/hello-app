@@ -5,11 +5,13 @@ import classes from "../styles/Recovery.module.scss";
 import { Row, Col } from "react-flexbox-grid";
 import { checkAuth } from "../helpers/checkAuth";
 import { Layout } from "components/LayoutComponents/Layout";
+import useTranslation from "next-translate/useTranslation";
 
 const Recovery: NextPage = () => {
+  const { t } = useTranslation("common");
   return (
     <Layout
-      meta={{ title: "Hello - Новые знакомства рядом с вами" }}
+      meta={{ title: t("Hello - Новые знакомства рядом с вами") }}
       fullHeight={true}
     >
       <section className={classes.recovery}>

@@ -5,8 +5,10 @@ import { checkAuth } from "../helpers/checkAuth";
 import { Jumbotron } from "../components/PremiumComponents/Jumbotron";
 import { Benefits } from "../components/PremiumComponents/Benefits";
 import { ChooseTariff } from "../components/PremiumComponents/ChooseTariff";
+import useTranslation from "next-translate/useTranslation";
 
 const Premium: NextPage = () => {
+  const { t } = useTranslation("common");
   const chooseTariffRef = useRef<HTMLElement>(null);
   const handleButtonClick = () => {
     if (chooseTariffRef.current) {
@@ -17,7 +19,7 @@ const Premium: NextPage = () => {
     }
   };
   return (
-    <Layout meta={{ title: "Личный кабинет - Hello" }}>
+    <Layout meta={{ title: t("Личный кабинет - Hello") }}>
       <Jumbotron onButtonClick={handleButtonClick} />
       <Benefits />
       <ChooseTariff containerRef={chooseTariffRef} />

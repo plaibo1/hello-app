@@ -5,6 +5,7 @@ import { StyledBody2 } from "../../GlobalComponents";
 import { Context } from "../../../context";
 import Link from "next/link";
 import { ProfileMenu } from "../ProfileMenu";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   open: boolean;
@@ -12,6 +13,7 @@ interface IProps {
 }
 
 export const ProfileModal: FC<IProps> = ({ open, onClose }) => {
+  const { t } = useTranslation("common");
   const { state } = useContext<any>(Context);
   return open ? (
     <>
@@ -42,7 +44,7 @@ export const ProfileModal: FC<IProps> = ({ open, onClose }) => {
             <StyledBody2 textAlign="center" mt="8px">
               {state.user.data.firstName
                 ? `${state.user.data.firstName} ${state.user.data.lastName}`
-                : "Имя не указано"}
+                : t("Имя не указано")}
             </StyledBody2>
           </a>
         </Link>

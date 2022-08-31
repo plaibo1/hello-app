@@ -1,3 +1,4 @@
+import useTranslation from "next-translate/useTranslation";
 import React, { FC, ReactElement } from "react";
 import styled from "styled-components";
 import classes from "./SubscribeStatus.module.scss";
@@ -21,28 +22,37 @@ interface StatusType {
   paused: string;
 }
 
-const statusObject: StatusType = {
-  active: (
-    <>
-      <svg
-        width="12"
-        height="12"
-        viewBox="0 0 12 12"
-        fill="none"
-        className={classes.subscribeDone}
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path d="M2 6.5L4.66667 9L10 4" stroke="white" strokeLinecap="round" />
-      </svg>
-      Подписка активна
-    </>
-  ),
-  stopped: "Подписка отменена",
-  paused: "Подписка приостановлена",
+type StatusFunc = () => StatusType;
+
+const StatusObject: StatusFunc = () => {
+  const { t } = useTranslation("common");
+  return {
+    active: (
+      <>
+        <svg
+          width="12"
+          height="12"
+          viewBox="0 0 12 12"
+          fill="none"
+          className={classes.subscribeDone}
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M2 6.5L4.66667 9L10 4"
+            stroke="white"
+            strokeLinecap="round"
+          />
+        </svg>
+        {t("Подписка активна")}
+      </>
+    ),
+    stopped: t("Подписка отменена"),
+    paused: t("Подписка приостановлена"),
+  };
 };
 
 export const SubscribeStatus: FC<IProps> = ({ className, active }) => {
-  return <div className={className}>{statusObject[active]}</div>;
+  return <div className={className}>{StatusObject()[active]}</div>;
 };
 
 export const StyledSubscribeStatus = styled(SubscribeStatus)`

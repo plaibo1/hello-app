@@ -19,8 +19,10 @@ import classes from "./RecoveryForm.module.scss";
 import { restorePassword, newPassword } from "../../../services";
 import { passwordSchema } from "../../../Schemas/Login";
 import { Context } from "../../../context";
+import useTranslation from "next-translate/useTranslation";
 
 export const RecoveryForm = () => {
+  const { t } = useTranslation("common");
   const { codeConfirm } = useContext<any>(Context);
   const { push } = useRouter();
   const [step, setStep] = useState<number>(1);
@@ -45,7 +47,6 @@ export const RecoveryForm = () => {
   );
 
   const handleFirstFocus = () => {
-    console.log(phoneValue);
     if (!phoneValue) {
       setPhoneValue("+7");
     }
@@ -73,7 +74,10 @@ export const RecoveryForm = () => {
     []
   );
 
-  const handleCodeFocus = useCallback((event: React.FocusEvent) => {}, []);
+  const handleCodeFocus = useCallback(
+    (event: React.FocusEvent<HTMLInputElement>) => {},
+    []
+  );
 
   const handleBack = useCallback(() => {
     if (step === 1) {
@@ -83,59 +87,61 @@ export const RecoveryForm = () => {
     }
   }, [step, push]);
 
-  const handlePhoneForm = useCallback(() => {
+  const handlePhoneForm = useCallback(async () => {
     setPhoneError("");
     if (phoneValue && isValidPhoneNumber(phoneValue)) {
       const phoneParse = parsePhoneNumber(phoneValue);
-      restorePassword({
-        country: `+${phoneParse?.countryCallingCode}`,
-        number: phoneParse?.nationalNumber,
-      })
-        .then((data) => {
-          setStep(2);
-        })
-        .catch((error) => setPhoneError(error.message));
+      try {
+        await restorePassword({
+          country: `+${phoneParse?.countryCallingCode}`,
+          number: phoneParse?.nationalNumber,
+        });
+        setStep(2);
+      } catch (error: any) {
+        console.log(error);
+        setPhoneError(error.response.data.error.message);
+      }
     } else {
       setPhoneError("Неверный формат телефона");
     }
   }, [phoneValue]);
 
-  const handleCodeForm = useCallback(() => {
+  const handleCodeForm = useCallback(async () => {
     setCodeError("");
     if (phoneValue && !(codeValue.length < 4 || codeValue.includes(""))) {
       const phoneParse = parsePhoneNumber(phoneValue);
-      codeConfirm({
-        code: codeValue.join(""),
-        confirmType: "restore",
-        phone: {
-          country: `+${phoneParse?.countryCallingCode}`,
-          number: phoneParse?.nationalNumber,
-        },
-      })
-        .then(() => {
-          setStep(3);
-        })
-        .catch((error: any) => setCodeError(error));
+      try {
+        await codeConfirm({
+          code: codeValue.join(""),
+          confirmType: "restore",
+          phone: {
+            country: `+${phoneParse?.countryCallingCode}`,
+            number: phoneParse?.nationalNumber,
+          },
+        });
+        setStep(3);
+      } catch (error: any) {
+        setCodeError(error);
+      }
     } else {
       setCodeError("Неверный формат кода");
     }
   }, [codeConfirm, codeValue, phoneValue]);
 
-  const handlePasswordForm = useCallback(() => {
-    passwordSchema
-      .validate({
+  const handlePasswordForm = useCallback(async () => {
+    try {
+      await passwordSchema.validate({
         password: passwordValue,
-      })
-      .then((data) => {
-        newPassword({ newPassword: passwordValue })
-          .then((data) => {
-            push("/account");
-          })
-          .catch((error) => setPasswordError(error));
-      })
-      .catch((error) => {
-        setPasswordError(error.errors);
       });
+      try {
+        await newPassword({ newPassword: passwordValue });
+        push("/account");
+      } catch (error: any) {
+        setPasswordError(error.response.data.error.message);
+      }
+    } catch (error: any) {
+      setPasswordError(error.response.data.error.message);
+    }
   }, [passwordValue, push]);
 
   const handleFormSubmit = useCallback(
@@ -156,10 +162,10 @@ export const RecoveryForm = () => {
     return (
       <>
         <StyledTitle2 textAlign="center" mb="12px">
-          Восстановление пароля
+          {t("Восстановление пароля")}
         </StyledTitle2>
         <StyledSubhead color="#848592" textAlign="center">
-          Введите номер телефона, который был привязан к вашему аккаунту.
+          {t("Введите номер телефона, который был привязан к вашему аккаунту.")}
         </StyledSubhead>
         <PhoneInput
           value={phoneValue}
@@ -175,7 +181,7 @@ export const RecoveryForm = () => {
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
         >
-          Далее
+          {t("Далее")}
         </StyledButton>
       </>
     );
@@ -185,10 +191,10 @@ export const RecoveryForm = () => {
     return (
       <>
         <StyledTitle2 textAlign="center" mb="12px">
-          Введите код из смс
+          {t("Введите код из смс")}
         </StyledTitle2>
         <StyledSubhead color="#848592" textAlign="center">
-          Мы отправили его на номер{" "}
+          {t("Мы отправили его на номер")}{" "}
           {phoneValue
             ? formatPhoneNumber(phoneValue).replace(/(\d[ .-]?){6}$/, (x) =>
                 x.replace(/\d/g, "*")
@@ -201,7 +207,7 @@ export const RecoveryForm = () => {
           onFocus={handleCodeFocus}
         />
         {codeError && (
-          <div className={classes.errorTitle}>Введен неверный код</div>
+          <div className={classes.errorTitle}>{t("Введен неверный код")}</div>
         )}
         <StyledButton
           type="submit"
@@ -211,7 +217,7 @@ export const RecoveryForm = () => {
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
         >
-          Далее
+          {t("Далее")}
         </StyledButton>
       </>
     );
@@ -221,7 +227,7 @@ export const RecoveryForm = () => {
     return (
       <>
         <StyledTitle2 textAlign="center" mb="16px">
-          Новый пароль
+          {t("Новый пароль")}
         </StyledTitle2>
         <PasswordInput
           value={passwordValue}
@@ -236,7 +242,7 @@ export const RecoveryForm = () => {
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
         >
-          Сохранить и войти
+          {t("Сохранить и войти")}
         </StyledButton>
       </>
     );

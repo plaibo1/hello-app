@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import {
   signIn,
   signOut,
-  getSelfInfo,
+  getSelfInfo as _getSelfInfo,
   codeConfirm as _codeConfirm,
   startTrial as _startTrial,
   changeTariff as _changeTariff,
@@ -68,165 +68,110 @@ const Provider = ({
   const { push } = useRouter();
   const [state, dispatch] = useReducer(combineReducers(user), initialProps); // pass more reducers combineReducers(user, blogs, products)
 
+  const getSelfInfo = useCallback(async () => {
+    try {
+      const userInfo = await _getSelfInfo();
+      dispatch({
+        type: "LOGGED_IN_USER",
+        payload: {
+          auth: true,
+          data: userInfo.selfProfile,
+          premium: userInfo.premiumStatus,
+        },
+      });
+      return userInfo;
+    } catch (error) {
+      dispatch({ type: "LOGGED_OUT_USER" });
+      return Promise.reject(error);
+    }
+  }, []);
+
+  const startTrial = useCallback(async () => {
+    await _startTrial();
+    const userInfo = await getSelfInfo();
+    return userInfo;
+  }, [getSelfInfo]);
+
+  const changeTariff = useCallback(
+    async (tariff: string) => {
+      await _changeTariff(tariff);
+      const userInfo = await getSelfInfo();
+      push("/account");
+      return userInfo;
+    },
+    [getSelfInfo, push]
+  );
+
   const login = useCallback(
     async (
       { phone, password }: LoginSchema,
       start_trial?: boolean,
       tariff?: string
     ) => {
-      return signIn({ phone, password })
-        .then((userData) => {
-          if (start_trial) {
-            return getSelfInfo()
-              .then((userInfo) => {
-                if (
-                  !userInfo.selfProfile.premium &&
-                  !userInfo.selfProfile.trial
-                ) {
-                  return startTrial()
-                    .then(() => {
-                      return changeTariff(tariff || "")
-                        .then(() => {
-                          push({
-                            pathname: "/account",
-                            query: { show_modal: true },
-                          });
-                        })
-                        .catch((error) => Promise.reject(error));
-                    })
-                    .catch((error) => Promise.reject(error));
-                } else {
-                  push({
-                    pathname: "/account",
-                  });
-                  return userInfo;
-                }
-              })
-              .catch((error) => Promise.reject(error));
-          } else {
-            return getSelfInfo()
-              .then((userInfo) => {
-                const redirect_link = `${
-                  userInfo.selfProfile.premium || userInfo.selfProfile.trial
-                    ? "/account"
-                    : "/premium"
-                }`;
-                dispatch({
-                  type: "LOGGED_IN_USER",
-                  payload: {
-                    auth: true,
-                    data: userInfo.selfProfile,
-                    premium: userInfo.premiumStatus,
-                  },
-                });
-                push(redirect_link);
-                return userInfo;
-              })
-              .catch((error) => Promise.reject(error));
-          }
-        })
-        .catch((error) => Promise.reject(error));
+      await signIn({ phone, password });
+      const userInfo = await getSelfInfo();
+
+      if (start_trial) {
+        if (!userInfo.selfProfile.premium && !userInfo.selfProfile.trial) {
+          await startTrial();
+          await changeTariff(tariff || "");
+          push({
+            pathname: "/account",
+            query: { show_modal: true },
+          });
+          return userInfo;
+        } else {
+          push({
+            pathname: "/account",
+          });
+          return userInfo;
+        }
+      } else {
+        const redirect_link = `${
+          userInfo.selfProfile.premium || userInfo.selfProfile.trial
+            ? "/account"
+            : "/premium"
+        }`;
+        dispatch({
+          type: "LOGGED_IN_USER",
+          payload: {
+            auth: true,
+            data: userInfo.selfProfile,
+            premium: userInfo.premiumStatus,
+          },
+        });
+        push(redirect_link);
+        return userInfo;
+      }
     },
-    [push]
+    [changeTariff, getSelfInfo, push, startTrial]
   );
 
   const logout = useCallback(async () => {
-    return signOut()
-      .then(() => {
-        push("/");
-        dispatch({ type: "LOGGED_OUT_USER" });
-      })
-      .catch((error) => Promise.reject(error));
+    await signOut();
+    push("/");
+    dispatch({ type: "LOGGED_OUT_USER" });
   }, [push]);
 
-  const codeConfirm = useCallback(async (body: CodeConfirmSchema) => {
-    return _codeConfirm(body)
-      .then((userData) => {
-        return getSelfInfo()
-          .then((userInfo) => {
-            dispatch({
-              type: "LOGGED_IN_USER",
-              payload: {
-                auth: true,
-                data: userInfo.selfProfile,
-                premium: userInfo.premiumStatus,
-              },
-            });
-            return userInfo;
-          })
-          .catch((error) => Promise.reject(error));
-      })
-      .catch((error) => Promise.reject(error));
-  }, []);
-
-  const startTrial = useCallback(async () => {
-    return _startTrial()
-      .then((userData) => {
-        return getSelfInfo()
-          .then((userInfo) => {
-            dispatch({
-              type: "LOGGED_IN_USER",
-              payload: {
-                auth: true,
-                data: userInfo.selfProfile,
-                premium: userInfo.premiumStatus,
-              },
-            });
-            return userInfo;
-          })
-          .catch((error) => Promise.reject(error));
-      })
-      .catch((error) => Promise.reject(error));
-  }, []);
-
-  const changeTariff = useCallback(async (tariff: string) => {
-    return _changeTariff(tariff)
-      .then((userData) => {
-        push("/account");
-        return getSelfInfo()
-          .then((userInfo) => {
-            dispatch({
-              type: "LOGGED_IN_USER",
-              payload: {
-                auth: true,
-                data: userInfo.selfProfile,
-                premium: userInfo.premiumStatus,
-              },
-            });
-            return userInfo;
-          })
-          .catch((error) => Promise.reject(error));
-      })
-      .catch((error) => Promise.reject(error));
-  }, []);
+  const codeConfirm = useCallback(
+    async (body: CodeConfirmSchema) => {
+      await _codeConfirm(body);
+      const userInfo = await getSelfInfo();
+      return userInfo;
+    },
+    [getSelfInfo]
+  );
 
   const tariffPayment = useCallback(async (tariff: string) => {
-    return _tariffPayment(tariff)
-      .then((paymentUrl) => {
-        return paymentUrl;
-      })
-      .catch((error) => Promise.reject(error));
+    const paymentUrl = await _tariffPayment(tariff);
+    return paymentUrl;
   }, []);
 
-  const cancelTariff = useCallback(async (tariff: string) => {
-    return _cancelTariff()
-      .then((userData) => {
-        return getSelfInfo()
-          .then((userInfo) => {
-            dispatch({
-              type: "LOGGED_IN_USER",
-              payload: {
-                auth: true,
-                data: userInfo.selfProfile,
-                premium: userInfo.premiumStatus,
-              },
-            });
-            return userInfo;
-          })
-          .catch((error) => Promise.reject(error));
-      })
-      .catch((error) => Promise.reject(error));
-  }, []);
+  const cancelTariff = useCallback(async () => {
+    _cancelTariff();
+    const userInfo = getSelfInfo();
+    return userInfo;
+  }, [getSelfInfo]);
 
   const value = {
     state,

@@ -3,6 +3,7 @@ import Image from "next/image";
 import styled from "styled-components";
 import classes from "./ListItem.module.scss";
 import { xl as xlSize } from "../../../constants/windowWidth";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   className?: string;
@@ -19,6 +20,7 @@ interface AdaptiveStyledProps extends IStyledProps {
 }
 
 export const ListItem: FC<IProps> = ({ className, text }) => {
+  const { t } = useTranslation("common");
   return (
     <div className={className}>
       <div className={classes.listIcon}>
@@ -29,7 +31,7 @@ export const ListItem: FC<IProps> = ({ className, text }) => {
           alt="Check icon"
         />
       </div>
-      <div className={classes.listContent}>{text} </div>
+      <div className={classes.listContent}>{t(text)} </div>
     </div>
   );
 };

@@ -14,8 +14,10 @@ import { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
 import classes from "./LoginForm.module.scss";
 import { Context } from "../../../context";
 import { passwordSchema } from "../../../Schemas/Login";
+import useTranslation from "next-translate/useTranslation";
 
 export const LoginForm = () => {
+  const { t } = useTranslation("common");
   const { push, query } = useRouter();
   const { login } = useContext<any>(Context);
   const [phoneValue, setPhoneValue] = useState<E164Number | undefined>("");
@@ -33,43 +35,34 @@ export const LoginForm = () => {
   };
 
   const handleFirstFocus = () => {
-    console.log(phoneValue);
     if (!phoneValue) {
       setPhoneValue("+7");
     }
   };
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoginError("");
     setPhoneError("");
     setPasswordError("");
     if (phoneValue && isValidPhoneNumber(phoneValue)) {
-      passwordSchema
-        .validate({
-          password: passwordValue,
-        })
-        .then(async () => {
-          const phoneParse = parsePhoneNumber(phoneValue);
-          try {
-            const loginPromise = await login(
-              {
-                password: passwordValue,
-                phone: {
-                  country: `+${phoneParse?.countryCallingCode}`,
-                  number: phoneParse?.nationalNumber,
-                },
-              },
-              query.start_trial,
-              query.tariff
-            );
-          } catch (error: any) {
-            setLoginError(error);
-          }
-        })
-        .catch((error) => {
-          setPasswordError(error.errors);
-        });
+      const phoneParse = parsePhoneNumber(phoneValue);
+
+      try {
+        await login(
+          {
+            password: passwordValue,
+            phone: {
+              country: `+${phoneParse?.countryCallingCode}`,
+              number: phoneParse?.nationalNumber,
+            },
+          },
+          query.start_trial,
+          query.tariff
+        );
+      } catch (error: any) {
+        setLoginError(error);
+      }
     } else {
       setPhoneError("Неверный формат телефона");
     }
@@ -92,9 +85,9 @@ export const LoginForm = () => {
       <div className={classes.loginFormWrap}>
         <Logo size="mini" />
         <StyledTitle2 textAlign="center" mt="4px">
-          Вход
+          {t("Вход")}
         </StyledTitle2>
-        <form onSubmit={(event) => handleSubmit(event)}>
+        <form onSubmit={(event) => handleSubmit(event)} autoComplete="off">
           <PhoneInput
             value={phoneValue}
             onChange={handlePhoneInput}
@@ -108,7 +101,7 @@ export const LoginForm = () => {
           />
           {loginError && (
             <div className={classes.errorTitle}>
-              Введен неверный логин или пароль
+              {t("Введен неверный логин или пароль")}
             </div>
           )}
           <StyledButton
@@ -118,7 +111,7 @@ export const LoginForm = () => {
             mt="12px"
             mb="15px"
           >
-            Войти
+            {t("Войти")}
           </StyledButton>
           <StyledLink
             href="/recovery"
@@ -126,7 +119,7 @@ export const LoginForm = () => {
             textAlign="center"
             display="block"
           >
-            Забыли пароль?
+            {t("Забыли пароль?")}
           </StyledLink>
         </form>
       </div>

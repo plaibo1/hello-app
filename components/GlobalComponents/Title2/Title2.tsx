@@ -4,7 +4,10 @@ import { xl as xlSize, md as mdSize } from "../../../constants/windowWidth";
 
 interface IProps {
   className?: string;
-  children: ReactNode;
+  children?: ReactNode;
+  dangerouslySetInnerHTML?: {
+    __html: string;
+  };
 }
 
 interface IStyledProps {
@@ -20,8 +23,16 @@ interface AdaptiveStyledProps extends IStyledProps {
   md?: IStyledProps;
 }
 
-export const Title2: FC<IProps> = ({ className, children }) => {
-  return <h2 className={className}>{children}</h2>;
+export const Title2: FC<IProps> = ({
+  className,
+  children,
+  dangerouslySetInnerHTML,
+}) => {
+  return (
+    <h2 className={className} dangerouslySetInnerHTML={dangerouslySetInnerHTML}>
+      {children}
+    </h2>
+  );
 };
 
 export const StyledTitle2 = styled(Title2)`

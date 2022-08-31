@@ -4,19 +4,21 @@ import { StyledDivider, StyledTitle2 } from "../../GlobalComponents";
 import Container from "../../LayoutComponents/Container";
 import classes from "./Functions.module.scss";
 import dynamic from "next/dynamic";
+import useTranslation from "next-translate/useTranslation";
 
 const DynamicFunctions = dynamic(() => import("./DynamicFunctions") as any, {
   ssr: false,
 });
 
 export const Functions = () => {
+  const { t } = useTranslation("common");
   return (
     <section className={classes.wrapper}>
       <Container>
         <Row>
           <Col md={12}>
             <StyledTitle2 textAlign="center">
-              Основные функции и возможности
+              {t("Основные функции и возможности")}
             </StyledTitle2>
             <StyledDivider mb="0px" />
           </Col>

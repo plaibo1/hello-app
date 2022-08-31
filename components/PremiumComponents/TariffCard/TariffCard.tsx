@@ -7,6 +7,7 @@ import {
 import { Context } from "../../../context";
 import classes from "./TariffCard.module.scss";
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   tariff: {
@@ -23,6 +24,7 @@ interface IProps {
 }
 
 export const TariffCard: FC<IProps> = ({ tariff }) => {
+  const { t } = useTranslation("common");
   const { push } = useRouter();
   const { state, startTrial } = useContext<any>(Context);
   const {
@@ -35,12 +37,11 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
     benefitDescription,
   } = tariff;
 
-  const handleStartTrial = () => {
-    startTrial().then(() => {
-      push({
-        pathname: "/account",
-        query: { show_modal: true },
-      });
+  const handleStartTrial = async () => {
+    await startTrial();
+    push({
+      pathname: "/account",
+      query: { show_modal: true },
     });
   };
 
@@ -54,14 +55,14 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
             fontSize="16px"
             md={{ fontSize: "14px" }}
           >
-            {free}
+            {t(free)}
           </StyledSubhead>
           <StyledSubhead
             display="inline"
             color="#848592"
             fontSize="16px"
             md={{ fontSize: "14px" }}
-          >{`, ${freeDescription}`}</StyledSubhead>
+          >{`, ${t(freeDescription)}`}</StyledSubhead>
         </div>
         <StyledDivider />
         {benefitPercent && benefitDescription && (
@@ -70,10 +71,10 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
               className={classes.benefitPercent}
               style={{ backgroundColor: benefitBackground }}
             >
-              {benefitPercent}
+              {t(benefitPercent)}
             </span>
             <span className={classes.benefitDescription}>
-              {benefitDescription}
+              {t(benefitDescription)}
             </span>
           </div>
         )}
@@ -96,7 +97,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
         }
         gradientBackground={true}
       >
-        Попробовать бесплатно
+        {t("Попробовать бесплатно")}
       </StyledButton>
     </div>
   );

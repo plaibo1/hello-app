@@ -17,8 +17,10 @@ import { checkAuth } from "../helpers/checkAuth";
 import { ProfileStatus } from "../components/AccountComponents/ProfileStatus";
 import { Benefits } from "../components/AccountComponents/Benefits";
 import { useRouter } from "next/router";
+import useTranslation from "next-translate/useTranslation";
 
 const Account: NextPage = () => {
+  const { t } = useTranslation("common");
   const { query } = useRouter();
   const { state, cancelTariff } = useContext<any>(Context);
   const [cancelModalOpen, setCancelModalOpen] = useState<boolean>(false);
@@ -40,12 +42,13 @@ const Account: NextPage = () => {
     setTrialModalOpen(false);
   };
 
-  const handleCancelSubscribe = () => {
-    cancelTariff()
-      .then(() => {
-        setCancelModalOpen(false);
-      })
-      .catch((error: any) => console.log(error));
+  const handleCancelSubscribe = async () => {
+    try {
+      await cancelTariff();
+      setCancelModalOpen(false);
+    } catch (error: any) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -55,7 +58,7 @@ const Account: NextPage = () => {
   }, [query.show_modal]);
 
   return (
-    <Layout meta={{ title: "Личный кабинет - Hello" }}>
+    <Layout meta={{ title: t("Личный кабинет - Hello") }}>
       <ProfileStatus handleModalOpen={handleCancelModalOpen} />
       <Benefits />
       <Dialog
@@ -76,7 +79,7 @@ const Account: NextPage = () => {
               />
             </div>
             <StyledTitle3 mb="12px" textAlign="center">
-              Отменить подписку?
+              {t("Отменить подписку?")}
             </StyledTitle3>
             <StyledSubhead mb="12px" textAlign="center">
               {`${
@@ -92,7 +95,7 @@ const Account: NextPage = () => {
               }`}
             </StyledSubhead>
             <StyledSubhead mb="24px" textAlign="center" color="#848592">
-              После все привилегии станут недоступны
+              {t("После все привилегии станут недоступны")}
             </StyledSubhead>
             <StyledButton
               blueButton
@@ -100,7 +103,7 @@ const Account: NextPage = () => {
               padding="12px 54.5px"
               onClick={handleCancelModalClose}
             >
-              Оставить подписку
+              {t("Оставить подписку")}
             </StyledButton>
             <StyledButton
               color="#BF434A"
@@ -109,7 +112,7 @@ const Account: NextPage = () => {
               onClick={handleCancelSubscribe}
               mb="0px"
             >
-              Отменить подписку
+              {t("Отменить подписку")}
             </StyledButton>
           </div>
         )}
@@ -129,11 +132,12 @@ const Account: NextPage = () => {
               />
             </div>
             <StyledTitle3 mb="12px" textAlign="center">
-              Подписка оформлена!
+              {t("Подписка оформлена!")}
             </StyledTitle3>
             <StyledSubhead mb="24px" textAlign="center">
-              Наслаждайтесь всеми привилегиями подписки Hello Premium прямо
-              сейчас.
+              {t(
+                "Наслаждайтесь всеми привилегиями подписки Hello Premium прямо сейчас."
+              )}
             </StyledSubhead>
             <StyledButton
               blueButton
@@ -141,16 +145,16 @@ const Account: NextPage = () => {
               padding="12px 54.5px"
               onClick={handleTrialModalClose}
             >
-              Перейти в приложение
+              {t("Перейти в приложение")}
             </StyledButton>
             <StyledButton
-              color="#BF434A"
+              color="#4392BF"
               backgroundColor="unset"
               padding="12px 0px"
               onClick={handleTrialModalClose}
               mb="0px"
             >
-              Смотреть привилегии
+              {t("Смотреть привилегии")}
             </StyledButton>
           </div>
         )}

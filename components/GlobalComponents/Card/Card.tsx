@@ -2,6 +2,7 @@ import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
 import classes from "./Card.module.scss";
 import { xl as xlSize } from "../../../constants/windowWidth";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   className?: string;
@@ -29,6 +30,7 @@ export const Card: FC<IProps> = ({
   iconPosition = "left",
   icon,
 }) => {
+  const { t } = useTranslation("common");
   return (
     <div className={`${className} ${classes[`cardWrapper-${iconPosition}`]}`}>
       {icon && (
@@ -41,7 +43,7 @@ export const Card: FC<IProps> = ({
               classes[`cardTitle-${iconPosition}`]
             }`}
           >
-            {title}
+            {t(title)}
           </div>
         )}
         {text && (
@@ -50,7 +52,7 @@ export const Card: FC<IProps> = ({
               classes[`cardText-${iconPosition}`]
             }`}
           >
-            {text}
+            {t(text)}
           </div>
         )}
       </div>

@@ -3,15 +3,16 @@ import Image from "next/image";
 import classes from "./ProfileMenu.module.scss";
 import { StyledButton } from "../../GlobalComponents";
 import { Context } from "../../../context";
+import useTranslation from "next-translate/useTranslation";
 
 export const ProfileMenu = () => {
+  const { t } = useTranslation("common");
   const { logout } = useContext<any>(Context);
-  const handleLogout = () => {
-    logout().then(() => {
-      if (window.innerWidth < 765) {
-        document.querySelector("body")!.style.overflow = "auto";
-      }
-    });
+  const handleLogout = async () => {
+    await logout();
+    if (window.innerWidth < 765) {
+      document.querySelector("body")!.style.overflow = "auto";
+    }
   };
   return (
     <div className={classes.profileMenu}>
@@ -32,7 +33,7 @@ export const ProfileMenu = () => {
             alt="icon"
           />
         </div>
-        Выйти
+        {t("Выйти")}
       </StyledButton>
     </div>
   );

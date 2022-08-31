@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 import { Col, Row } from "react-flexbox-grid";
 import {
   StyledButton,
@@ -12,6 +11,8 @@ import { DownloadBlock } from "../DownloadBlock";
 import classes from "./Jumbotron.module.scss";
 import adaptiveClasses from "/styles/Adaptive.module.scss";
 import useTranslation from "next-translate/useTranslation";
+import { PhoneImage } from "../PhoneImage";
+import { useSpring } from "react-spring";
 
 export const Jumbotron = () => {
   const { t } = useTranslation("common");
@@ -59,15 +60,7 @@ export const Jumbotron = () => {
             </Row>
           </Col>
           <Col md={6}>
-            <div className={classes.jumbotronImageWrap}>
-              <div className={classes.jumbotronImage}>
-                <Image
-                  src="/images/home_banner.png"
-                  layout="fill"
-                  alt="Header image"
-                />
-              </div>
-            </div>
+            <PhoneImage />
           </Col>
         </Row>
       </Container>

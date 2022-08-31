@@ -7,6 +7,7 @@ import "swiper/css/pagination";
 import classes from "./Benefits.module.scss";
 import dynamic from "next/dynamic";
 import ContentLoader from "react-content-loader";
+import useTranslation from "next-translate/useTranslation";
 
 const DynamicSwiper = dynamic(() => import("../SwiperWrap/") as any, {
   ssr: false,
@@ -27,14 +28,23 @@ const DynamicSwiper = dynamic(() => import("../SwiperWrap/") as any, {
 });
 
 export const Benefits = () => {
+  const { t } = useTranslation("common");
   return (
     <section className={classes.wrapper}>
       <Container>
         <Row>
           <Col md={12}>
-            <StyledTitle2 textAlign="center">
-              Откройте все преимущества <span>Hello Premium</span>
-            </StyledTitle2>
+            <StyledTitle2
+              textAlign="center"
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  "Откройте все преимущества <span>Hello Premium</span>",
+                  {
+                    interpolation: { escapeValue: false },
+                  }
+                ),
+              }}
+            />
             <StyledDivider mb="24px" />
           </Col>
         </Row>

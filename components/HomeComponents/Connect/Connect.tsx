@@ -5,22 +5,31 @@ import { StyledSubhead, StyledTitle2 } from "../../GlobalComponents";
 import Container from "../../LayoutComponents/Container";
 import classes from "./Connect.module.scss";
 import { DownloadBlock } from "../DownloadBlock";
+import useTranslation from "next-translate/useTranslation";
 
 export const Connect = () => {
+  const { t } = useTranslation("common");
   return (
     <section className={classes.wrapper}>
       <Container>
         <Row middle="xs">
           <Col lg={6} lgOffset={3} xl={5} xlOffset={2}>
-            <StyledTitle2 xl={{ textAlign: "center" }}>
-              Присоединяйтесь к сообществу <span>Hello</span>
-            </StyledTitle2>
+            <StyledTitle2
+              xl={{ textAlign: "center" }}
+              dangerouslySetInnerHTML={{
+                __html: t("Присоединяйтесь к сообществу <span>Hello</span>", {
+                  interpolation: { escapeValue: false },
+                }),
+              }}
+            />
             <StyledSubhead
               fontSize="14px"
               mb="32px"
               xl={{ textAlign: "center" }}
             >
-              Приложение Hello позволит расширить ваши личные и бизнес связи
+              {t(
+                "Приложение Hello позволит расширить ваши личные и бизнес связи"
+              )}
             </StyledSubhead>
             <DownloadBlock />
           </Col>

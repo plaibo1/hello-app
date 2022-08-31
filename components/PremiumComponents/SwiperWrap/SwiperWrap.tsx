@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { useMediaQuery } from "usehooks-ts";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper";
+import { Pagination, Autoplay } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
 import classes from "./SwiperWrap.module.scss";
@@ -17,7 +17,8 @@ export const SwiperWrap = () => {
       slidesPerView={1}
       spaceBetween={20}
       slidesPerGroup={1}
-      modules={[Pagination]}
+      modules={[Pagination, Autoplay]}
+      autoplay={{ delay: 2500 }}
       loop={true}
       pagination={{
         clickable: true,

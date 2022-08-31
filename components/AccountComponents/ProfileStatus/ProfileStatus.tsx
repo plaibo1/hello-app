@@ -15,12 +15,14 @@ import { TARIFFS } from "../../../constants/tariffs";
 import { Context } from "../../../context";
 import { useRouter } from "next/router";
 import { getBindCardUrl } from "../../../services";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   handleModalOpen: () => void;
 }
 
 export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
+  const { t } = useTranslation("common");
   const { replace, push } = useRouter();
   const {
     state: {
@@ -54,7 +56,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       color="#848592"
                       textTransform="capitalize"
                     >
-                      {TARIFFS[premium.tariff]}
+                      {t(TARIFFS[premium.tariff])}
                     </StyledSubhead>
                   </div>
                   <StyledSubscribeStatus
@@ -89,15 +91,17 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     />
                   </span>
                   {premium.isBlocked
-                    ? "Платеж не прошел"
+                    ? t("Платеж не прошел")
                     : `${
                         premium.tariff === "trial"
-                          ? "Бесплатно до"
+                          ? t("Бесплатно до")
                           : premium.autoPayment
-                          ? "Следующая оплата"
+                          ? t("Следующая оплата")
                           : premium.unactivate === 0
-                          ? "Привяжите карту к вашему аккаунту и оплатите тариф, для возобновления подписки"
-                          : "Действует до"
+                          ? t(
+                              "Привяжите карту к вашему аккаунту и оплатите тариф, для возобновления подписки"
+                            )
+                          : t("Действует до")
                       } ${
                         premium.unactivate === 0
                           ? ""
@@ -105,7 +109,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                               .unix(premium.unactivate)
                               .format("DD.MM.YYYY")}${
                               premium.tariff === "trial"
-                                ? ", далее по тарифу"
+                                ? t(", далее по тарифу")
                                 : ""
                             }`
                       }`}
@@ -122,8 +126,12 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     xl={{ mb: "24px", mt: "0px" }}
                   >
                     {premium.isBlocked
-                      ? "Оплата подписки не была произведена, проверьте выбранный способ оплаты и попробуйте еще раз"
-                      : "Привяжите карту к вашему аккаунту для использования подписки после пробного периода"}
+                      ? t(
+                          "Оплата подписки не была произведена, проверьте выбранный способ оплаты и попробуйте еще раз"
+                        )
+                      : t(
+                          "Привяжите карту к вашему аккаунту для использования подписки после пробного периода"
+                        )}
                   </StyledBody2>
                 </Col>
               )}
@@ -140,7 +148,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     padding="12px 47px"
                     onClick={() => push("/tariff")}
                   >
-                    Изменить тариф
+                    {t("Изменить тариф")}
                   </StyledButton>
                 </Col>
               )}
@@ -154,7 +162,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       replace(`${bindCardUrl}&successURL=test.com`)
                     }
                   >
-                    Привязать карту
+                    {t("Привязать карту")}
                   </StyledButton>
                 </Col>
               )}
@@ -180,7 +188,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       xl={{ padding: "12px 59px" }}
                       md={{ padding: "12px 40px" }}
                     >
-                      Привязать карту и оплатить
+                      {t("Привязать карту и оплатить")}
                     </StyledButton>
                   </Col>
                 )}
@@ -198,7 +206,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       blueButton={true}
                       xl={{ padding: "12px 59px" }}
                     >
-                      Возобновить подписку
+                      {t("Возобновить подписку")}
                     </StyledButton>
                   </Col>
                 )}
@@ -224,7 +232,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       blueButton={true}
                       xl={{ padding: "12px 59px" }}
                     >
-                      Проверить платежные данные
+                      {t("Проверить платежные данные")}
                     </StyledButton>
                   </Col>
                 )}
@@ -237,7 +245,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     mb="0px"
                     onClick={handleModalOpen}
                   >
-                    Отменить подписку
+                    {t("Отменить подписку")}
                   </StyledButton>
                 </Col>
               )}

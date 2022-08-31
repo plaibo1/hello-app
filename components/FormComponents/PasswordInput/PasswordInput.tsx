@@ -1,6 +1,7 @@
 import React, { FC, useState, useCallback } from "react";
 import Image from "next/image";
 import classes from "./PasswordInput.module.scss";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   value: string;
@@ -9,6 +10,7 @@ interface IProps {
 }
 
 export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
+  const { t } = useTranslation("common");
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleVisible = useCallback(() => {
@@ -24,7 +26,8 @@ export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
           value={value}
           onChange={onChange}
           className={classes.input}
-          placeholder="Введите пароль"
+          placeholder={t("Введите пароль")}
+          autoComplete="new-password"
           aria-invalid
         />
         <div className={classes.isVisibleButton} onClick={handleVisible}>
@@ -40,7 +43,9 @@ export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
           />
         </div>
       </div>
-      {error.length > 0 && <div className={classes.errorTitle}>{error[0]}</div>}
+      {error.length > 0 && (
+        <div className={classes.errorTitle}>{t(error[0])}</div>
+      )}
     </label>
   );
 };

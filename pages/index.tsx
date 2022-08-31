@@ -7,10 +7,12 @@ import { Connect } from "../components/HomeComponents/Connect";
 import { Jumbotron } from "../components/HomeComponents/Jumbotron";
 import { HowItWork } from "../components/HomeComponents/HowItWork";
 import { WhatIsIt } from "../components/HomeComponents/WhatIsIt";
+import useTranslation from "next-translate/useTranslation";
 
 const Home: NextPage = () => {
+  const { t } = useTranslation("common");
   return (
-    <Layout meta={{ title: "Hello - Новые знакомства рядом с вами" }}>
+    <Layout meta={{ title: t("Hello - Новые знакомства рядом с вами") }}>
       <Jumbotron />
       <HowItWork />
       <WhatIsIt />
