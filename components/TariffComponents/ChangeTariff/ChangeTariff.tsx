@@ -4,11 +4,9 @@ import { Context } from "../../../context";
 import Container from "../../LayoutComponents/Container";
 import { Row, Col } from "react-flexbox-grid";
 import useTranslation from "next-translate/useTranslation";
-
 import classes from "./ChangeTariff.module.scss";
 import { MOC_TARIFFS } from "../../../constants/tariffs";
 import { TariffCard } from "../TariffCard";
-import { useRouter } from "next/router";
 
 export const ChangeTariff = () => {
   const { t } = useTranslation("common");

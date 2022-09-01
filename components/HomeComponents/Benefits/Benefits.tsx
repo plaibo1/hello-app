@@ -102,7 +102,7 @@ export const Benefits = () => {
                   xl={{ fontSize: "13px" }}
                   dangerouslySetInnerHTML={{
                     __html: t(
-                      "Получите <span>Premium бесплатно</span> на 1 месяц и получите новый опыт взаимодействия с приложением.",
+                      "Получите <span>Premium бесплатно</span> на 1 месяц и получите новый опыт взаимодействия с приложением&#46;",
                       {
                         interpolation: { escapeValue: false },
                       }

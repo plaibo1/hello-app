@@ -18,11 +18,11 @@ interface AccessSchema {
 
 export const accessLinks: AccessSchema = {
   withPremium: {
-    access: ["/account", "/tariff"],
+    access: ["/account", "/tariff", "/recovery"],
     redirect: "/account",
   },
   withoutPremium: {
-    access: ["/premium"],
+    access: ["/premium", "/recovery"],
     redirect: "/premium",
   },
   withoutLogin: {

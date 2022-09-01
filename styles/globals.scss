@@ -32,3 +32,20 @@ button {font-family: 'Roboto', sans-serif;}
 .rc-dialog {
   width: inherit
 }
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+}
+.layoutWrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}

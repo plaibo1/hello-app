@@ -35,6 +35,7 @@ export const PhoneImage: FC = () => {
           src="/images/phone_banner/mockup.png"
           layout="fill"
           alt="Header image"
+          priority
         />
       </div>
       {images()}

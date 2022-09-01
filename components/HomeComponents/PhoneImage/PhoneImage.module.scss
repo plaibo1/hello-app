@@ -17,6 +17,7 @@
   padding-top: 203.125%;
   margin-top: -20px;
   margin-bottom: -440px;
+  position: relative;
   filter: drop-shadow(10px 12px 35px rgba(0, 0, 0, 0.15)) drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.15));
   @media (max-width: $xl) {
     margin-top: -13px;
@@ -147,13 +148,25 @@
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+  &:before {
+    animation-name: slideDown;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
 }
 
 .animateUp {
-  animation-name: slideUp ;
+  animation-name: slideUpBack;
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-timing-function: linear;
+  &:before {
+    animation-name: slideDownBack;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+  }
 }
 @keyframes slideDown {
   0% {
@@ -166,6 +179,27 @@
 
   50% {
     transform: translateY(10px);
+  }
+
+  80% {
+    transform: translateY(0px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes slideDownBack {
+  0% {
+    transform: translateY(0px);
+  }
+
+  30% {
+    transform: translateY(15px);
+  }
+
+  50% {
+    transform: translateY(15px);
   }
 
   80% {
@@ -189,6 +223,27 @@
     transform: translateY(-10px);
   }
   
+  80% {
+    transform: translateY(0px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+@keyframes slideUpBack {
+  0% {
+    transform: translateY(0px);
+  }
+
+  30% {
+    transform: translateY(-15px);
+  }
+
+  50% {
+    transform: translateY(-15px);
+  }
+
   80% {
     transform: translateY(0px);
   }

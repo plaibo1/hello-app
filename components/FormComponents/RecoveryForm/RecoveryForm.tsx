@@ -32,7 +32,7 @@ export const RecoveryForm = () => {
   const [passwordError, setPasswordError] = useState<string>("");
   const [codeValue, setCodeValue] = useState<
     Array<number | string | undefined>
-  >([]);
+  >(["", "", "", ""]);
   const [codeError, setCodeError] = useState<string>("");
 
   const handlePhoneInput = useCallback((value: E164Number | undefined) => {

@@ -4,4 +4,5 @@ module.exports = {
   pages: {
     "*": ["common"],
   },
+  keySeparator: false,
 };

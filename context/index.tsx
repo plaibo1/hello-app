@@ -168,7 +168,7 @@ const Provider = ({
   }, []);
 
   const cancelTariff = useCallback(async () => {
-    _cancelTariff();
+    await _cancelTariff();
     const userInfo = getSelfInfo();
     return userInfo;
   }, [getSelfInfo]);

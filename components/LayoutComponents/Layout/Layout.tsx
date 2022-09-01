@@ -33,9 +33,6 @@ export const Layout: FC<IProps> = ({
   useEffect(() => {
     let profileStatus = "withoutLogin";
     const page = pathname.split("?")[0];
-    console.log("STATE", state);
-    console.log("PAGE", page);
-
     if (state.user.auth) {
       if (
         (state.user.data && state.user.data.premium) ||
@@ -57,10 +54,10 @@ export const Layout: FC<IProps> = ({
   return (
     <>
       <Head>
-        <title>{t(meta.title || "Hello")}</title>
+        <title>{meta.title || "Hello"}</title>
         <meta
           name="description"
-          content={t(meta.description || "meta description")}
+          content={meta.description || "meta description"}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
