@@ -19,16 +19,6 @@ button {font-family: 'Roboto', sans-serif;}
   outline: 0 !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-  body {
-    color: white;
-    background: black;
-  }
-}
-
 .rc-dialog {
   width: inherit
 }
