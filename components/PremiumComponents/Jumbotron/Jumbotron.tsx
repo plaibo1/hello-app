@@ -33,11 +33,24 @@ export const Jumbotron: FC<IProps> = ({ onButtonClick }) => {
               backgroundColor="white"
               color="#171717"
               padding="12px 46px"
+              mb="12px"
               whiteButton
               onClick={onButtonClick}
             >
               {t("Попробовать бесплатно")}
             </StyledButton>
+            <StyledSubhead
+              fontSize="12px"
+              md={{ textAlign: "center", fontSize: "11px" }}
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  "1 месяц бесплатно не доступен для пользователей,<br>которые уже пробовали Премиум",
+                  {
+                    interpolation: { escapeValue: false },
+                  }
+                ),
+              }}
+            />
           </Col>
         </Row>
       </Container>

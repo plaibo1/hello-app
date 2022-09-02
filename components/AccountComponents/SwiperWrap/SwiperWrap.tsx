@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { useMediaQuery } from "usehooks-ts";
+import { useMediaQuery } from "../../../hooks";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper";
 import "swiper/css";

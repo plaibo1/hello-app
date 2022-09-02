@@ -53,6 +53,11 @@ export const Jumbotron = () => {
                   padding="12px 46px"
                   whiteButton
                   xl={{ mb: "0px", padding: "12px 65px" }}
+                  md={{
+                    padding: "12px 30px",
+                    width: "100%",
+                    textAlign: "center",
+                  }}
                 >
                   {t("Скачать приложение")}
                 </StyledButton>

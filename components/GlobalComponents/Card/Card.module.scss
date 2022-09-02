@@ -25,6 +25,10 @@
     margin-right: 8px;
     width: 36px;
     height: 36px;
+
+    @media (max-width: $md) {
+      margin-right: 14px;
+    }
   }
 }
 
@@ -61,5 +65,8 @@
 
   @media (max-width: $xl) {
     font-size: 14px;
+  }
+  @media (max-width: $md) {
+    letter-spacing: -0.2px;
   }
 }

@@ -1,7 +1,6 @@
 @import "/styles/variables.scss";
 
 .jumbotronImageWrap {
-  pointer-events: none;
   user-select: none;
   position: relative;
   width: 352px;
@@ -10,6 +9,16 @@
 
   @media (max-width: $xl) {
     width: 212px;
+  }
+
+  &:hover {
+    & .miniImage, & .bigImage {
+      transform: scale(1.1);
+      &:before {
+        top: 0%;
+        left: 0%;
+      }
+    }
   }
 }
 
@@ -33,6 +42,11 @@
   width: 43.33px;
   height: 129.9px;
   border-radius: 32px;
+  transition: .5s;
+  animation-name: onLoadOpacity;
+  animation-duration: 5s;
+  animation-fill-mode: forwards;
+  opacity: 0;
   &:before {
     content: "";
     position: absolute;
@@ -41,7 +55,11 @@
     top: -9%;
     left: -35%;
     border-radius: 32px;
+    transition: .5s;
     background-color: rgba(255,255,255,0.2);
+    animation-name: onLoadBig;
+    animation-duration: 5.5s;
+    animation-timing-function: linear;
   }
 
   @media (max-width: $xl) {
@@ -54,6 +72,11 @@
   width: 29.79px;
   height: 86.6px;
   border-radius: 32px;
+  transition: .5s;
+  animation-name: onLoadOpacity;
+  animation-duration: .5s;
+  animation-fill-mode: forwards;
+  opacity: 0;
   &:before {
     content: "";
     position: absolute;
@@ -62,9 +85,13 @@
     top: -15%;
     left: -45%;
     border-radius: 32px;
+    transition: .5s;
     background-color: rgba(255, 255, 255, 0.2);
-  }
 
+    animation-name: onLoadMini;
+    animation-duration: 5.5s;
+    animation-timing-function: linear;
+  }
   @media (max-width: $xl) {
     width: 17.92px;
     height: 52.08px;
@@ -73,182 +100,115 @@
 .image-1 {
   left: -16%;
   top: 43%;
+  animation-delay: 1.2s;
 }.image-2 {
   left: -0.5%;
-  top: 32%;
+  top: 32%;animation-delay: 3.6s;
 }.image-3 {
   left: 19.5%;
-  top: 38%;
+  top: 38%;animation-delay: 2.4s;
 }.image-4 {
   left: 34.5%;
-  top: 37%;
+  top: 37%;animation-delay: 1.2s;
 }.image-5 {
   left: 54.5%;
-  top: 33%;
+  top: 33%;animation-delay: 4.2s;
 }.image-6 {
   left: 70.5%;
-  top: 38%;
+  top: 38%;animation-delay: 1.2s;
 }.image-7 {
   left: 89.5%;
-  top: 37%;
+  top: 37%;animation-delay: 3s;
 }.image-8 {
   left: 105.5%;
-  top: 33%;
+  top: 33%;animation-delay: 2.4s;
 }.image-9 {
   left: -16.5%;
-  top: 59%;
+  top: 59%;animation-delay: 1.8s;
 }.image-10 {
   left: 1.5%;
-  top: 54%;
+  top: 54%;animation-delay: 4.2s;
 }.image-11 {
   left: 17.5%;
-  top: 54%;
+  top: 54%;animation-delay: .6s;
 }.image-12 {
   left: 36.5%;
-  top: 59%;
+  top: 59%;animation-delay: 3.6s;
 }.image-13 {
   left: 54.5%;
-  top: 49%;
+  top: 49%;animation-delay: 2.4s;
 }.image-14 {
   left: 72.5%;
-  top: 60%;
+  top: 60%;animation-delay: 0.2s;
 }.image-15 {
   left: 87.5%;
-  top: 53%;
+  top: 53%;animation-delay: 1.8s;
 }.image-16 {
   left: 107.5%;
-  top: 55%;
+  top: 55%;animation-delay: 3s;
 }.image-17 {
   left: -18.5%;
-  top: 75%;
+  top: 75%;animation-delay: .6s;
 }.image-18 {
   left: 1.5%;
-  top: 70%;
+  top: 70%;animation-delay: 4.2s;
 }.image-19 {
   left: 19.5%;
-  top: 76%;
+  top: 76%;animation-delay: .6s;
 }.image-20 {
   left: 34.5%;
-  top: 75%;
+  top: 75%;animation-delay: 3.6s;
 }.image-21 {
   left: 52.5%;
-  top: 65%;
+  top: 65%;animation-delay: 0.2s;
 }.image-22 {
   left: 72.5%;
-  top: 76%;
+  top: 76%;animation-delay: 3s;
 }.image-23 {
   left: 88.5%;
-  top: 75%;
+  top: 75%;animation-delay: 1.8s;
 }.image-24 {
   left: 107.5%;
-  top: 71%;
+  top: 71%;animation-delay: 0.2s;
 }
 .animateDown {
-  animation-name: slideDown;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  &:before {
-    animation-name: slideDown;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-  }
 }
 
 .animateUp {
-  animation-name: slideUpBack;
-  animation-duration: 2s;
-  animation-iteration-count: infinite;
-  animation-timing-function: linear;
-  &:before {
-    animation-name: slideDownBack;
-    animation-duration: 2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
+}
+@keyframes onLoadBig {
+  0% {
+    top: 0%;
+    left: 0%;
+  }
+  91% {
+    top: 0%;
+    left: 0%;
+  }
+  100% {
+    top: -9%;
+    left: -35%;
   }
 }
-@keyframes slideDown {
+@keyframes onLoadMini {
   0% {
-    transform: translateY(0px);
+    top: 0%;
+    left: 0%;
   }
-
-  30% {
-    transform: translateY(10px);
+  91% {
+    top: 0%;
+    left: 0%;
   }
-
-  50% {
-    transform: translateY(10px);
-  }
-
-  80% {
-    transform: translateY(0px);
-  }
-
   100% {
-    transform: translateY(0px);
+    top: -15%;
+    left: -45%;
   }
 }
-@keyframes slideDownBack {
+@keyframes onLoadOpacity {
   0% {
-    transform: translateY(0px);
+    opacity: 0;
   }
-
-  30% {
-    transform: translateY(15px);
-  }
-
-  50% {
-    transform: translateY(15px);
-  }
-
-  80% {
-    transform: translateY(0px);
-  }
-
   100% {
-    transform: translateY(0px);
-  }
-}
-@keyframes slideUp {
-  0% {
-    transform: translateY(0px);
-  }
-
-  30% {
-    transform: translateY(-10px);
-  }
-
-  50% {
-    transform: translateY(-10px);
-  }
-  
-  80% {
-    transform: translateY(0px);
-  }
-
-  100% {
-    transform: translateY(0px);
-  }
-}
-@keyframes slideUpBack {
-  0% {
-    transform: translateY(0px);
-  }
-
-  30% {
-    transform: translateY(-15px);
-  }
-
-  50% {
-    transform: translateY(-15px);
-  }
-
-  80% {
-    transform: translateY(0px);
-  }
-
-  100% {
-    transform: translateY(0px);
+    opacity: 1;
   }
 }

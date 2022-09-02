@@ -114,7 +114,6 @@ const Provider = ({
       if (start_trial) {
         if (!userInfo.selfProfile.premium && !userInfo.selfProfile.trial) {
           await startTrial();
-          await changeTariff(tariff || "");
           push({
             pathname: "/account",
             query: { show_modal: true },

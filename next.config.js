@@ -8,7 +8,6 @@ const nextConfig = {
     domains: ["localhost", "flag.pk", "storage.googleapis.com"],
   },
   reactStrictMode: false,
-  swcMinify: true,
 };
 
 module.exports = withTM(withImages(nextTranslate(nextConfig)));

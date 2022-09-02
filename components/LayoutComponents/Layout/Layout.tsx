@@ -43,6 +43,9 @@ export const Layout: FC<IProps> = ({
         profileStatus = "withoutPremium";
       }
     }
+    console.log(state.user.data.premium);
+    console.log(state.user.data.trial);
+    console.log(profileStatus);
     const statusObject = accessLinks[profileStatus];
     if (
       !statusObject.access.includes(page) &&

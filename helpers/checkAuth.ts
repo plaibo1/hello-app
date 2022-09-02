@@ -58,6 +58,7 @@ export const checkAuth = async (
       profileStatus = "withoutPremium";
     }
   }
+  console.log(profileStatus);
   redirect(page, profileStatus, res);
 
   return {

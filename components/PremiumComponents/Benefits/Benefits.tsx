@@ -11,20 +11,6 @@ import useTranslation from "next-translate/useTranslation";
 
 const DynamicSwiper = dynamic(() => import("../SwiperWrap/") as any, {
   ssr: false,
-  loading: () => (
-    <ContentLoader
-      speed={2}
-      width={312}
-      height={164}
-      viewBox="0 0 312 164"
-      backgroundColor="#f3f3f3"
-      foregroundColor="#ecebeb"
-    >
-      <rect x="0" y="80" rx="3" ry="3" width="312" height="6" />
-      <rect x="0" y="110" rx="3" ry="3" width="312" height="6" />
-      <circle cx="156" cy="36" r="36" />
-    </ContentLoader>
-  ),
 });
 
 export const Benefits = () => {

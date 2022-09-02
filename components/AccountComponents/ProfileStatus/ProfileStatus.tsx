@@ -23,19 +23,20 @@ interface IProps {
 
 export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
   const { t } = useTranslation("common");
-  const { replace, push } = useRouter();
+  const { push } = useRouter();
   const {
     state: {
       user: { premium, data },
     },
   } = useContext<any>(Context);
-  const [bindCardUrl, setBindCardUrl] = useState<string>("");
+  console.log(premium);
+  console.log(data);
 
-  useEffect(() => {
+  const handleBindCard = () => {
     getBindCardUrl().then((url) => {
-      setBindCardUrl(url.paymentUrl);
+      push(url.paymentUrl);
     });
-  }, []);
+  };
 
   return (
     <section className={classes.wrapper}>
@@ -158,9 +159,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     backgroundColor="#FAFAFA"
                     color="#171717"
                     padding="12px 47px"
-                    onClick={() =>
-                      replace(`${bindCardUrl}&successURL=test.com`)
-                    }
+                    onClick={handleBindCard}
                   >
                     {t("Привязать карту")}
                   </StyledButton>

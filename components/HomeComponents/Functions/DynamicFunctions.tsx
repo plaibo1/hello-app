@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import "swiper/css";
 import "swiper/css/pagination";
-import { useMediaQuery } from "usehooks-ts";
+import { useMediaQuery } from "../../../hooks";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper";
 import { Col, Row } from "react-flexbox-grid";

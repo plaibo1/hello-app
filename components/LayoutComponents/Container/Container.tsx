@@ -29,8 +29,8 @@ export const Container = styled(ContainerWrap)`
     box-sizing: border-box;
     margin-left: auto;
     margin-right: auto;
-    padding-right: 8px;
-    padding-left: 8px;
+    padding-right: 19px;
+    padding-left: 19px;
     @media (min-width: 540px) {
       width: 536px;
       max-width: 100%;

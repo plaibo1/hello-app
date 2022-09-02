@@ -1,4 +1,5 @@
 import "../styles/globals.scss";
+import "intl-pluralrules";
 import type { AppProps } from "next/app";
 import { Provider } from "../context";
 
