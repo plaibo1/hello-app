@@ -14,7 +14,7 @@ const DynamicSwiper = dynamic(() => import("../SwiperWrap/") as any, {
 });
 
 export const Benefits = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("premium");
   return (
     <section className={classes.wrapper}>
       <Container>
@@ -23,12 +23,9 @@ export const Benefits = () => {
             <StyledTitle2
               textAlign="center"
               dangerouslySetInnerHTML={{
-                __html: t(
-                  "Откройте все преимущества <span>Hello Premium</span>",
-                  {
-                    interpolation: { escapeValue: false },
-                  }
-                ),
+                __html: t("benefits.title", {
+                  interpolation: { escapeValue: false },
+                }),
               }}
             />
             <StyledDivider mb="24px" />

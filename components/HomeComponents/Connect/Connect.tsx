@@ -8,7 +8,7 @@ import { DownloadBlock } from "../DownloadBlock";
 import useTranslation from "next-translate/useTranslation";
 
 export const Connect = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   return (
     <section className={classes.wrapper}>
       <Container>
@@ -17,7 +17,7 @@ export const Connect = () => {
             <StyledTitle2
               xl={{ textAlign: "center" }}
               dangerouslySetInnerHTML={{
-                __html: t("Присоединяйтесь к сообществу <span>Hello</span>", {
+                __html: t("connect.title", {
                   interpolation: { escapeValue: false },
                 }),
               }}
@@ -27,9 +27,7 @@ export const Connect = () => {
               mb="32px"
               xl={{ textAlign: "center" }}
             >
-              {t(
-                "Приложение Hello позволит расширить ваши личные и бизнес связи"
-              )}
+              {t("connect.subtitle")}
             </StyledSubhead>
             <DownloadBlock />
           </Col>

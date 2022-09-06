@@ -25,7 +25,7 @@ interface StatusType {
 type StatusFunc = () => StatusType;
 
 const StatusObject: StatusFunc = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("account");
   return {
     active: (
       <>
@@ -43,11 +43,11 @@ const StatusObject: StatusFunc = () => {
             strokeLinecap="round"
           />
         </svg>
-        {t("Подписка активна")}
+        {t("statusBar.tariffStatus.active")}
       </>
     ),
-    stopped: t("Подписка отменена"),
-    paused: t("Подписка приостановлена"),
+    stopped: t("statusBar.tariffStatus.canceled"),
+    paused: t("statusBar.tariffStatus.paused"),
   };
 };
 

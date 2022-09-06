@@ -7,7 +7,7 @@ import { Row, Col } from "react-flexbox-grid";
 import useTranslation from "next-translate/useTranslation";
 
 const Header = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("layout");
   const { state } = useContext<any>(Context);
   return (
     <header className={classes.header}>
@@ -28,7 +28,7 @@ const Header = () => {
                     <Avatar />
                   </>
                 ) : (
-                  <StyledLink href="/login">{t("Войти")}</StyledLink>
+                  <StyledLink href="/login">{t("header.loginText")}</StyledLink>
                 )}
               </Col>
             </Row>

@@ -8,12 +8,9 @@ import { Layout } from "components/LayoutComponents/Layout";
 import useTranslation from "next-translate/useTranslation";
 
 const Recovery: NextPage = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("recovery");
   return (
-    <Layout
-      meta={{ title: t("Hello - Новые знакомства рядом с вами") }}
-      fullHeight={true}
-    >
+    <Layout meta={{ title: t("pageTitle") }} fullHeight={true}>
       <section className={classes.recovery}>
         <div className={classes.formWrap}>
           <RecoveryForm />

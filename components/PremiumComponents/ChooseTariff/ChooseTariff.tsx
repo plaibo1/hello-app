@@ -14,7 +14,7 @@ interface IProps {
 }
 
 export const ChooseTariff: FC<IProps> = ({ containerRef }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("premium");
   const { state } = useContext<any>(Context);
   const currentTariffRef = useRef(state.user.premium.tariff);
 
@@ -24,7 +24,7 @@ export const ChooseTariff: FC<IProps> = ({ containerRef }) => {
         <Row>
           <Col md={12}>
             <StyledTitle2 textAlign="center" mb="24px">
-              {t("Выберите свой тариф")}
+              {t("chooseTariff.title")}
             </StyledTitle2>
           </Col>
         </Row>

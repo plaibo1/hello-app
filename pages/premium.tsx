@@ -8,7 +8,7 @@ import { ChooseTariff } from "../components/PremiumComponents/ChooseTariff";
 import useTranslation from "next-translate/useTranslation";
 
 const Premium: NextPage = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("premium");
   const chooseTariffRef = useRef<HTMLElement>(null);
   const handleButtonClick = () => {
     if (chooseTariffRef.current) {
@@ -19,7 +19,7 @@ const Premium: NextPage = () => {
     }
   };
   return (
-    <Layout meta={{ title: t("Личный кабинет - Hello") }}>
+    <Layout meta={{ title: t("pageTitle") }}>
       <Jumbotron onButtonClick={handleButtonClick} />
       <Benefits />
       <ChooseTariff containerRef={chooseTariffRef} />

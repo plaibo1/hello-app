@@ -8,6 +8,17 @@ interface IProps {
 }
 
 export const CodeInput: FC<IProps> = ({ value, onChange, onFocus }) => {
+  const handleDelete = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const target = event?.target as HTMLInputElement;
+    if (
+      target.value === "" &&
+      target.value.length < target.maxLength &&
+      target.previousSibling &&
+      event.keyCode === 8
+    ) {
+      (target.previousSibling as HTMLInputElement).focus();
+    }
+  };
   return (
     <label className={classes.codeInput}>
       <input
@@ -16,6 +27,7 @@ export const CodeInput: FC<IProps> = ({ value, onChange, onFocus }) => {
         value={value[0]}
         onChange={(event) => onChange(0, event.target)}
         onFocus={onFocus}
+        onKeyDown={handleDelete}
       />
       <input
         className={classes.input}
@@ -23,6 +35,7 @@ export const CodeInput: FC<IProps> = ({ value, onChange, onFocus }) => {
         value={value[1]}
         onChange={(event) => onChange(1, event.target)}
         onFocus={onFocus}
+        onKeyDown={handleDelete}
       />
       <input
         className={classes.input}
@@ -30,6 +43,7 @@ export const CodeInput: FC<IProps> = ({ value, onChange, onFocus }) => {
         value={value[2]}
         onChange={(event) => onChange(2, event.target)}
         onFocus={onFocus}
+        onKeyDown={handleDelete}
       />
       <input
         className={classes.input}
@@ -37,6 +51,7 @@ export const CodeInput: FC<IProps> = ({ value, onChange, onFocus }) => {
         value={value[3]}
         onChange={(event) => onChange(3, event.target)}
         onFocus={onFocus}
+        onKeyDown={handleDelete}
       />
     </label>
   );

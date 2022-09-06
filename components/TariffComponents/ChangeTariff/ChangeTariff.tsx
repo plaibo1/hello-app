@@ -9,7 +9,7 @@ import { MOC_TARIFFS } from "../../../constants/tariffs";
 import { TariffCard } from "../TariffCard";
 
 export const ChangeTariff = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("tariff");
   const { state } = useContext<any>(Context);
   const currentTariffRef = useRef(state.user.premium.tariff);
 
@@ -24,8 +24,8 @@ export const ChangeTariff = () => {
                   state.user.premium.tariff !== "trial" &&
                   !state.user.premium.autoPayment &&
                   state.user.premium.unactivate === 0
-                    ? "Выберите тариф"
-                    : "Смена тарифа"
+                    ? "title.withPremium"
+                    : "title.withoutPremium"
                 }`
               )}
             </StyledTitle2>

@@ -17,7 +17,7 @@ import { passwordSchema } from "../../../Schemas/Login";
 import useTranslation from "next-translate/useTranslation";
 
 export const LoginForm = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("login");
   const { push, query } = useRouter();
   const { login } = useContext<any>(Context);
   const [phoneValue, setPhoneValue] = useState<E164Number | undefined>("");
@@ -85,7 +85,7 @@ export const LoginForm = () => {
       <div className={classes.loginFormWrap}>
         <Logo size="mini" />
         <StyledTitle2 textAlign="center" mt="4px">
-          {t("Вход")}
+          {t("title")}
         </StyledTitle2>
         <form onSubmit={(event) => handleSubmit(event)} autoComplete="off">
           <PhoneInput
@@ -100,9 +100,7 @@ export const LoginForm = () => {
             error={passwordError}
           />
           {loginError && (
-            <div className={classes.errorTitle}>
-              {t("Введен неверный логин или пароль")}
-            </div>
+            <div className={classes.errorTitle}>{t("loginError")}</div>
           )}
           <StyledButton
             type="submit"
@@ -111,7 +109,7 @@ export const LoginForm = () => {
             mt="12px"
             mb="15px"
           >
-            {t("Войти")}
+            {t("submitButton")}
           </StyledButton>
           <StyledLink
             href="/recovery"
@@ -119,7 +117,7 @@ export const LoginForm = () => {
             textAlign="center"
             display="block"
           >
-            {t("Забыли пароль?")}
+            {t("recoveryPassword")}
           </StyledLink>
         </form>
       </div>

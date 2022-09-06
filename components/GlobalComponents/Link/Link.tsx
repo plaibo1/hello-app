@@ -7,7 +7,7 @@ interface IProps {
   className?: string;
   children: ReactNode;
   href?: string;
-  onClick?: () => void;
+  onClick?: (event?: any) => void;
 }
 
 interface IStyledProps {
@@ -28,8 +28,10 @@ interface AdaptiveStyledProps extends IStyledProps {
 
 export const Link: FC<IProps> = ({ className, children, href, onClick }) => {
   return (
-    <NextLink href={href || ""} onClick={onClick}>
-      <a className={className}>{children}</a>
+    <NextLink href={href || ""}>
+      <a className={className} onClick={onClick}>
+        {children}
+      </a>
     </NextLink>
   );
 };

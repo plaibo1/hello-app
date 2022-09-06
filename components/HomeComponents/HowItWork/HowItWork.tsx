@@ -10,7 +10,7 @@ import Container from "../../LayoutComponents/Container";
 import classes from "./HowItWork.module.scss";
 
 export const HowItWork = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   return (
     <section className={classes.wrapper}>
       <Container>
@@ -19,19 +19,16 @@ export const HowItWork = () => {
             <StyledTitle2
               md={{ textAlign: "center" }}
               dangerouslySetInnerHTML={{
-                __html: t("Как работает <span>Hello</span>", {
+                __html: t("howItWork.title", {
                   interpolation: { escapeValue: false },
                 }),
               }}
             />
             <StyledDivider mb="24px" xl={{ width: "354px" }} />
             <StyledNumericList
-              items={[
-                "Скачайте приложение на телефон",
-                "Зарегистрируйтесь и создайте личный или бизнес профиль",
-                "Включите bluetooth и начните искать интересных людей поблизости ",
-                "Расширяйте сообщество Hello, рассказывая о нас друзьям и коллегам",
-              ]}
+              items={Array.from({ length: 4 }, (_, idx) =>
+                t(`howItWork.items.${idx}`)
+              )}
             />
           </Col>
         </Row>

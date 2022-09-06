@@ -24,9 +24,9 @@ interface IProps {
 }
 
 export const TariffCard: FC<IProps> = ({ tariff }) => {
-  const { t } = useTranslation("common");
-  const { push } = useRouter();
-  const { state, startTrial } = useContext<any>(Context);
+  const { t } = useTranslation("premium");
+  const { push, replace } = useRouter();
+  const { state, startTrial, tariffPayment } = useContext<any>(Context);
   const {
     id,
     free,
@@ -37,12 +37,29 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
     benefitDescription,
   } = tariff;
 
+  const isEndedPremium = () => {
+    return (
+      state.user.data.trial &&
+      !state.user.premium?.autoPayment &&
+      state.user.premium?.unactivate === 0
+    );
+  };
+
   const handleStartTrial = async () => {
-    await startTrial();
-    push({
-      pathname: "/account",
-      query: { show_modal: true },
-    });
+    if (isEndedPremium()) {
+      try {
+        const { paymentUrl } = await tariffPayment(id);
+        replace(paymentUrl);
+      } catch (error: any) {
+        console.log(error);
+      }
+    } else {
+      await startTrial(id);
+      push({
+        pathname: "/account",
+        query: { show_modal: true },
+      });
+    }
   };
 
   return (
@@ -55,14 +72,16 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
             fontSize="16px"
             md={{ fontSize: "14px" }}
           >
-            {t(free)}
+            {t(`chooseTariff.items.${id}.free`)}
           </StyledSubhead>
           <StyledSubhead
             display="inline"
             color="#848592"
             fontSize="16px"
             md={{ fontSize: "14px" }}
-          >{`, ${t(freeDescription)}`}</StyledSubhead>
+          >{`, ${t(
+            `chooseTariff.items.${id}.freeDescription`
+          )}`}</StyledSubhead>
         </div>
         <StyledDivider />
         {benefitPercent && benefitDescription && (
@@ -71,10 +90,10 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
               className={classes.benefitPercent}
               style={{ backgroundColor: benefitBackground }}
             >
-              {t(benefitPercent)}
+              {t(`chooseTariff.items.${id}.benefitPercent`)}
             </span>
             <span className={classes.benefitDescription}>
-              {t(benefitDescription)}
+              {t(`chooseTariff.items.${id}.benefitDescription`)}
             </span>
           </div>
         )}
@@ -97,7 +116,9 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
         }
         gradientBackground={true}
       >
-        {t("Попробовать бесплатно")}
+        {isEndedPremium()
+          ? t("chooseTariff.button.withTrial")
+          : t("chooseTariff.button.withoutTrial")}
       </StyledButton>
     </div>
   );

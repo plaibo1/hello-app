@@ -22,7 +22,7 @@ import { Context } from "../../../context";
 import useTranslation from "next-translate/useTranslation";
 
 export const RecoveryForm = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("recovery");
   const { codeConfirm } = useContext<any>(Context);
   const { push } = useRouter();
   const [step, setStep] = useState<number>(1);
@@ -57,7 +57,8 @@ export const RecoveryForm = () => {
       if (
         target.value === "" &&
         target.value.length < target.maxLength &&
-        target.previousSibling
+        target.previousSibling &&
+        (target.previousSibling as HTMLInputElement).value === ""
       ) {
         (target.previousSibling as HTMLInputElement).focus();
       }
@@ -102,9 +103,9 @@ export const RecoveryForm = () => {
         setPhoneError(error.response.data.error.message);
       }
     } else {
-      setPhoneError("Неверный формат телефона");
+      setPhoneError(t("phoneError"));
     }
-  }, [phoneValue]);
+  }, [phoneValue, t]);
 
   const handleCodeForm = useCallback(async () => {
     setCodeError("");
@@ -124,9 +125,9 @@ export const RecoveryForm = () => {
         setCodeError(error);
       }
     } else {
-      setCodeError("Неверный формат кода");
+      setCodeError(t("codeError"));
     }
-  }, [codeConfirm, codeValue, phoneValue]);
+  }, [codeConfirm, codeValue, phoneValue, t]);
 
   const handlePasswordForm = useCallback(async () => {
     try {
@@ -162,10 +163,10 @@ export const RecoveryForm = () => {
     return (
       <>
         <StyledTitle2 textAlign="center" mb="12px">
-          {t("Восстановление пароля")}
+          {t("title")}
         </StyledTitle2>
         <StyledSubhead color="#848592" textAlign="center">
-          {t("Введите номер телефона, который был привязан к вашему аккаунту.")}
+          {t("subtitle")}
         </StyledSubhead>
         <PhoneInput
           value={phoneValue}
@@ -181,7 +182,7 @@ export const RecoveryForm = () => {
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
         >
-          {t("Далее")}
+          {t("nextButton")}
         </StyledButton>
       </>
     );
@@ -191,15 +192,15 @@ export const RecoveryForm = () => {
     return (
       <>
         <StyledTitle2 textAlign="center" mb="12px">
-          {t("Введите код из смс")}
+          {t("codeTitle")}
         </StyledTitle2>
         <StyledSubhead color="#848592" textAlign="center">
-          {t("Мы отправили его на номер")}{" "}
+          {t("codeSubtitle")}{" "}
           {phoneValue
             ? formatPhoneNumber(phoneValue).replace(/(\d[ .-]?){6}$/, (x) =>
                 x.replace(/\d/g, "*")
               )
-            : "ТЕСТОВЫЙ"}
+            : "codeTestPhone"}
         </StyledSubhead>
         <CodeInput
           value={codeValue}
@@ -217,7 +218,7 @@ export const RecoveryForm = () => {
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
         >
-          {t("Далее")}
+          {t("nextButton")}
         </StyledButton>
       </>
     );
@@ -227,7 +228,7 @@ export const RecoveryForm = () => {
     return (
       <>
         <StyledTitle2 textAlign="center" mb="16px">
-          {t("Новый пароль")}
+          {t("passwordTitle")}
         </StyledTitle2>
         <PasswordInput
           value={passwordValue}
@@ -242,7 +243,7 @@ export const RecoveryForm = () => {
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
         >
-          {t("Сохранить и войти")}
+          {t("saveButton")}
         </StyledButton>
       </>
     );

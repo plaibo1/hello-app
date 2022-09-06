@@ -8,7 +8,7 @@ interface IProps {
 }
 
 export const DownloadBlock: FC<IProps> = ({ color = "black" }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   return (
     <div className={classes.wrapper}>
       <div className={classes.qrWrap}>
@@ -21,7 +21,7 @@ export const DownloadBlock: FC<IProps> = ({ color = "black" }) => {
           className={classes.downloadTitle}
           style={{ color: color === "black" ? "#171717" : "white" }}
         >
-          {t("Наведите камеру на QR-код, чтобы скачать")}
+          {t("jumbotron.qrText")}
         </p>
         <div className={classes.storesWrap}>
           <div className={classes.storeItem}>

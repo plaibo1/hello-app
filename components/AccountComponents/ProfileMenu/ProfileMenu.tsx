@@ -6,7 +6,7 @@ import { Context } from "../../../context";
 import useTranslation from "next-translate/useTranslation";
 
 export const ProfileMenu = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("layout");
   const { logout } = useContext<any>(Context);
   const handleLogout = async () => {
     await logout();
@@ -33,7 +33,7 @@ export const ProfileMenu = () => {
             alt="icon"
           />
         </div>
-        {t("Выйти")}
+        {t("header.logoutText")}
       </StyledButton>
     </div>
   );

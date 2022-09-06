@@ -13,19 +13,21 @@ interface IProps {
 export const LanguageSwitcher: FC<IProps> = ({ className }) => {
   const { pathname, asPath, query, push, locale } = useRouter();
 
+  const targetLocale = locale === "ru" ? "en" : "ru";
+
   const handleLocaleChange = () => {
     push({ pathname, query }, asPath, {
-      locale: locale === "ru" ? "en" : "ru",
+      locale: targetLocale,
     });
   };
   return (
     <div className={className}>
       <div className={classes.languageTitle}>
-        {COUNTRY_LIST[locale || "en"] || locale}
+        {COUNTRY_LIST[targetLocale || "en"] || locale}
       </div>
       <div className={classes.languageIcon} onClick={handleLocaleChange}>
         <Image
-          src={`/images/lang_icons/flag_ru.svg`}
+          src={`/images/lang_icons/flag_${targetLocale}.svg`}
           height={16}
           width={16}
           alt="icon"

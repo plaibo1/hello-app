@@ -11,7 +11,7 @@ import { MOC_FUNCTIONS } from "../../../constants/functions";
 import useTranslation from "next-translate/useTranslation";
 
 const DynamicFunctions = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   const matches = useMediaQuery("(max-width:765px)");
   const [activeSlide, setActiveSlide] = useState<number>(1);
   const [swiper, setSwiper] = useState<any>(null);
@@ -65,11 +65,11 @@ const DynamicFunctions = () => {
                         />
                       </span>
                       <span className={classes.sliderTitleSpan}>
-                        {t(item.title)}
+                        {t(`functions.items.${index}.title`)}
                       </span>
                     </div>
                     <div className={classes.sliderText}>
-                      {t(item.description)}
+                      {t(`functions.items.${index}.text`)}
                     </div>
                   </div>
                 </SwiperSlide>
@@ -97,11 +97,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {t(MOC_FUNCTIONS[0].title)}
+                    {t("functions.items.0.title")}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {t(MOC_FUNCTIONS[0].description)}
+                  {t("functions.items.0.text")}
                 </div>
               </div>
               <div
@@ -120,11 +120,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {t(MOC_FUNCTIONS[1].title)}
+                    {t("functions.items.1.title")}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {t(MOC_FUNCTIONS[1].description)}
+                  {t("functions.items.1.text")}
                 </div>
               </div>
               <div
@@ -143,11 +143,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {t(MOC_FUNCTIONS[2].title)}
+                    {t("functions.items.2.title")}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {t(MOC_FUNCTIONS[2].description)}
+                  {t("functions.items.2.text")}
                 </div>
               </div>
             </div>
@@ -199,11 +199,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {t(MOC_FUNCTIONS[3].title)}
+                    {t("functions.items.3.title")}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {t(MOC_FUNCTIONS[3].description)}
+                  {t("functions.items.3.text")}
                 </div>
               </div>
               <div
@@ -222,11 +222,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {t(MOC_FUNCTIONS[4].title)}
+                    {t("functions.items.4.title")}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {t(MOC_FUNCTIONS[4].description)}
+                  {t("functions.items.4.text")}
                 </div>
               </div>
               <div
@@ -245,11 +245,11 @@ const DynamicFunctions = () => {
                     />
                   </span>
                   <span className={classes.sliderTitleSpan}>
-                    {t(MOC_FUNCTIONS[5].title)}
+                    {t("functions.items.5.title")}
                   </span>
                 </div>
                 <div className={classes.sliderText}>
-                  {t(MOC_FUNCTIONS[5].description)}
+                  {t("functions.items.5.text")}
                 </div>
               </div>
             </div>

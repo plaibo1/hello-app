@@ -10,9 +10,9 @@ import { WhatIsIt } from "../components/HomeComponents/WhatIsIt";
 import useTranslation from "next-translate/useTranslation";
 
 const Home: NextPage = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   return (
-    <Layout meta={{ title: t("Hello - Новые знакомства рядом с вами") }}>
+    <Layout meta={{ title: t("pageTitle") }}>
       <Jumbotron />
       <HowItWork />
       <WhatIsIt />

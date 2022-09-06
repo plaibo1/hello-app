@@ -1,3 +1,4 @@
+import { Autoplay } from "swiper";
 import { accessLinks } from "constants/access";
 import { StateSchema } from "context";
 import * as cookie from "cookie";
@@ -53,12 +54,19 @@ export const checkAuth = async (
       (initialState.user.data && initialState.user.data.premium) ||
       initialState.user.data.trial
     ) {
-      profileStatus = "withPremium";
+      if (
+        initialState.user.data.trial &&
+        !initialState.user.premium?.autoPayment &&
+        initialState.user.premium?.unactivate === 0
+      ) {
+        profileStatus = "withoutPremium";
+      } else {
+        profileStatus = "withPremium";
+      }
     } else {
       profileStatus = "withoutPremium";
     }
   }
-  console.log(profileStatus);
   redirect(page, profileStatus, res);
 
   return {

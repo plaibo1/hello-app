@@ -20,7 +20,7 @@ import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 
 const Account: NextPage = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("account");
   const { query } = useRouter();
   const { state, cancelTariff } = useContext<any>(Context);
   const [cancelModalOpen, setCancelModalOpen] = useState<boolean>(false);
@@ -58,7 +58,7 @@ const Account: NextPage = () => {
   }, [query.show_modal]);
 
   return (
-    <Layout meta={{ title: t("Личный кабинет - Hello") }}>
+    <Layout meta={{ title: t("pageTitle") }}>
       <ProfileStatus handleModalOpen={handleCancelModalOpen} />
       <Benefits />
       <Dialog

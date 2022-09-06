@@ -12,10 +12,9 @@ import classes from "./Jumbotron.module.scss";
 import adaptiveClasses from "/styles/Adaptive.module.scss";
 import useTranslation from "next-translate/useTranslation";
 import { PhoneImage } from "../PhoneImage";
-import { useSpring } from "react-spring";
 
 export const Jumbotron = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   return (
     <section className={classes.wrapper}>
       <Container>
@@ -24,7 +23,7 @@ export const Jumbotron = () => {
             <Row>
               <Col md={12}>
                 <StyledTitle1 md={{ textAlign: "center" }}>
-                  {t("Новые знакомства рядом с вами")}
+                  {t("jumbotron.title")}
                 </StyledTitle1>
               </Col>
               <Col xl={8}>
@@ -33,17 +32,11 @@ export const Jumbotron = () => {
                   xl={{ mb: "24px" }}
                   md={{ textAlign: "center" }}
                 >
-                  {t(
-                    "Ищите новые знакомства и полезные контакты через bluetooth, в приложении Hello"
-                  )}
+                  {t("jumbotron.subtitle")}
                 </StyledSubhead>
               </Col>
               <Col md={12} className={adaptiveClasses["hidden-xl"]}>
-                <StyledTitle4>
-                  {t(
-                    "Скачивайте приложение и присоединяйтесь с сообществу Hello"
-                  )}
-                </StyledTitle4>
+                <StyledTitle4>{t("jumbotron.downloadText")}</StyledTitle4>
                 <DownloadBlock color="white" />
               </Col>
               <Col md={12} className={adaptiveClasses["visible-xl"]}>
@@ -59,7 +52,7 @@ export const Jumbotron = () => {
                     textAlign: "center",
                   }}
                 >
-                  {t("Скачать приложение")}
+                  {t("jumbotron.downloadLink")}
                 </StyledButton>
               </Col>
             </Row>

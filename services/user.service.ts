@@ -100,9 +100,12 @@ export const getSelfInfo = async (token?: string) => {
     });
 };
 
-export const startTrial = async () => {
+export const startTrial = async (deferTariff?: string) => {
   return apiClient
     .get(`${baseUrl}/web/pay/startTrial`, {
+      params: {
+        tariff: deferTariff,
+      },
       headers: {
         Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
       },

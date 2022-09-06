@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 
 export const Benefits = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   const { push } = useRouter();
   return (
     <section className={classes.wrapper}>
@@ -31,12 +31,9 @@ export const Benefits = () => {
                   xl={{ textAlign: "left", lineHeight: "1.33" }}
                   md={{ textAlign: "center" }}
                   dangerouslySetInnerHTML={{
-                    __html: t(
-                      "Больше возможностей с подпиской <span>Premium</span>",
-                      {
-                        interpolation: { escapeValue: false },
-                      }
-                    ),
+                    __html: t("benefits.title", {
+                      interpolation: { escapeValue: false },
+                    }),
                   }}
                 />
                 <div
@@ -76,8 +73,13 @@ export const Benefits = () => {
                   className={`${adaptiveClasses["hidden-xl"]} ${adaptiveClasses["visible-md"]}`}
                 >
                   <Col sm={6}>
-                    {HOME_BENEFITS.slice(0, 3).map((benefit) => {
-                      return <StyledListItem key={benefit} text={benefit} />;
+                    {HOME_BENEFITS.slice(0, 3).map((benefit, index) => {
+                      return (
+                        <StyledListItem
+                          key={benefit}
+                          text={t(`benefits.items.${index}`)}
+                        />
+                      );
                     })}
                   </Col>
                   <Col sm={6}>
@@ -89,7 +91,10 @@ export const Benefits = () => {
                           color="#171717"
                         />
                       ) : (
-                        <StyledListItem key={benefit} text={benefit} />
+                        <StyledListItem
+                          key={benefit}
+                          text={t(`benefits.items.${index}`)}
+                        />
                       );
                     })}
                   </Col>
@@ -101,12 +106,9 @@ export const Benefits = () => {
                   mb="20px"
                   xl={{ fontSize: "13px" }}
                   dangerouslySetInnerHTML={{
-                    __html: t(
-                      "Получите <span>Premium бесплатно</span> на 1 месяц и получите новый опыт взаимодействия с приложением&#46;",
-                      {
-                        interpolation: { escapeValue: false },
-                      }
-                    ),
+                    __html: t("benefits.subtitle", {
+                      interpolation: { escapeValue: false },
+                    }),
                   }}
                 />
                 <StyledButton
@@ -118,7 +120,7 @@ export const Benefits = () => {
                   gradientBackground
                   onClick={() => push("/premium")}
                 >
-                  {t("Подробнее")}
+                  {t("benefits.button")}
                 </StyledButton>
               </Col>
             </Row>

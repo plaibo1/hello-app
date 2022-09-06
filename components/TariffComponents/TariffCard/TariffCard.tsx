@@ -32,7 +32,7 @@ interface IProps {
 }
 
 export const TariffCard: FC<IProps> = ({ tariff }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("tariff");
   const { replace } = useRouter();
   const { state, changeTariff, tariffPayment } = useContext<any>(Context);
   const [error, setError] = useState<string>("");
@@ -76,10 +76,10 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
       <h3 className={classes.title}>{title}</h3>
       <div className={classes.description}>
         <StyledSubhead display="inline" fontSize="14px">
-          {t(free)}
+          {t(`items.${id}.free`)}
         </StyledSubhead>
         <StyledSubhead display="inline" color="#848592" fontSize="14px">{`, ${t(
-          freeDescription
+          `items.${id}.freeDescription`
         )}`}</StyledSubhead>
       </div>
       <StyledDivider />
@@ -89,10 +89,10 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
             className={classes.benefitPercent}
             style={{ backgroundColor: benefitBackground }}
           >
-            {t(benefitPercent)}
+            {t(`items.${id}.benefitPercent`)}
           </span>
           <span className={classes.benefitDescription}>
-            {t(benefitDescription)}
+            {t(`items.${id}.benefitDescription`)}
           </span>
         </div>
       )}
@@ -109,7 +109,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
         }
         gradientBackground={true}
       >
-        {t("Перейти")}
+        {t("button")}
       </StyledButton>
       <Dialog
         onClose={handleModalClose}
@@ -126,26 +126,26 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
               />
             </div>
             <StyledTitle3 mb="12px" textAlign="center">
-              {t(modalTitle)}
+              {t(`items.${id}.modalTitle`)}
             </StyledTitle3>
             <StyledSubhead mb="12px" textAlign="center">
-              {`${t("Оплата будет произведена")} ${dayjs
+              {`${t("paymentWillBe")} ${dayjs
                 .unix(state.user.premium.unactivate)
-                .format("DD.MM.YYYY")}, после ${
+                .format("DD.MM.YYYY")}, ${t("after")} ${
                 state.user.premium.tariff === "trial"
-                  ? "пробного периода"
-                  : "истечения подписки"
-              } “${TARIFFS[userTariffRef.current]}”`}
+                  ? t("afterTariff.withTrial")
+                  : t("afterTariff.withTariff")
+              } “${t(`items.${id}.title`)}”`}
             </StyledSubhead>
             <StyledSubhead mb="24px" textAlign="center" color="#848592">
-              {t(modalDescription)}
+              {t(`items.${id}.modalDescription`)}
             </StyledSubhead>
             <StyledButton
               blueButton
               mb="4px"
               onClick={() => handleChangeTariff(id)}
             >
-              {t("Перейти")}
+              {t("button")}
             </StyledButton>
             <StyledButton
               color="#4392BF"
@@ -154,7 +154,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
               mb="0px"
               onClick={handleModalClose}
             >
-              {t("Остаться на своей подписке")}
+              {t("cancelChangeButton")}
             </StyledButton>
           </div>
         )}

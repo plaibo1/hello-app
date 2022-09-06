@@ -9,9 +9,10 @@ import {
 import Container from "../../LayoutComponents/Container";
 import classes from "./WhatIsIt.module.scss";
 import useTranslation from "next-translate/useTranslation";
+import { WII_ITEMS } from "constants/whatIsIt";
 
 export const WhatIsIt = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   return (
     <section className={classes.wrapper}>
       <Container>
@@ -20,77 +21,33 @@ export const WhatIsIt = () => {
             <StyledTitle2
               textAlign="center"
               dangerouslySetInnerHTML={{
-                __html: t("Что такое <span>Hello</span>", {
+                __html: t("whatIsIt.title", {
                   interpolation: { escapeValue: false },
                 }),
               }}
             />
             <StyledDivider mb="24px" />
             <Row>
-              <Col md={6}>
-                <StyledCard
-                  icon={
-                    <Image
-                      src="/images/icons/people_search.svg"
-                      height={36}
-                      width={36}
-                      alt="icon"
+              {WII_ITEMS.map((item, index) => {
+                return (
+                  <Col md={6} key={item.title}>
+                    <StyledCard
+                      icon={
+                        <Image
+                          src={item.icon}
+                          height={36}
+                          width={36}
+                          alt="icon"
+                        />
+                      }
+                      title={t(`whatIsIt.items.${index}.title`)}
+                      text={t(`whatIsIt.items.${index}.text`)}
+                      mb="24px"
+                      xl={{ mb: "0px" }}
                     />
-                  }
-                  title="Простой поиск"
-                  text="Простой и удобный поиск людей поблизости, использующий bluetooth и работающий в фоне"
-                  mb="24px"
-                  xl={{ mb: "0px" }}
-                />
-              </Col>
-              <Col md={6}>
-                <StyledCard
-                  icon={
-                    <Image
-                      src="/images/icons/account_filter.svg"
-                      height={36}
-                      width={36}
-                      alt="icon"
-                    />
-                  }
-                  title="Фильтры по категориям"
-                  text="Система фильтрации, позволяющая тонко настроить поиск и находить только нужные вам контакты и знакомства"
-                  mb="24px"
-                  xl={{ mb: "0px" }}
-                />
-              </Col>
-              <Col md={6}>
-                <StyledCard
-                  icon={
-                    <Image
-                      src="/images/icons/message.svg"
-                      height={36}
-                      width={36}
-                      alt="icon"
-                    />
-                  }
-                  title="Обмен сообщениями"
-                  text="Короткие Push-сообщения, позволяющие быстро обмениваться своим профилем с другими людьми"
-                  mb="24px"
-                  xl={{ mb: "0px" }}
-                />
-              </Col>
-              <Col md={6}>
-                <StyledCard
-                  icon={
-                    <Image
-                      src="/images/icons/slide_settings.svg"
-                      height={36}
-                      width={36}
-                      alt="icon"
-                    />
-                  }
-                  title="Широкий выбор настроек"
-                  text="Настройки профилей и аккаунта, позволяющие настроить ваш опыт взаимодействия с приложением"
-                  mb="24px"
-                  xl={{ mb: "0px" }}
-                />
-              </Col>
+                  </Col>
+                );
+              })}
             </Row>
           </Col>
         </Row>

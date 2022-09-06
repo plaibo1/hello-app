@@ -14,13 +14,12 @@ interface IStyledProps {
 }
 
 export const NumericList: FC<IProps> = ({ className, items }) => {
-  const { t } = useTranslation("common");
   return (
     <ul className={className}>
       {items.map((item, index) => (
         <li key={item} className={classes.listItem}>
           <div className={classes.numberWrapper}>{index + 1}</div>
-          <div className={classes.content}>{t(item)}</div>
+          <div className={classes.content}>{item}</div>
         </li>
       ))}
     </ul>

@@ -86,11 +86,14 @@ const Provider = ({
     }
   }, []);
 
-  const startTrial = useCallback(async () => {
-    await _startTrial();
-    const userInfo = await getSelfInfo();
-    return userInfo;
-  }, [getSelfInfo]);
+  const startTrial = useCallback(
+    async (deferTariff: string) => {
+      await _startTrial(deferTariff);
+      const userInfo = await getSelfInfo();
+      return userInfo;
+    },
+    [getSelfInfo]
+  );
 
   const changeTariff = useCallback(
     async (tariff: string) => {
@@ -112,8 +115,12 @@ const Provider = ({
       const userInfo = await getSelfInfo();
 
       if (start_trial) {
-        if (!userInfo.selfProfile.premium && !userInfo.selfProfile.trial) {
-          await startTrial();
+        if (
+          tariff &&
+          !userInfo.selfProfile.premium &&
+          !userInfo.selfProfile.trial
+        ) {
+          await startTrial(tariff);
           push({
             pathname: "/account",
             query: { show_modal: true },

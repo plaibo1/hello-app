@@ -30,7 +30,6 @@ export const Card: FC<IProps> = ({
   iconPosition = "left",
   icon,
 }) => {
-  const { t } = useTranslation("common");
   return (
     <div className={`${className} ${classes[`cardWrapper-${iconPosition}`]}`}>
       {icon && (
@@ -43,7 +42,7 @@ export const Card: FC<IProps> = ({
               classes[`cardTitle-${iconPosition}`]
             }`}
           >
-            {t(title)}
+            {title}
           </div>
         )}
         {text && (
@@ -52,7 +51,7 @@ export const Card: FC<IProps> = ({
               classes[`cardText-${iconPosition}`]
             }`}
           >
-            {t(text)}
+            {text}
           </div>
         )}
       </div>

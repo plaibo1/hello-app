@@ -6,9 +6,9 @@ import { Layout } from "components/LayoutComponents/Layout";
 import useTranslation from "next-translate/useTranslation";
 
 const Login: NextPage = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("login");
   return (
-    <Layout meta={{ title: t("Вход в аккаунт Hello") }} fullHeight={true}>
+    <Layout meta={{ title: t("metaTitle") }} fullHeight={true}>
       <section className={classes.signIn}>
         <div className={classes.formWrap}>
           <LoginForm />

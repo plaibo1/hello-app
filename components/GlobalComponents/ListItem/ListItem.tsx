@@ -20,7 +20,6 @@ interface AdaptiveStyledProps extends IStyledProps {
 }
 
 export const ListItem: FC<IProps> = ({ className, text }) => {
-  const { t } = useTranslation("common");
   return (
     <div className={className}>
       <div className={classes.listIcon}>
@@ -31,7 +30,7 @@ export const ListItem: FC<IProps> = ({ className, text }) => {
           alt="Check icon"
         />
       </div>
-      <div className={classes.listContent}>{t(text)} </div>
+      <div className={classes.listContent}>{text} </div>
     </div>
   );
 };

@@ -22,21 +22,20 @@ interface IProps {
 }
 
 export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("account");
   const { push } = useRouter();
   const {
     state: {
       user: { premium, data },
     },
   } = useContext<any>(Context);
-  console.log(premium);
-  console.log(data);
 
   const handleBindCard = () => {
     getBindCardUrl().then((url) => {
       push(url.paymentUrl);
     });
   };
+  console.log(premium);
 
   return (
     <section className={classes.wrapper}>
@@ -57,7 +56,11 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       color="#848592"
                       textTransform="capitalize"
                     >
-                      {t(TARIFFS[premium.tariff])}
+                      {t(
+                        `statusBar.tariffs.${
+                          premium.deferTariff || premium.tariff
+                        }`
+                      )}
                     </StyledSubhead>
                   </div>
                   <StyledSubscribeStatus
@@ -92,17 +95,15 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     />
                   </span>
                   {premium.isBlocked
-                    ? t("Платеж не прошел")
+                    ? t("statusBar.paymentFailed")
                     : `${
                         premium.tariff === "trial"
-                          ? t("Бесплатно до")
+                          ? t("statusBar.freeUntil")
                           : premium.autoPayment
-                          ? t("Следующая оплата")
+                          ? t("statusBar.nextPayment")
                           : premium.unactivate === 0
-                          ? t(
-                              "Привяжите карту к вашему аккаунту и оплатите тариф, для возобновления подписки"
-                            )
-                          : t("Действует до")
+                          ? t("statusBar.bindCardAndPay")
+                          : t("statusBar.activeUntil")
                       } ${
                         premium.unactivate === 0
                           ? ""
@@ -110,7 +111,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                               .unix(premium.unactivate)
                               .format("DD.MM.YYYY")}${
                               premium.tariff === "trial"
-                                ? t(", далее по тарифу")
+                                ? t("statusBar.afterOnTariff")
                                 : ""
                             }`
                       }`}
@@ -127,12 +128,8 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     xl={{ mb: "24px", mt: "0px" }}
                   >
                     {premium.isBlocked
-                      ? t(
-                          "Оплата подписки не была произведена, проверьте выбранный способ оплаты и попробуйте еще раз"
-                        )
-                      : t(
-                          "Привяжите карту к вашему аккаунту для использования подписки после пробного периода"
-                        )}
+                      ? t("statusBar.paymentFailedText")
+                      : t("statusBar.bindCardForTrial")}
                   </StyledBody2>
                 </Col>
               )}
@@ -149,7 +146,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     padding="12px 47px"
                     onClick={() => push("/tariff")}
                   >
-                    {t("Изменить тариф")}
+                    {t("statusBar.changeTariffButton")}
                   </StyledButton>
                 </Col>
               )}
@@ -161,7 +158,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     padding="12px 47px"
                     onClick={handleBindCard}
                   >
-                    {t("Привязать карту")}
+                    {t("statusBar.bindCardButton")}
                   </StyledButton>
                 </Col>
               )}
@@ -187,7 +184,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       xl={{ padding: "12px 59px" }}
                       md={{ padding: "12px 40px" }}
                     >
-                      {t("Привязать карту и оплатить")}
+                      {t("statusBar.bindCardAndPayButton")}
                     </StyledButton>
                   </Col>
                 )}
@@ -205,7 +202,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       blueButton={true}
                       xl={{ padding: "12px 59px" }}
                     >
-                      {t("Возобновить подписку")}
+                      {t("statusBar.renewSubscribeButton")}
                     </StyledButton>
                   </Col>
                 )}
@@ -231,7 +228,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                       blueButton={true}
                       xl={{ padding: "12px 59px" }}
                     >
-                      {t("Проверить платежные данные")}
+                      {t("statusBar.checkPaymentButton")}
                     </StyledButton>
                   </Col>
                 )}
@@ -244,7 +241,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
                     mb="0px"
                     onClick={handleModalOpen}
                   >
-                    {t("Отменить подписку")}
+                    {t("statusBar.cancelSubscribeButton")}
                   </StyledButton>
                 </Col>
               )}

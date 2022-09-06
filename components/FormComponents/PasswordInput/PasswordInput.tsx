@@ -10,7 +10,7 @@ interface IProps {
 }
 
 export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("inputs");
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleVisible = useCallback(() => {
@@ -19,14 +19,14 @@ export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
 
   return (
     <label className={`${classes.passwordInput}  ${error && classes.error}`}>
-      <p className={classes.inputLabel}>Пароль</p>
+      <p className={classes.inputLabel}>{t("passwordLabel")}</p>
       <div className={classes.inputWrap}>
         <input
           type={isVisible ? "text" : "password"}
           value={value}
           onChange={onChange}
           className={classes.input}
-          placeholder={t("Введите пароль")}
+          placeholder={t("passwordPlaceholder")}
           autoComplete="new-password"
           aria-invalid
         />
@@ -40,6 +40,7 @@ export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
             width={20}
             height={20}
             alt="Toggle password visible"
+            title={isVisible ? "Hide password" : "Show password"}
           />
         </div>
       </div>

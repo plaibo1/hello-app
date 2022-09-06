@@ -11,7 +11,12 @@ interface IStyledProps {
   mb?: string;
   mr?: string;
   mt?: string;
+  fontSize?: string;
   textAlign?: string;
+}
+interface AdaptiveStyledProps extends IStyledProps {
+  xl?: IStyledProps;
+  md?: IStyledProps;
 }
 
 export const Title3: FC<IProps> = ({ className, children }) => {
@@ -19,13 +24,15 @@ export const Title3: FC<IProps> = ({ className, children }) => {
 };
 
 export const StyledTitle3 = styled(Title3)`
-  font-weight: 600;
-  font-size: 16px;
-  line-height: 1.5;
-  letter-spacing: 0.2px;
-  color: ${({ color }: IStyledProps) => color || "inherit"};
-  margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
-  margin-right: ${({ mr }: IStyledProps) => mr || "0px"};
-  margin-top: ${({ mt }: IStyledProps) => mt || "0px"};
-  text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
+  ${({ color, mb, textAlign, mr, mt, fontSize }: AdaptiveStyledProps) => `
+    font-weight: 600;
+    font-size: ${fontSize || "16px"};
+    line-height: 1.5;
+    letter-spacing: 0.2px;
+    color: ${color || "inherit"};
+    margin-bottom: ${mb || "16px"};
+    margin-right: ${mr || "0px"};
+    margin-top: ${mt || "0px"};
+    text-align: ${textAlign || "left"};
+  `}
 `;

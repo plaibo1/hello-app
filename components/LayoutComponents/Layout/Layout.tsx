@@ -38,14 +38,19 @@ export const Layout: FC<IProps> = ({
         (state.user.data && state.user.data.premium) ||
         state.user.data.trial
       ) {
-        profileStatus = "withPremium";
+        if (
+          state.user.data.trial &&
+          !state.user.premium?.autoPayment &&
+          state.user.premium?.unactivate === 0
+        ) {
+          profileStatus = "withoutPremium";
+        } else {
+          profileStatus = "withPremium";
+        }
       } else {
         profileStatus = "withoutPremium";
       }
     }
-    console.log(state.user.data.premium);
-    console.log(state.user.data.trial);
-    console.log(profileStatus);
     const statusObject = accessLinks[profileStatus];
     if (
       !statusObject.access.includes(page) &&

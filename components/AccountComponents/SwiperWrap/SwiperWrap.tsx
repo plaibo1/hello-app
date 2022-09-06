@@ -9,19 +9,21 @@ import classes from "./SwiperWrap.module.scss";
 import { MOC_BENEFITS } from "../../../constants/benefits";
 import { Col, Row } from "react-flexbox-grid";
 import { StyledCard } from "../../GlobalComponents";
+import useTranslation from "next-translate/useTranslation";
 
 export const SwiperWrap = () => {
+  const { t } = useTranslation("account");
   const matches = useMediaQuery("(min-width:1201px)");
   return matches ? (
-    MOC_BENEFITS.map((benefitMap) =>
-      benefitMap.map((benefit) => (
+    MOC_BENEFITS.map((benefitMap, index) =>
+      benefitMap.map((benefit, benefitIndex) => (
         <Col md={3} key={benefit.title}>
           <StyledCard
             icon={
               <Image src={benefit.icon} height={36} width={36} alt="icon" />
             }
-            title={benefit.title}
-            text={benefit.text}
+            title={t(`benefits.items.${index * 2 + benefitIndex}.title`)}
+            text={t(`benefits.items.${index * 2 + benefitIndex}.text`)}
             iconPosition="top"
             padding="0px"
             mb="50px"
@@ -57,7 +59,7 @@ export const SwiperWrap = () => {
         return (
           <SwiperSlide key={index}>
             <Row>
-              {benefitMap.map((benefit) => {
+              {benefitMap.map((benefit, benefitIndex) => {
                 return (
                   <Col sm={6} key={benefit.title}>
                     <StyledCard
@@ -69,8 +71,12 @@ export const SwiperWrap = () => {
                           alt="icon"
                         />
                       }
-                      title={benefit.title}
-                      text={benefit.text}
+                      title={t(
+                        `benefits.items.${index * 2 + benefitIndex}.title`
+                      )}
+                      text={t(
+                        `benefits.items.${index * 2 + benefitIndex}.text`
+                      )}
                       iconPosition="top"
                       padding="0px"
                       mb="60px"

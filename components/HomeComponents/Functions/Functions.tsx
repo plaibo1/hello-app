@@ -11,14 +11,14 @@ const DynamicFunctions = dynamic(() => import("./DynamicFunctions") as any, {
 });
 
 export const Functions = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   return (
     <section className={classes.wrapper}>
       <Container>
         <Row>
           <Col md={12}>
             <StyledTitle2 textAlign="center">
-              {t("Основные функции и возможности")}
+              {t("functions.title")}
             </StyledTitle2>
             <StyledDivider mb="0px" />
           </Col>

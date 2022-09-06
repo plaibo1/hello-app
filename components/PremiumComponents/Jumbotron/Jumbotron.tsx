@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import {
   StyledButton,
   StyledSubhead,
@@ -9,25 +9,32 @@ import { Row, Col } from "react-flexbox-grid";
 import useTranslation from "next-translate/useTranslation";
 
 import classes from "./Jumbotron.module.scss";
+import { Context } from "context";
 
 interface IProps {
   onButtonClick: () => void;
 }
 
 export const Jumbotron: FC<IProps> = ({ onButtonClick }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("premium");
+  const { state } = useContext<any>(Context);
+  const isEndedPremium = () => {
+    return (
+      state.user.data.trial &&
+      !state.user.premium?.autoPayment &&
+      state.user.premium?.unactivate === 0
+    );
+  };
   return (
     <section className={classes.wrapper}>
       <Container>
         <Row>
           <Col md={6}>
             <StyledTitle1 md={{ textAlign: "center" }}>
-              {t("Hello Premium")}
+              {t("jumbotron.title")}
             </StyledTitle1>
             <StyledSubhead mb="24px" md={{ textAlign: "center" }}>
-              {t(
-                "Черный список, настройки приватности, безлимитный просмотр профилей и еще множество возможностей."
-              )}
+              {t("jumbotron.subtitle")}
             </StyledSubhead>
             <StyledButton
               backgroundColor="white"
@@ -37,20 +44,21 @@ export const Jumbotron: FC<IProps> = ({ onButtonClick }) => {
               whiteButton
               onClick={onButtonClick}
             >
-              {t("Попробовать бесплатно")}
+              {isEndedPremium()
+                ? t("jumbotron.button.withTrial")
+                : t("jumbotron.button.withoutTrial")}
             </StyledButton>
-            <StyledSubhead
-              fontSize="12px"
-              md={{ textAlign: "center", fontSize: "11px" }}
-              dangerouslySetInnerHTML={{
-                __html: t(
-                  "1 месяц бесплатно не доступен для пользователей,<br>которые уже пробовали Премиум",
-                  {
+            {!isEndedPremium() && (
+              <StyledSubhead
+                fontSize="12px"
+                md={{ textAlign: "center", fontSize: "11px" }}
+                dangerouslySetInnerHTML={{
+                  __html: t("jumbotron.rulesText", {
                     interpolation: { escapeValue: false },
-                  }
-                ),
-              }}
-            />
+                  }),
+                }}
+              />
+            )}
           </Col>
         </Row>
       </Container>

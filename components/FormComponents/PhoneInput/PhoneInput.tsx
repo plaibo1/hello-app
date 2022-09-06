@@ -17,10 +17,10 @@ export const PhoneInput: FC<IProps> = ({
   onFocus,
   error = "",
 }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("inputs");
   return (
     <label className={`${classes.phoneInput} ${error && classes.error}`}>
-      <p className={classes.inputLabel}>{t("Телефон")}</p>
+      <p className={classes.inputLabel}>{t("phoneLabel")}</p>
       <div className={classes.inputWrap}>
         <Input
           value={value}
@@ -31,7 +31,7 @@ export const PhoneInput: FC<IProps> = ({
           className={classes.input}
         />
       </div>
-      {error && <div className={classes.errorTitle}>{t(error)}</div>}
+      {error && <div className={classes.errorTitle}>{error}</div>}
     </label>
   );
 };
