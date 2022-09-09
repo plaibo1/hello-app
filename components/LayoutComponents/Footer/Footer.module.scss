@@ -1,10 +1,66 @@
-.header {
+@import "/styles/variables.scss";
+
+.footer {
   box-sizing: border-box;
-  padding: 10px 0px;
+  padding: 24px 0px;
 }
 
 .wrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.copyrightWrapper {
+  color: #848592;
+  font-size: 11px;
+  @media (max-width: $xl) {
+    text-align: center;
+  }
+  @media (max-width: $md) {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+  }
+  &>* {
+    margin-bottom: 4px;
+  }
+}
+.modalWrapper {
+  div>& {
+    width: 1300px;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: fit-content;
+    margin: auto;
+
+    @media (max-width: $xl) {
+      width: 536px;
+    }
+  }
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 44px 67px 24px 67px;
+  position: relative;
+
+  @media (max-width: $xl) {
+    padding: 44px 12px 12px 12px;
+  }
+}
+
+.modalClose {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
 }

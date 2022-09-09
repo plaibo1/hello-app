@@ -1,0 +1,89 @@
+@import "/styles/variables.scss";
+
+.wrapper {
+  padding: 24px 16px;
+  background: #FBFBFB;
+  border-radius: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  transition: 0.3s;
+
+  &:hover {
+    border: 1px solid #4392BF;
+  }
+}
+.title {
+  margin: 0px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  text-align: center;
+  letter-spacing: 0.2px;
+  color: #4392BF;
+  margin-bottom: 8px;
+}
+.description {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.benefits {
+  text-align: center;
+  margin-bottom: 16px;
+}
+.benefitPercent {
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 1.45;
+  text-align: center;
+  letter-spacing: 0.1px;
+  color: #FFFFFF;
+  padding: 2px 6px;
+  border-radius: 24px;
+  margin-right: 8px;
+}
+.benefitDescription {
+  font-weight: 400;
+  font-size: 9px;
+  line-height: 1.22;
+  text-align: center;
+  letter-spacing: 0.1px;
+  color: #848592;
+}
+.modalWrapper {
+  width: 638px;
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 100%;
+  margin: auto;
+  
+  @media (max-width: $xl) {
+    width: 536px;
+  }
+}
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 44px 67px 24px 67px;
+  position: relative;
+
+  @media (max-width: $xl) {
+    padding: 44px 12px 12px 12px;
+  }
+}
+.modalClose {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  cursor: pointer;
+}

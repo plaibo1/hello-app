@@ -1,0 +1,21 @@
+@import "/styles/variables.scss";
+
+.backArrow {
+  position: absolute;
+  left: 30px;
+  top: 30px;
+  cursor: pointer;
+  @media (max-width: $lg) {
+    top: -40px;
+    left: 20px;
+  }
+}
+.errorTitle {
+  text-align: left;
+  font-size: 12px;
+  padding: 10px;
+  background: #ffc2c2;
+  margin-top: 7px;
+  border-radius: 2px;
+  color: #666666;
+}

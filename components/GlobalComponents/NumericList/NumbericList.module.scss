@@ -1,5 +1,8 @@
+@import "/styles/variables.scss";
+
 .numberWrapper {
   margin-right: 12px;
+  min-width: 56px;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -8,7 +11,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 48%, rgba(248, 248, 248, 1) 48%, rgba(248, 248, 248, 1) 100%);
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 40%, rgba(248, 248, 248, 1) 40%, rgba(248, 248, 248, 1) 100%);
 }
 .content {
   font-weight: 400;
@@ -32,5 +35,11 @@
         border: 1px dashed rgba(23, 23, 23, 0.08);
         transform: translateX(-50%);
       }
+    @media (max-width: $xl) {
+      margin-bottom: 35px;
+    }
+    @media (max-width: $md) {
+      margin-bottom: 31px;
+    }
   }
 }

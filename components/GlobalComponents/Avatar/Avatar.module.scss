@@ -1,0 +1,19 @@
+.avatarWrapper {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+
+.avatarButton {
+  background: unset;
+  border: unset;
+  padding: 0px;
+  display: flex;
+  position: relative;cursor: pointer;
+}
+
+.imageWrap {
+  border-radius: 50%;
+  display: inline-flex;
+  overflow: hidden;
+}

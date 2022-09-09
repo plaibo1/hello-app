@@ -1,24 +1,36 @@
-import React from "react";
-import { Logo } from "../../GlobalComponents/Logo/Logo";
+import React, { useContext } from "react";
+import { Logo, StyledLink, Avatar } from "../../GlobalComponents";
 import Container from "../Container";
+import { Context } from "../../../context";
 import classes from "./Header.module.scss";
-import { Grid, Row, Col } from "react-flexbox-grid";
+import { Row, Col } from "react-flexbox-grid";
+import useTranslation from "next-translate/useTranslation";
 
 const Header = () => {
+  const { t } = useTranslation("layout");
+  const { state } = useContext<any>(Context);
   return (
     <header className={classes.header}>
       <Container>
         <Row middle="xs">
-          <Col lg={4} lgOffset={4}>
+          <Col xs={4} xsOffset={4}>
             <Row center="xs">
-              <Col lg={12}>
+              <Col xs={12}>
                 <Logo />
               </Col>
             </Row>
           </Col>
-          <Col lg={4}>
-            <Row end="xs">
-              <Col lg={12}>Войти</Col>
+          <Col xs={4}>
+            <Row end="xs" middle="xs">
+              <Col xs={12}>
+                {state.user.auth ? (
+                  <>
+                    <Avatar />
+                  </>
+                ) : (
+                  <StyledLink href="/login">{t("header.loginText")}</StyledLink>
+                )}
+              </Col>
             </Row>
           </Col>
         </Row>

@@ -1,0 +1,25 @@
+@import "/styles/variables.scss";
+
+.wrapper {
+  padding-top: 52px;
+  padding-bottom: 36px;
+  background-color: white;
+  border-radius: 24px;
+  color: #171717;
+  margin-bottom: 8px;
+
+  @media (max-width: $xl) {
+    padding-top: 44px;
+  }
+}
+.imageWrap {
+  width: 272px;
+  height: 260px;
+  max-width: 100%;
+  margin: auto;
+  position: relative;
+  @media (max-width: $md) {
+    width: 199px;
+    height: 189px;
+  }
+}

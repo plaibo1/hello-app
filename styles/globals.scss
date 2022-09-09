@@ -1,0 +1,41 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #F8F8F8;
+}
+
+a {
+  font-family: 'Roboto', sans-serif;
+  color: inherit;
+  text-decoration: none;
+}
+
+button {font-family: 'Roboto', sans-serif;}
+
+* {
+  box-sizing: border-box;
+  outline: 0 !important;
+}
+
+.rc-dialog {
+  width: inherit
+}
+
+#__next {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  justify-content: space-between;
+}
+.layoutWrap {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 0 auto;
+}

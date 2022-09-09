@@ -1,0 +1,25 @@
+@import "./variables.scss";
+
+.hidden-xl {
+  @media (max-width: $xl) {
+    display: none;
+  }
+}
+.visible-xl {
+  display: none;
+  @media (max-width: $xl) {
+    display: block;
+  }
+}
+
+.hidden-md {
+  @media (max-width: $md) {
+    display: none;
+  }
+}
+
+.visible-md {
+  @media (max-width: $md) {
+    display: flex;
+  }
+}

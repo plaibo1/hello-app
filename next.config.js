@@ -5,10 +5,9 @@ const withTM = require("next-transpile-modules")(["react-flexbox-grid"]);
 
 const nextConfig = {
   images: {
-    domains: ["localhost"],
+    domains: ["localhost", "flag.pk", "storage.googleapis.com"],
   },
-  reactStrictMode: true,
-  swcMinify: true,
+  reactStrictMode: false,
 };
 
 module.exports = withTM(withImages(nextTranslate(nextConfig)));

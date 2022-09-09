@@ -1,15 +1,21 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
+import { xl as xlSize, md as mdSize } from "../../../constants/windowWidth";
 
 interface IProps {
   className?: string;
-  children: any;
+  children: ReactNode;
 }
 
-interface ISyledProps {
+interface IStyledProps {
   color?: string;
   mb?: string;
   textAlign?: string;
+}
+
+interface AdaptiveStyledProps extends IStyledProps {
+  xl?: IStyledProps;
+  md?: IStyledProps;
 }
 
 export const Title1: FC<IProps> = ({ className, children }) => {
@@ -17,11 +23,21 @@ export const Title1: FC<IProps> = ({ className, children }) => {
 };
 
 export const StyledTitle1 = styled(Title1)`
-  font-weight: 600;
-  font-size: 32px;
-  line-height: 1.12;
-  letter-spacing: 0.1px;
-  color: ${({ color }: ISyledProps) => color || "inherit"};
-  margin-bottom: ${({ mb }: ISyledProps) => mb || "16px"};
-  text-align: ${({ textAlign }: ISyledProps) => textAlign || "left"};
+  ${({ color, mb, textAlign, xl, md }: AdaptiveStyledProps) => `
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.12;
+    letter-spacing: 0.1px;
+    color: ${color || "inherit"};
+    margin-bottom: ${mb || "16px"};
+    text-align: ${textAlign || "left"};
+    @media screen and (max-width: ${xlSize}) {
+      font-size: 28px;
+      line-height: 1.14;
+      text-align: ${xl?.textAlign || textAlign || "left"};
+    }
+    @media screen and (max-width: ${mdSize}) {
+      text-align: ${md?.textAlign || xl?.textAlign || textAlign || "left"};
+    }
+  `}
 `;

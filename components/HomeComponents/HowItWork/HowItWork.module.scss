@@ -1,0 +1,17 @@
+@import "/styles/variables.scss";
+
+.wrapper {
+  padding-top: 48px;
+  padding-bottom: 48px;
+  background-color: white;
+  border-radius: 24px;
+  color: #171717;
+  margin-bottom: 8px;
+  @media (max-width: $xl) {
+    padding-top: 52px;
+    padding-bottom: 30px;
+  }
+  @media (max-width: $md) {
+    padding-top: 195px
+  }
+}

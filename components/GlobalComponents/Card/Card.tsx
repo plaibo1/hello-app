@@ -1,6 +1,8 @@
 import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
 import classes from "./Card.module.scss";
+import { xl as xlSize } from "../../../constants/windowWidth";
+import useTranslation from "next-translate/useTranslation";
 
 interface IProps {
   className?: string;
@@ -10,9 +12,15 @@ interface IProps {
   text?: string;
 }
 
-interface ISyledProps {
+interface IStyledProps {
   color?: string;
   mb?: string;
+  iconPosition?: string;
+  padding?: string;
+}
+
+interface AdaptiveStyledProps extends IStyledProps {
+  xl?: IStyledProps;
 }
 
 export const Card: FC<IProps> = ({
@@ -29,10 +37,22 @@ export const Card: FC<IProps> = ({
       )}
       <div className={classes[`cardContent-${iconPosition}`]}>
         {title && (
-          <div className={classes[`cardTitle-${iconPosition}`]}>{title}</div>
+          <div
+            className={`${classes.cardTitle} ${
+              classes[`cardTitle-${iconPosition}`]
+            }`}
+          >
+            {title}
+          </div>
         )}
         {text && (
-          <div className={classes[`cardTitle-${iconPosition}`]}>{text}</div>
+          <div
+            className={`${classes.cardText} ${
+              classes[`cardText-${iconPosition}`]
+            }`}
+          >
+            {text}
+          </div>
         )}
       </div>
     </div>
@@ -40,11 +60,17 @@ export const Card: FC<IProps> = ({
 };
 
 export const StyledCard = styled(Card)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0px;
-  list-style: none;
-  color: ${({ color }: ISyledProps) => color || "inherit"};
-  margin-bottom: ${({ mb }: ISyledProps) => mb || "16px"};
+  ${({ padding, color, mb, xl }: AdaptiveStyledProps) => `
+    display: flex;
+    padding: ${padding || "16px 0px"};
+    list-style: none;
+    color: ${color || "inherit"};
+    margin-bottom: ${mb || "16px"};
+
+    @media screen and (max-width: ${xlSize}) {
+      padding: ${xl?.padding || padding || "16px 0px"};
+      color: ${xl?.color || color || "inherit"};
+      margin-bottom: ${xl?.mb || mb || "16px"};
+    }
+  `}
 `;

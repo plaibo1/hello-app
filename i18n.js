@@ -1,7 +1,13 @@
 module.exports = {
   locales: ["en", "ru"],
-  defaultLocale: "en",
+  defaultLocale: "ru",
   pages: {
-    "*": ["common"],
+    "*": ["layout"],
+    "/": ["home"],
+    "/login": ["login", "inputs"],
+    "/recovery": ["recovery", "inputs"],
+    "/premium": ["premium"],
+    "/account": ["account"],
+    "/tariff": ["tariff"],
   },
 };

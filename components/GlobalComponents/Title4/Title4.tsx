@@ -1,14 +1,16 @@
-import React, { FC } from "react";
+import React, { FC, ReactNode } from "react";
 import styled from "styled-components";
 
 interface IProps {
   className?: string;
-  children: any;
+  children: ReactNode;
 }
 
-interface ISyledProps {
+interface IStyledProps {
   color?: string;
   mb?: string;
+  mr?: string;
+  mt?: string;
   textAlign?: string;
 }
 
@@ -21,7 +23,9 @@ export const StyledTitle4 = styled(Title4)`
   font-size: 16px;
   line-height: 1.5;
   letter-spacing: 0.2px;
-  color: ${({ color }: ISyledProps) => color || "inherit"};
-  margin-bottom: ${({ mb }: ISyledProps) => mb || "16px"};
-  text-align: ${({ textAlign }: ISyledProps) => textAlign || "left"};
+  color: ${({ color }: IStyledProps) => color || "inherit"};
+  margin-bottom: ${({ mb }: IStyledProps) => mb || "16px"};
+  margin-right: ${({ mr }: IStyledProps) => mr || "0px"};
+  margin-top: ${({ mt }: IStyledProps) => mt || "0px"};
+  text-align: ${({ textAlign }: IStyledProps) => textAlign || "left"};
 `;
