@@ -5,6 +5,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  max-height: 100vh;
+  max-height: -webkit-fill-available;
   @media (max-width: $lg) {
     align-items: flex-end;
   }
@@ -14,6 +16,7 @@
   background-color: white;
   position: relative;
   height: 75vh;
+  max-height: 616px;
   border-radius: 24px;
   padding: 110px;
   display: flex;

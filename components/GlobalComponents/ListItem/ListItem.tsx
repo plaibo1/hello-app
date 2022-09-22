@@ -45,7 +45,7 @@ export const StyledListItem = styled(ListItem)`
     color: ${color || "#848592"};
     @media screen and (max-width: ${xlSize}) {
       margin-bottom: ${xl?.mb || mb || "12px"};
-      color: ${color && "#4392BF"};
+      color: ${color || "#848592"};
     }
   `}
 `;

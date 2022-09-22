@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import styled from "styled-components";
-import { xl as xlSize, md as mdSize } from "../../../constants/windowWidth";
+import {
+  xl as xlSize,
+  lg as lgSize,
+  md as mdSize,
+} from "../../../constants/windowWidth";
 
 interface IProps {
   className?: string;
@@ -15,6 +19,7 @@ interface IStyledProps {
 }
 interface AdaptiveStyledProps extends IStyledProps {
   xl?: IStyledProps;
+  lg?: IStyledProps;
   md?: IStyledProps;
 }
 
@@ -31,6 +36,7 @@ export const StyledDivider = styled(Divider)`
     display,
     width,
     xl,
+    lg,
     md,
   }: AdaptiveStyledProps) => `
     display: ${display || "block"};
@@ -46,10 +52,17 @@ export const StyledDivider = styled(Divider)`
       width: ${xl?.width || width || "100%"};
       margin-bottom: ${xl?.mb || mb || "16px"};
     }
+    @media screen and (max-width: ${lgSize}) {
+      display: ${lg?.display || xl?.display || display || "block"};
+      width: ${lg?.width || xl?.width || width || "100%"};
+      margin-bottom: ${lg?.mb || xl?.mb || mb || "16px"};
+    }
     @media (max-width: ${mdSize}) {
-      display: ${md?.display || display || "block"};
-      width: ${md?.width || width || "100%"};
-      margin-bottom: ${md?.mb || mb || "16px"};
+      display: ${
+        md?.display || lg?.display || xl?.display || display || "block"
+      };
+      width: ${md?.width || lg?.width || xl?.width || width || "100%"};
+      margin-bottom: ${md?.mb || lg?.mb || xl?.mb || mb || "16px"};
     }
   `}
 `;

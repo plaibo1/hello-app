@@ -18,7 +18,7 @@ export const ChangeTariff = () => {
       <Container>
         <Row>
           <Col md={12}>
-            <StyledTitle2 textAlign="center" mb="24px">
+            <StyledTitle2 textAlign="center" mb="40px" lg={{ mb: "32px" }}>
               {t(
                 `${
                   state.user.premium.tariff !== "trial" &&
@@ -31,20 +31,18 @@ export const ChangeTariff = () => {
             </StyledTitle2>
           </Col>
         </Row>
-        <Row>
+        <div className={classes.tariffs}>
           {MOC_TARIFFS.map((tariff) => {
             return (
               ((state.user.premium.tariff !== "trial" &&
                 !state.user.premium.autoPayment &&
                 state.user.premium.unactivate !== 0) ||
                 tariff.id !== currentTariffRef.current) && (
-                <Col lg={4} key={tariff.id}>
-                  <TariffCard tariff={tariff} />
-                </Col>
+                <TariffCard tariff={tariff} key={tariff.id} />
               )
             );
           })}
-        </Row>
+        </div>
       </Container>
     </section>
   );

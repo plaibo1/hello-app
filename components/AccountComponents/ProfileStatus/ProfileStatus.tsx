@@ -35,7 +35,6 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
       push(url.paymentUrl);
     });
   };
-  console.log(premium);
 
   return (
     <section className={classes.wrapper}>

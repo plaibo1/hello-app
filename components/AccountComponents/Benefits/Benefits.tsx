@@ -40,7 +40,7 @@ export const Benefits = () => {
                 }}
               />
             )}
-            <StyledDivider mb="24px" />
+            <StyledDivider mb="40px" />
           </Col>
         </Row>
         <Row>

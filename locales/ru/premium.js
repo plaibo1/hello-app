@@ -58,6 +58,10 @@ module.exports = {
         title: "Уникальный значок подписчика",
         text: "Добавьте значок Premium рядом с именем.",
       },
+      11: {
+        title: "Работаем над новыми функциями",
+        text: "Получаем обратную связь и думаем об улучшении сервиса каждый день.",
+      },
     },
   },
   chooseTariff: {
@@ -71,6 +75,9 @@ module.exports = {
         title: "1 месяц",
         free: "1 месяц бесплатно",
         freeDescription: "каждый следующий месяц - по тарифу",
+        benefitPercent: "%",
+        benefitDescription: "Нет выгоды",
+        benefitBackground: "rgba(23, 23, 23, 0.12)",
         modalTitle: "Перейти на ежемесячную подписку?",
         modalDescription: "Далее каждый месяц — по тарифу",
       },

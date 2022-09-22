@@ -11,21 +11,21 @@ const baseUrl = process.env.NEXT_PUBLIC_API_HOST;
 
 export const signIn = async ({ password, phone }: LoginSchema) => {
   return apiClient
-    .post(`${baseUrl}/auth/signIn`, {
+    .post(`${baseUrl}/api/auth/session`, {
       phone,
       password,
       web: true,
     })
     .then((res) => {
-      document.cookie = `access_token=${res.data.response.credentials.access_token}`;
-      document.cookie = `refresh_token=${res.data.response.credentials.refresh_token}`;
+      document.cookie = `access_token=${res.data.response.credentials.access_token}; path=/;`;
+      document.cookie = `refresh_token=${res.data.response.credentials.refresh_token}; path=/;`;
       return res.data.response;
     });
 };
 
 export const signOut = (token?: string) => {
   return apiClient
-    .get(`${baseUrl}/api/signOut`, {
+    .delete(`${baseUrl}/api/auth/session`, {
       headers: {
         Authorization:
           "Bearer " + (token || cookie.parse(document.cookie).access_token),
@@ -40,9 +40,8 @@ export const signOut = (token?: string) => {
 
 export const restorePassword = (phone: PhoneSchema) => {
   return apiClient
-    .post(`${baseUrl}/auth/restore`, {
+    .post(`${baseUrl}/api/auth/restore`, {
       phone: { ...phone },
-      web: true,
     })
     .then((res) => {
       return res.data.response;
@@ -51,23 +50,23 @@ export const restorePassword = (phone: PhoneSchema) => {
 
 export const codeConfirm = (body: CodeConfirmSchema) => {
   return apiClient
-    .post(`${baseUrl}/auth/codeConfirm`, {
+    .post(`${baseUrl}/api/auth/codeConfirm`, {
       code: body.code,
       confirmType: body.confirmType,
       phone: body.phone,
       web: true,
     })
     .then((res) => {
-      document.cookie = `access_token=${res.data.response.credentials.access_token}`;
-      document.cookie = `refresh_token=${res.data.response.credentials.refresh_token}`;
+      document.cookie = `access_token=${res.data.response.credentials.access_token}; path=/;`;
+      document.cookie = `refresh_token=${res.data.response.credentials.refresh_token}; path=/;`;
       return res.data.response;
     });
 };
 
 export const newPassword = (body: NewPasswordScheme) => {
   return apiClient
-    .post(
-      `${baseUrl}/api/newPassword`,
+    .patch(
+      `${baseUrl}/api/user/password`,
       {
         newPassword: body.newPassword,
       },
@@ -84,7 +83,7 @@ export const newPassword = (body: NewPasswordScheme) => {
 
 export const getSelfInfo = async (token?: string) => {
   return apiClient
-    .get(`${baseUrl}/web/pay/selfStatus`, {
+    .get(`${baseUrl}/api/pay/tariff`, {
       headers: {
         Authorization:
           "Bearer " + (token || cookie.parse(document.cookie).access_token),
@@ -102,14 +101,17 @@ export const getSelfInfo = async (token?: string) => {
 
 export const startTrial = async (deferTariff?: string) => {
   return apiClient
-    .get(`${baseUrl}/web/pay/startTrial`, {
-      params: {
+    .post(
+      `${baseUrl}/api/pay/trial`,
+      {
         tariff: deferTariff,
       },
-      headers: {
-        Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
-      },
-    })
+      {
+        headers: {
+          Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
+        },
+      }
+    )
     .then((res) => {
       return res.data.response;
     });
@@ -117,8 +119,8 @@ export const startTrial = async (deferTariff?: string) => {
 
 export const changeTariff = async (tariff: string) => {
   return apiClient
-    .post(
-      `${baseUrl}/web/pay/changeTariff`,
+    .put(
+      `${baseUrl}/api/pay/tariff`,
       {
         tariff,
       },
@@ -135,17 +137,14 @@ export const changeTariff = async (tariff: string) => {
 
 export const tariffPayment = async (tariff: string) => {
   return apiClient
-    .post(
-      `${baseUrl}/web/pay/tariffPayment`,
-      {
-        tariff,
+    .get(`${baseUrl}/api/pay/url`, {
+      params: {
+        section: tariff,
       },
-      {
-        headers: {
-          Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
-        },
-      }
-    )
+      headers: {
+        Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
+      },
+    })
     .then((res) => {
       return res.data.response;
     });
@@ -153,20 +152,20 @@ export const tariffPayment = async (tariff: string) => {
 
 export const refreshToken = async () => {
   return apiClient
-    .post(`${baseUrl}/auth/refresh`, {
+    .put(`${baseUrl}/api/auth/session`, {
       refresh_token: cookie.parse(document.cookie).refresh_token,
       web: true,
     })
     .then((res) => {
-      document.cookie = `access_token=${res.data.response.access_token}`;
-      document.cookie = `refresh_token=${res.data.response.refresh_token}`;
+      document.cookie = `access_token=${res.data.response.access_token}; path=/;`;
+      document.cookie = `refresh_token=${res.data.response.refresh_token}; path=/;`;
       return res.data.response;
     });
 };
 
 export const cancelTariff = async () => {
   return apiClient
-    .get(`${baseUrl}/web/pay/cancelTariff`, {
+    .delete(`${baseUrl}/api/pay/tariff`, {
       headers: {
         Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
       },
@@ -178,7 +177,7 @@ export const cancelTariff = async () => {
 
 export const getBindCardUrl = async () => {
   return apiClient
-    .get(`${baseUrl}/web/pay/bindCard`, {
+    .get(`${baseUrl}/api/pay/url/bindCard`, {
       headers: {
         Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
       },

@@ -27,8 +27,9 @@ export const Benefits = () => {
               <Col md={6} xl={12}>
                 <StyledTitle2
                   textAlign="center"
-                  mb="24px"
+                  mb="40px"
                   xl={{ textAlign: "left", lineHeight: "1.33" }}
+                  lg={{ mb: "32px" }}
                   md={{ textAlign: "center" }}
                   dangerouslySetInnerHTML={{
                     __html: t("benefits.title", {
@@ -46,7 +47,7 @@ export const Benefits = () => {
                         text={benefit}
                         color={
                           index === HOME_BENEFITS.length - 1
-                            ? "#171717"
+                            ? "#4392BF"
                             : "#848592"
                         }
                       />
@@ -88,7 +89,7 @@ export const Benefits = () => {
                         <StyledListItem
                           key={benefit}
                           text={benefit}
-                          color="#171717"
+                          color="#4392BF"
                         />
                       ) : (
                         <StyledListItem

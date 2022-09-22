@@ -24,7 +24,7 @@ export const Functions = () => {
           </Col>
         </Row>
         <Row between="xl" center="xs">
-          <Col md={12} lg={10} xl={12}>
+          <Col md={12} lg={12} xl={12}>
             <DynamicFunctions />
           </Col>
         </Row>

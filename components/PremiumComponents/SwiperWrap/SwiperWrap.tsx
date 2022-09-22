@@ -63,6 +63,7 @@ export const SwiperWrap = () => {
                       iconPosition="top"
                       padding="0px"
                       mb="60px"
+                      mocced={benefit?.mocced}
                       xl={{ mb: "40px" }}
                     />
                   </Col>
