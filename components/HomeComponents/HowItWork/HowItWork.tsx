@@ -24,7 +24,12 @@ export const HowItWork = () => {
                 }),
               }}
             />
-            <StyledDivider mb="24px" xl={{ width: "354px" }} />
+            <StyledDivider
+              mb="40px"
+              xl={{ width: "354px" }}
+              lg={{ mb: "32px" }}
+              md={{ width: "100%" }}
+            />
             <StyledNumericList
               items={Array.from({ length: 4 }, (_, idx) =>
                 t(`howItWork.items.${idx}`)

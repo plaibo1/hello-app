@@ -10,6 +10,7 @@ interface IProps {
   icon?: ReactNode;
   title?: string;
   text?: string;
+  mocced?: boolean;
 }
 
 interface IStyledProps {
@@ -17,6 +18,7 @@ interface IStyledProps {
   mb?: string;
   iconPosition?: string;
   padding?: string;
+  mocced?: boolean;
 }
 
 interface AdaptiveStyledProps extends IStyledProps {
@@ -27,20 +29,27 @@ export const Card: FC<IProps> = ({
   className,
   text,
   title,
+  mocced = false,
   iconPosition = "left",
   icon,
 }) => {
   return (
     <div className={`${className} ${classes[`cardWrapper-${iconPosition}`]}`}>
       {icon && (
-        <div className={classes[`iconWrapper-${iconPosition}`]}>{icon}</div>
+        <div
+          className={`${classes[`iconWrapper-${iconPosition}`]}  ${
+            mocced ? classes.mocced : ""
+          }`}
+        >
+          {icon}
+        </div>
       )}
       <div className={classes[`cardContent-${iconPosition}`]}>
         {title && (
           <div
             className={`${classes.cardTitle} ${
               classes[`cardTitle-${iconPosition}`]
-            }`}
+            } ${mocced ? classes.mocced : ""}`}
           >
             {title}
           </div>
@@ -49,7 +58,7 @@ export const Card: FC<IProps> = ({
           <div
             className={`${classes.cardText} ${
               classes[`cardText-${iconPosition}`]
-            }`}
+            } ${mocced ? classes.mocced : ""}`}
           >
             {text}
           </div>

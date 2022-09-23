@@ -26,6 +26,7 @@ export const RecoveryForm = () => {
   const { codeConfirm } = useContext<any>(Context);
   const { push } = useRouter();
   const [step, setStep] = useState<number>(1);
+  const [disabledButton, setDisabledButton] = useState(false);
   const [phoneValue, setPhoneValue] = useState<E164Number | undefined>("");
   const [phoneError, setPhoneError] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
@@ -76,7 +77,24 @@ export const RecoveryForm = () => {
   );
 
   const handleCodeFocus = useCallback(
-    (event: React.FocusEvent<HTMLInputElement>) => {},
+    (event: React.FocusEvent<HTMLInputElement>) => {
+      const target = event.target;
+      if (
+        target.value === "" &&
+        target.value.length < target.maxLength &&
+        target.previousSibling &&
+        (target.previousSibling as HTMLInputElement).value === ""
+      ) {
+        (target.previousSibling as HTMLInputElement).focus();
+      }
+      if (
+        target.value !== "" &&
+        target.nextSibling &&
+        (target.nextSibling as HTMLInputElement).value !== ""
+      ) {
+        (target.nextSibling as HTMLInputElement).focus();
+      }
+    },
     []
   );
 
@@ -89,6 +107,7 @@ export const RecoveryForm = () => {
   }, [step, push]);
 
   const handlePhoneForm = useCallback(async () => {
+    setDisabledButton(true);
     setPhoneError("");
     if (phoneValue && isValidPhoneNumber(phoneValue)) {
       const phoneParse = parsePhoneNumber(phoneValue);
@@ -105,9 +124,11 @@ export const RecoveryForm = () => {
     } else {
       setPhoneError(t("phoneError"));
     }
+    setDisabledButton(false);
   }, [phoneValue, t]);
 
   const handleCodeForm = useCallback(async () => {
+    setDisabledButton(true);
     setCodeError("");
     if (phoneValue && !(codeValue.length < 4 || codeValue.includes(""))) {
       const phoneParse = parsePhoneNumber(phoneValue);
@@ -127,21 +148,20 @@ export const RecoveryForm = () => {
     } else {
       setCodeError(t("codeError"));
     }
+    setDisabledButton(false);
   }, [codeConfirm, codeValue, phoneValue, t]);
 
   const handlePasswordForm = useCallback(async () => {
+    setDisabledButton(true);
     try {
       await passwordSchema.validate({
         password: passwordValue,
       });
-      try {
-        await newPassword({ newPassword: passwordValue });
-        push("/account");
-      } catch (error: any) {
-        setPasswordError(error.response.data.error.message);
-      }
+      await newPassword({ newPassword: passwordValue });
+      push("/account");
     } catch (error: any) {
       setPasswordError(error.response.data.error.message);
+      setDisabledButton(false);
     }
   }, [passwordValue, push]);
 
@@ -177,7 +197,9 @@ export const RecoveryForm = () => {
         <StyledButton
           type="submit"
           color="white"
-          disabled={phoneValue ? phoneValue.length < 1 : true}
+          disabled={
+            (phoneValue ? phoneValue.length < 1 : true) || disabledButton
+          }
           mt="12px"
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
@@ -213,7 +235,9 @@ export const RecoveryForm = () => {
         <StyledButton
           type="submit"
           color="white"
-          disabled={codeValue.length < 4 || codeValue.includes("")}
+          disabled={
+            codeValue.length < 4 || codeValue.includes("") || disabledButton
+          }
           mt="12px"
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
@@ -238,7 +262,7 @@ export const RecoveryForm = () => {
         <StyledButton
           type="submit"
           color="white"
-          disabled={!passwordValue}
+          disabled={!passwordValue || disabledButton}
           mt="12px"
           mb="15px"
           md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}

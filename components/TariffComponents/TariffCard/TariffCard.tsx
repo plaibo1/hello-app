@@ -36,19 +36,10 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
   const { replace } = useRouter();
   const { state, changeTariff, tariffPayment } = useContext<any>(Context);
   const [error, setError] = useState<string>("");
+  const [disabledButton, setDisabledButton] = useState(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const userTariffRef = useRef<string>(state.user.premium.tariff);
-  const {
-    id,
-    free,
-    title,
-    benefitPercent,
-    freeDescription,
-    benefitBackground,
-    benefitDescription,
-    modalTitle,
-    modalDescription,
-  } = tariff;
+  const { id, title, benefitPercent, benefitBackground, benefitDescription } =
+    tariff;
 
   const handleModalOpen = () => {
     setModalOpen(true);
@@ -68,34 +59,43 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
   };
 
   const handleChangeTariff = async (tariff: string) => {
-    await changeTariff(tariff);
+    setDisabledButton(true);
+    try {
+      await changeTariff(tariff);
+    } catch {
+      setDisabledButton(false);
+    }
   };
 
   return (
     <div className={classes.wrapper}>
-      <h3 className={classes.title}>{title}</h3>
-      <div className={classes.description}>
-        <StyledSubhead display="inline" fontSize="14px">
-          {t(`items.${id}.free`)}
-        </StyledSubhead>
-        <StyledSubhead display="inline" color="#848592" fontSize="14px">{`, ${t(
-          `items.${id}.freeDescription`
-        )}`}</StyledSubhead>
-      </div>
-      <StyledDivider />
-      {benefitPercent && benefitDescription && (
-        <div className={classes.benefits}>
-          <span
-            className={classes.benefitPercent}
-            style={{ backgroundColor: benefitBackground }}
-          >
-            {t(`items.${id}.benefitPercent`)}
-          </span>
-          <span className={classes.benefitDescription}>
-            {t(`items.${id}.benefitDescription`)}
-          </span>
+      <div>
+        <h3 className={classes.title}>{title}</h3>
+        <div className={classes.description}>
+          <StyledSubhead display="inline" fontSize="14px">
+            {t(`items.${id}.free`)}
+          </StyledSubhead>
+          <StyledSubhead
+            display="inline"
+            color="#848592"
+            fontSize="14px"
+          >{`, ${t(`items.${id}.freeDescription`)}`}</StyledSubhead>
         </div>
-      )}
+        <StyledDivider />
+        {benefitPercent && benefitDescription && (
+          <div className={classes.benefits}>
+            <span
+              className={classes.benefitPercent}
+              style={{ backgroundColor: benefitBackground }}
+            >
+              {t(`items.${id}.benefitPercent`)}
+            </span>
+            <span className={classes.benefitDescription}>
+              {t(`items.${id}.benefitDescription`)}
+            </span>
+          </div>
+        )}
+      </div>
       <StyledButton
         textAlign="center"
         color="white"
@@ -108,6 +108,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
             : handleModalOpen()
         }
         gradientBackground={true}
+        mb="0px"
       >
         {t("button")}
       </StyledButton>
@@ -142,6 +143,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
             </StyledSubhead>
             <StyledButton
               blueButton
+              disabled={disabledButton}
               mb="4px"
               onClick={() => handleChangeTariff(id)}
             >

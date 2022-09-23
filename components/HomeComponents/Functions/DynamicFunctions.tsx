@@ -29,7 +29,10 @@ const DynamicFunctions = () => {
             loop={true}
             modules={[Pagination, Autoplay]}
             autoplay={{ delay: 2500 }}
-            style={{ paddingBottom: "48px", paddingTop: "24px" }}
+            style={{
+              paddingBottom: "48px",
+              paddingTop: "32px",
+            }}
             onSwiper={setSwiper}
             onSlideChange={(item) => setActiveSlide(item.realIndex)}
             scrollbar={{ draggable: true }}
@@ -158,8 +161,14 @@ const DynamicFunctions = () => {
               spaceBetween={0}
               centeredSlides={true}
               loop={true}
-              style={{ paddingBottom: "48px", paddingTop: "24px" }}
+              style={{
+                paddingBottom: "48px",
+                paddingTop: "32px",
+              }}
               onSwiper={setSwiper}
+              breakpoints={{
+                970: {},
+              }}
               onSlideChange={(item) => setActiveSlide(item.realIndex)}
               scrollbar={{ draggable: true }}
               modules={[Autoplay]}
@@ -167,7 +176,7 @@ const DynamicFunctions = () => {
             >
               {MOC_FUNCTIONS.map((item) => {
                 return (
-                  <SwiperSlide key={item.title}>
+                  <SwiperSlide key={item.title} className={classes.swiperSlide}>
                     <div className={classes.sliderImage}>
                       <Image
                         src={item.phoneImage}

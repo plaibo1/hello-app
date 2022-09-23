@@ -26,7 +26,7 @@ export const WhatIsIt = () => {
                 }),
               }}
             />
-            <StyledDivider mb="24px" />
+            <StyledDivider mb="40px" lg={{ mb: "32px" }} />
             <Row>
               {WII_ITEMS.map((item, index) => {
                 return (

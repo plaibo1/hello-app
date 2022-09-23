@@ -145,3 +145,11 @@
 .swiperBulletActive {
   background: #4392BF;
 }
+.swiperSlide {
+  transition: 1s;
+  opacity: 0;
+  &:global(.swiper-slide-active) {
+    transition: 1s;
+    opacity: 1;
+  }
+}

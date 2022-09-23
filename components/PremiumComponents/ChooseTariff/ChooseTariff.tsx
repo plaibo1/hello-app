@@ -23,22 +23,20 @@ export const ChooseTariff: FC<IProps> = ({ containerRef }) => {
       <Container>
         <Row>
           <Col md={12}>
-            <StyledTitle2 textAlign="center" mb="24px">
+            <StyledTitle2 textAlign="center" mb="40px" lg={{ mb: "32px" }}>
               {t("chooseTariff.title")}
             </StyledTitle2>
           </Col>
         </Row>
-        <Row>
+        <div className={classes.tariffs}>
           {MOC_TARIFFS.map((tariff, index) => {
             return (
               tariff.id !== currentTariffRef.current && (
-                <Col md={(index + 1) % 3 === 0 ? 12 : 6} lg={4} key={tariff.id}>
-                  <TariffCard tariff={tariff} />
-                </Col>
+                <TariffCard tariff={tariff} key={tariff.id} />
               )
             );
           })}
-        </Row>
+        </div>
       </Container>
     </section>
   );

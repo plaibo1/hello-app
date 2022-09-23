@@ -13,13 +13,13 @@ import { E164Number } from "libphonenumber-js/types.d";
 import { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
 import classes from "./LoginForm.module.scss";
 import { Context } from "../../../context";
-import { passwordSchema } from "../../../Schemas/Login";
 import useTranslation from "next-translate/useTranslation";
 
 export const LoginForm = () => {
   const { t } = useTranslation("login");
   const { push, query } = useRouter();
   const { login } = useContext<any>(Context);
+  const [disabledButton, setDisabledButton] = useState(false);
   const [phoneValue, setPhoneValue] = useState<E164Number | undefined>("");
   const [phoneError, setPhoneError] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
@@ -42,6 +42,7 @@ export const LoginForm = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    setDisabledButton(true);
     setLoginError("");
     setPhoneError("");
     setPasswordError("");
@@ -62,9 +63,11 @@ export const LoginForm = () => {
         );
       } catch (error: any) {
         setLoginError(error);
+        setDisabledButton(false);
       }
     } else {
       setPhoneError("Неверный формат телефона");
+      setDisabledButton(false);
     }
   };
 
@@ -105,7 +108,7 @@ export const LoginForm = () => {
           <StyledButton
             type="submit"
             color="white"
-            disabled={!(phoneValue && passwordValue)}
+            disabled={!(phoneValue && passwordValue) || disabledButton}
             mt="12px"
             mb="15px"
           >

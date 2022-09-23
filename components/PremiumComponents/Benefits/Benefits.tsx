@@ -28,7 +28,7 @@ export const Benefits = () => {
                 }),
               }}
             />
-            <StyledDivider mb="24px" />
+            <StyledDivider mb="40px" lg={{ mb: "32px" }} />
           </Col>
         </Row>
         <Row>
