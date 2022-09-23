@@ -1,8 +1,15 @@
+@import "/styles/variables.scss";
+
 .backArrow {
   position: absolute;
   left: 30px;
   top: 30px;
   cursor: pointer;
+
+  @media (max-width: $lg) {
+    top: -40px;
+    left: 20px;
+  }
 }
 .errorTitle {
   text-align: left;

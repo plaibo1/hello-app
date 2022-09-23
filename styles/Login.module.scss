@@ -7,6 +7,10 @@
   justify-content: center;
   max-height: 100vh;
   max-height: -webkit-fill-available;
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  left: 0px;
 
   @media (max-width: $lg) {
     align-items: flex-end;
@@ -28,12 +32,12 @@
   width: 640px;
   text-align: center;
   @media (max-width: $xl) {
+    height: calc(100% - 56px);
     width: 462px;
     padding: 30px;
   }
   @media (max-width: $lg) {
     width: 100%;
-    height: calc(100vh - 56px);
     max-height: unset;
     padding: 20px;
   }
