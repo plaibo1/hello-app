@@ -3,21 +3,21 @@ export const MOC_FUNCTIONS = [
     title: "Избранные профили",
     titleIcon: "/images/icons/star.svg",
     description:
-      "Список избранных профилей, с возможностью поиска и сортировкой по алфавиту",
+      "Список избранных профилей с возможностью поиска и сортировкой по алфавиту",
     phoneImage: "/images/mockup_functions.png",
   },
   {
     title: "Поиск",
     titleIcon: "/images/icons/people_search_func.svg",
     description:
-      "Поиск пользователей поблизости при помощи bluetooth, с возможностью отложенного просмотра",
+      "Поиск пользователей поблизости при помощи bluetooth с возможностью отложенного просмотра",
     phoneImage: "/images/mockup_functions_search.png",
   },
   {
     title: "Фильтры",
     titleIcon: "/images/icons/account_filter_func.svg",
     description:
-      "Тонко настраиваемый фильтр поиска пользователей, по выбранным категориям, с возможностью поиска в фоне",
+      "Тонко настраиваемый фильтр поиска пользователей, по выбранным категориям с возможностью поиска в фоне",
     phoneImage: "/images/mockup_functions_filt.png",
   },
   {
@@ -38,7 +38,7 @@ export const MOC_FUNCTIONS = [
     title: "Короткие сообщения",
     titleIcon: "/images/icons/chat.svg",
     description:
-      "Отправка коротких сообщений, позволяющие общаться и делиться вашим профилем с интересным вам людьми",
+      "Отправка коротких сообщений, позволяющих общаться и делиться вашим профилем с интересным вам людьми",
     phoneImage: "/images/mockup_functions_message.png",
   },
 ];

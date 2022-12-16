@@ -111,7 +111,7 @@ module.exports = {
   "Выделяйтесь среди всех с возможностью кастомизировать карточки профилей.":
     "Stand out with custom profile cards.",
   "Отключение входящих сообщений": "Mute incoming messages",
-  "Ограничьте отправку вам сообщений, для спокойной работы и отдыха.":
+  "Ограничьте отправку вам сообщений для спокойной работы и отдыха.":
     "Restrict messages from you for work and leisure.",
   "Отображение вашего профиля только нужным вам людям":
     "Show your profile only to the people you need",

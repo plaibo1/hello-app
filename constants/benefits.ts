@@ -39,7 +39,7 @@ export const MOC_BENEFITS = [
     {
       icon: "/images/icons/chat_36.svg",
       title: "Отключение входящих сообщений",
-      text: "Ограничьте отправку вам сообщений, для спокойной работы и отдыха.",
+      text: "Ограничьте отправку вам сообщений для спокойной работы и отдыха.",
     },
     {
       icon: "/images/icons/view_outline_36.svg",
