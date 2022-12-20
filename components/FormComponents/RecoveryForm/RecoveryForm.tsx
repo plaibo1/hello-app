@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useRef, useState } from "react";
 import {
   StyledTitle2,
   StyledButton,
@@ -20,8 +20,6 @@ import { restorePassword, newPassword } from "../../../services";
 import { passwordSchema } from "../../../Schemas/Login";
 import { Context } from "../../../context";
 import useTranslation from "next-translate/useTranslation";
-import { useEffect } from "react";
-import useTimer from "../useTimer/useTimer";
 import TimerButton from "../TimerButton/TimerButton";
 
 export const RecoveryForm = () => {
@@ -38,9 +36,15 @@ export const RecoveryForm = () => {
     Array<number | string | undefined>
   >(["", "", "", ""]);
   const [codeError, setCodeError] = useState<string>("");
+  const phoneInputRef = useRef<HTMLInputElement | null>(null);
 
   const handlePhoneInput = useCallback((value: E164Number | undefined) => {
     setPhoneValue(value);
+
+    if (phoneInputRef.current?.value && isValidPhoneNumber(phoneInputRef.current?.value)) {
+      setPhoneError("");
+      setDisabledButton(false);
+    }
   }, []);
 
   const handlePasswordInput = useCallback(
@@ -55,6 +59,16 @@ export const RecoveryForm = () => {
       setPhoneValue("+7");
     }
   };
+
+  const handleFocusOut = () => {
+    if (!(phoneValue && isValidPhoneNumber(phoneValue))) {
+      setPhoneError("Неверный формат телефона");
+      setDisabledButton(true);
+    } else {
+      setPhoneError("");
+      setDisabledButton(false);
+    }
+  }
 
   const handleCodeInput = useCallback(
     (index: number, target: HTMLInputElement) => {
@@ -203,7 +217,9 @@ export const RecoveryForm = () => {
           value={phoneValue}
           onChange={handlePhoneInput}
           error={phoneError}
-          onFocus={handleFirstFocus}
+          onFocusIn={handleFirstFocus}
+          onFocusOut={handleFocusOut}
+          ref={phoneInputRef}
         />
         <StyledButton
           type="submit"
