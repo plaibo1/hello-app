@@ -4,7 +4,7 @@ export const MOC_FUNCTIONS = [
     titleIcon: "/images/icons/star.svg",
     description:
       "Список избранных профилей с возможностью поиска и сортировкой по алфавиту",
-    phoneImage: "/images/mockup_functions.png",
+    phoneImage: "/images/mockup_functions_fav.png",
   },
   {
     title: "Поиск",
