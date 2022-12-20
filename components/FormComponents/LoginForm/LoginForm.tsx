@@ -114,9 +114,9 @@ export const LoginForm = () => {
           <PhoneInput
             value={phoneValue}
             onChange={handlePhoneInput}
-            onFocus={handleFirstFocus}
+            onFocusIn={handleFirstFocus}
             error={phoneError}
-            onBlur={handleFocusOut}
+            onFocusOut={handleFocusOut}
             ref={phoneInputRef}
           />
           <PasswordInput

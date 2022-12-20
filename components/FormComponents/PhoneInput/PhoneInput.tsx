@@ -8,9 +8,9 @@ import { forwardRef } from "react";
 interface IProps {
   value: E164Number | undefined;
   onChange: (value: E164Number | undefined) => void;
-  onFocus: () => void;
+  onFocusIn: () => void;
+  onFocusOut: () => void;
   error: string;
-  onBlur: () => void;
 }
 
 type TRef = HTMLInputElement | null;
@@ -18,8 +18,8 @@ type TRef = HTMLInputElement | null;
 export const PhoneInput = forwardRef<TRef, IProps>(({
   value,
   onChange,
-  onFocus,
-  onBlur,
+  onFocusIn,
+  onFocusOut,
   error = "",
 }, ref) => {
   const { t } = useTranslation("inputs");
@@ -31,8 +31,8 @@ export const PhoneInput = forwardRef<TRef, IProps>(({
         <Input
           value={value}
           placeholder="+7 (___) ___ __ __"
-          onFocus={onFocus}
-          onBlur={onBlur}
+          onFocus={onFocusIn}
+          onBlur={onFocusOut}
           onChange={onChange}
           autoComplete="off"
           className={classes.input}
