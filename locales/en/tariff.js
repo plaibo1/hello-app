@@ -19,6 +19,8 @@ module.exports = {
       freeDescription: "каждый следующий месяц - по тарифу",
       modalTitle: "Перейти на ежемесячную подписку?",
       modalDescription: "Далее каждый месяц — по тарифу",
+      benefitPercent: "%",
+      benefitDescription: "Нет выгоды",
     },
     quarter: {
       title: "3 месяца",

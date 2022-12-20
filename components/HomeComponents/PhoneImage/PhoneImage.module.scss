@@ -149,6 +149,9 @@
 }.image-17 {
   left: -18.5%;
   top: 75%;animation-delay: .6s;
+  &:before {
+    background-color: rgba(203, 203, 203, 0.2);
+  }
 }.image-18 {
   left: 1.5%;
   top: 70%;animation-delay: 4.2s;

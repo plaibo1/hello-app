@@ -17,7 +17,7 @@ import useTranslation from "next-translate/useTranslation";
 
 export const LoginForm = () => {
   const { t } = useTranslation("login");
-  const { push, query } = useRouter();
+  const { push, query, back, basePath } = useRouter();
   const { login } = useContext<any>(Context);
   const [disabledButton, setDisabledButton] = useState(false);
   const [phoneValue, setPhoneValue] = useState<E164Number | undefined>("");
@@ -71,8 +71,12 @@ export const LoginForm = () => {
     }
   };
 
-  const handleBack = () => {
-    push("/");
+  const handleBack = async () => {
+    if (typeof window !== 'undefined' && + window?.history?.length > 1) {
+      back()
+    } else {
+      await push('/')
+    }
   };
 
   return (
