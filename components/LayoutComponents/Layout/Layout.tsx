@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React, { FC, ReactNode, useContext, useEffect } from "react";
+import React, { FC, ReactNode, useContext, useEffect, useState } from "react";
 
 import Header from "../Header";
 import Footer from "../Footer";
@@ -30,9 +30,18 @@ export const Layout: FC<IProps> = ({
   const { t } = useTranslation("common");
   const { pathname, push } = useRouter();
   const { state, cancelTariff } = useContext<any>(Context);
+  const [resultStatus, setResultStatus] = useState<Record<string, any> | null>(null);
+
+  const page = pathname.split("?")[0];
+  const isHaveAccess = !(
+    !resultStatus?.access?.includes(page) &&
+    !Array.isArray(resultStatus?.redirect) &&
+    resultStatus?.redirect
+  )
+
   useEffect(() => {
     let profileStatus = "withoutLogin";
-    const page = pathname.split("?")[0];
+    
     if (state.user.auth) {
       if (
         (state.user.data && state.user.data.premium) ||
@@ -51,14 +60,15 @@ export const Layout: FC<IProps> = ({
         profileStatus = "withoutPremium";
       }
     }
-    const statusObject = accessLinks[profileStatus];
-    if (
-      !statusObject.access.includes(page) &&
-      !Array.isArray(statusObject.redirect)
-    ) {
-      push(statusObject.redirect);
+    setResultStatus(accessLinks[profileStatus]);
+  }, [state, state.user.auth, state.user.data]);
+  
+  useEffect(() => {
+    if (!isHaveAccess) {
+      push(resultStatus.redirect);
     }
-  }, [pathname, push, state, state.user.auth, state.user.data]);
+  }, [resultStatus, push, pathname, page, isHaveAccess]);
+
   return (
     <>
       <Head>
@@ -69,11 +79,15 @@ export const Layout: FC<IProps> = ({
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="layoutWrap">
-        {!fullHeight && <Header />}
-        <main>{children}</main>
-      </div>
-      {!fullHeight && <Footer />}
+      {isHaveAccess ? (
+        <>
+          <div className="layoutWrap">
+            {!fullHeight && <Header />}
+            <main>{children}</main>
+          </div>
+          {!fullHeight && <Footer />}
+        </>
+      ) : null}
     </>
   );
 };

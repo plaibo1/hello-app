@@ -10,4 +10,5 @@ module.exports = {
   codeError: "Введен неверный код",
   passwordTitle: "Новый пароль",
   saveButton: "Сохранить и войти",
+  resendCodeButton: "Отправить код повторно",
 };

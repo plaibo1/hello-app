@@ -155,9 +155,8 @@ const Provider = ({
 
   const logout = useCallback(async () => {
     await signOut();
-    push("/");
     dispatch({ type: "LOGGED_OUT_USER" });
-  }, [push]);
+  }, []);
 
   const codeConfirm = useCallback(
     async (body: CodeConfirmSchema) => {

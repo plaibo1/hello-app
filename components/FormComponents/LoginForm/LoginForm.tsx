@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef } from "react";
 import {
   Logo,
   StyledTitle2,
@@ -25,9 +25,15 @@ export const LoginForm = () => {
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [loginError, setLoginError] = useState<string>("");
+  const phoneInputRef = useRef<HTMLInputElement | null>(null);
 
   const handlePhoneInput = (value: E164Number | undefined) => {
     setPhoneValue(value);
+
+    if (phoneInputRef.current?.value && isValidPhoneNumber(phoneInputRef.current?.value)) {
+      setPhoneError("");
+      setDisabledButton(false);
+    }
   };
 
   const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,6 +45,16 @@ export const LoginForm = () => {
       setPhoneValue("+7");
     }
   };
+
+  const handleFocusOut = () => {
+    if (!(phoneValue && isValidPhoneNumber(phoneValue))) {
+      setPhoneError("Неверный формат телефона");
+      setDisabledButton(true);
+    } else {
+      setPhoneError("");
+      setDisabledButton(false);
+    }
+  }
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -100,6 +116,8 @@ export const LoginForm = () => {
             onChange={handlePhoneInput}
             onFocus={handleFirstFocus}
             error={phoneError}
+            onBlur={handleFocusOut}
+            ref={phoneInputRef}
           />
           <PasswordInput
             value={passwordValue}
