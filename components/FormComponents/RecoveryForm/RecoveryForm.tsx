@@ -20,6 +20,9 @@ import { restorePassword, newPassword } from "../../../services";
 import { passwordSchema } from "../../../Schemas/Login";
 import { Context } from "../../../context";
 import useTranslation from "next-translate/useTranslation";
+import { useEffect } from "react";
+import useTimer from "../useTimer/useTimer";
+import TimerButton from "../TimerButton/TimerButton";
 
 export const RecoveryForm = () => {
   const { t } = useTranslation("recovery");
@@ -106,9 +109,7 @@ export const RecoveryForm = () => {
     }
   }, [step, push]);
 
-  const handlePhoneForm = useCallback(async () => {
-    setDisabledButton(true);
-    setPhoneError("");
+  const sendNumber = async () => {
     if (phoneValue && isValidPhoneNumber(phoneValue)) {
       const phoneParse = parsePhoneNumber(phoneValue);
       try {
@@ -116,14 +117,24 @@ export const RecoveryForm = () => {
           country: `+${phoneParse?.countryCallingCode}`,
           number: phoneParse?.nationalNumber,
         });
-        setStep(2);
+        return true;
       } catch (error: any) {
-        console.log(error);
         setPhoneError(error.response.data.error.message);
       }
     } else {
       setPhoneError(t("phoneError"));
     }
+  }
+
+  const handlePhoneForm = useCallback(async () => {
+    setDisabledButton(true);
+    setPhoneError("");
+
+    const successNumberSent = await sendNumber();
+    if (successNumberSent) {
+      setStep(2);
+    }
+
     setDisabledButton(false);
   }, [phoneValue, t]);
 
@@ -160,7 +171,7 @@ export const RecoveryForm = () => {
       await newPassword({ newPassword: passwordValue });
       push("/account");
     } catch (error: any) {
-      setPasswordError(error.response.data.error.message);
+      setPasswordError(error?.response?.data.error.message || error.errors);
       setDisabledButton(false);
     }
   }, [passwordValue, push]);
@@ -244,6 +255,8 @@ export const RecoveryForm = () => {
         >
           {t("nextButton")}
         </StyledButton>
+
+        <TimerButton sendNumber={sendNumber} />
       </>
     );
   };

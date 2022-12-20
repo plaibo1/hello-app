@@ -1,23 +1,29 @@
-import React, { FC } from "react";
+import React, { FC, useRef } from "react";
 import { E164Number } from "libphonenumber-js/types.d";
 import Input from "react-phone-number-input/input";
 import classes from "./PhoneInput.module.scss";
 import useTranslation from "next-translate/useTranslation";
+import { forwardRef } from "react";
 
 interface IProps {
   value: E164Number | undefined;
   onChange: (value: E164Number | undefined) => void;
   onFocus: () => void;
   error: string;
+  onBlur: () => void;
 }
 
-export const PhoneInput: FC<IProps> = ({
+type TRef = HTMLInputElement | null;
+
+export const PhoneInput = forwardRef<TRef, IProps>(({
   value,
   onChange,
   onFocus,
+  onBlur,
   error = "",
-}) => {
+}, ref) => {
   const { t } = useTranslation("inputs");
+
   return (
     <label className={`${classes.phoneInput} ${error && classes.error}`}>
       <p className={classes.inputLabel}>{t("phoneLabel")}</p>
@@ -26,12 +32,16 @@ export const PhoneInput: FC<IProps> = ({
           value={value}
           placeholder="+7 (___) ___ __ __"
           onFocus={onFocus}
+          onBlur={onBlur}
           onChange={onChange}
           autoComplete="off"
           className={classes.input}
+          ref={ref}
         />
       </div>
       {error && <div className={classes.errorTitle}>{error}</div>}
     </label>
-  );
-};
+  )
+});
+
+PhoneInput.displayName = 'PhoneInput';

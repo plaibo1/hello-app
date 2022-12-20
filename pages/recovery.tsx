@@ -9,6 +9,7 @@ import useTranslation from "next-translate/useTranslation";
 
 const Recovery: NextPage = () => {
   const { t } = useTranslation("recovery");
+
   return (
     <Layout meta={{ title: t("pageTitle") }} fullHeight={true}>
       <section className={classes.recovery}>

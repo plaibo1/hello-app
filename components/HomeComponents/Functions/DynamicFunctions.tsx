@@ -183,6 +183,7 @@ const DynamicFunctions = () => {
                         width={220}
                         height={450}
                         alt="Function image"
+                        priority={true}
                       />
                     </div>
                   </SwiperSlide>

@@ -23,8 +23,8 @@ export const signIn = async ({ password, phone }: LoginSchema) => {
     });
 };
 
-export const signOut = (token?: string) => {
-  return apiClient
+export const signOut = async (token?: string) => {
+  return await apiClient
     .delete(`${baseUrl}/api/auth/session`, {
       headers: {
         Authorization:
@@ -48,8 +48,8 @@ export const restorePassword = (phone: PhoneSchema) => {
     });
 };
 
-export const codeConfirm = (body: CodeConfirmSchema) => {
-  return apiClient
+export const codeConfirm = async (body: CodeConfirmSchema) => {
+  return await apiClient
     .post(`${baseUrl}/api/auth/codeConfirm`, {
       code: body.code,
       confirmType: body.confirmType,
@@ -63,8 +63,8 @@ export const codeConfirm = (body: CodeConfirmSchema) => {
     });
 };
 
-export const newPassword = (body: NewPasswordScheme) => {
-  return apiClient
+export const newPassword = async (body: NewPasswordScheme) => {
+  return await apiClient
     .patch(
       `${baseUrl}/api/user/password`,
       {
@@ -82,7 +82,7 @@ export const newPassword = (body: NewPasswordScheme) => {
 };
 
 export const getSelfInfo = async (token?: string) => {
-  return apiClient
+  return await apiClient
     .get(`${baseUrl}/api/pay/tariff`, {
       headers: {
         Authorization:
@@ -100,7 +100,7 @@ export const getSelfInfo = async (token?: string) => {
 };
 
 export const startTrial = async (deferTariff?: string) => {
-  return apiClient
+  return await apiClient
     .post(
       `${baseUrl}/api/pay/trial`,
       {
@@ -118,7 +118,7 @@ export const startTrial = async (deferTariff?: string) => {
 };
 
 export const changeTariff = async (tariff: string) => {
-  return apiClient
+  return await apiClient
     .put(
       `${baseUrl}/api/pay/tariff`,
       {
@@ -136,7 +136,7 @@ export const changeTariff = async (tariff: string) => {
 };
 
 export const tariffPayment = async (tariff: string) => {
-  return apiClient
+  return await apiClient
     .get(`${baseUrl}/api/pay/url`, {
       params: {
         section: tariff,
@@ -151,7 +151,7 @@ export const tariffPayment = async (tariff: string) => {
 };
 
 export const refreshToken = async () => {
-  return apiClient
+  return await apiClient
     .put(`${baseUrl}/api/auth/session`, {
       refresh_token: cookie.parse(document.cookie).refresh_token,
       web: true,
@@ -164,7 +164,7 @@ export const refreshToken = async () => {
 };
 
 export const cancelTariff = async () => {
-  return apiClient
+  return await apiClient
     .delete(`${baseUrl}/api/pay/tariff`, {
       headers: {
         Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
@@ -176,7 +176,7 @@ export const cancelTariff = async () => {
 };
 
 export const getBindCardUrl = async () => {
-  return apiClient
+  return await apiClient
     .get(`${baseUrl}/api/pay/url/bindCard`, {
       headers: {
         Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
