@@ -30,7 +30,7 @@ const Timer:FC<{sendNumber: () => Promise<true | undefined>}> = ({ sendNumber })
         textAlign="center"
         md={{ padding: "12px 0px", width: "100%", textAlign: "center" }}
       >
-        {t("resendCodeButton")} {time !== 0 ? `00:${time}` : null}
+        {t("resendCodeButton")} {time !== 0 ? `00:${time < 10 ? `0${time}` : time}` : null}
       </StyledButton>
     </div>
   );
