@@ -4,7 +4,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { useMediaQuery } from "../../../hooks";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper";
+import { Autoplay, Pagination } from 'swiper';
 import { Col, Row } from "react-flexbox-grid";
 import classes from "./Functions.module.scss";
 import { MOC_FUNCTIONS } from "../../../constants/functions";
@@ -18,6 +18,7 @@ const DynamicFunctions = () => {
   const slideTo = (index: number) => {
     swiper.slideTo(index);
   };
+
   return (
     <Row>
       {matches ? (
@@ -169,10 +170,10 @@ const DynamicFunctions = () => {
               breakpoints={{
                 970: {},
               }}
+              modules={[Autoplay]}
               onSlideChange={(item) => setActiveSlide(item.realIndex)}
               scrollbar={{ draggable: true }}
-              modules={[Autoplay]}
-              autoplay={{ delay: 2500 }}
+              autoplay={{ delay: 2500, disableOnInteraction: false }}
             >
               {MOC_FUNCTIONS.map((item) => {
                 return (

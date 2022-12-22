@@ -74,7 +74,7 @@ export const Benefits = () => {
                   className={`${adaptiveClasses["hidden-xl"]} ${adaptiveClasses["visible-md"]}`}
                 >
                   <Col sm={6}>
-                    {HOME_BENEFITS.slice(0, 3).map((benefit, index) => {
+                    {[...HOME_BENEFITS.slice(0, 3)].map((benefit, index) => {
                       return (
                         <StyledListItem
                           key={benefit}
@@ -84,17 +84,17 @@ export const Benefits = () => {
                     })}
                   </Col>
                   <Col sm={6}>
-                    {HOME_BENEFITS.slice(3, 6).map((benefit, index) => {
+                    {[...HOME_BENEFITS.slice(3, 6)].map((benefit, index) => {
                       return index === 2 ? (
                         <StyledListItem
                           key={benefit}
-                          text={benefit}
+                          text={t(`benefits.items.${index + 3}`)}
                           color="#4392BF"
                         />
                       ) : (
                         <StyledListItem
                           key={benefit}
-                          text={t(`benefits.items.${index}`)}
+                          text={t(`benefits.items.${index + 3}`)}
                         />
                       );
                     })}
