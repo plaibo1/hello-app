@@ -29,7 +29,7 @@ const DynamicFunctions = () => {
             centeredSlides={true}
             loop={true}
             modules={[Pagination, Autoplay]}
-            autoplay={{ delay: 2500 }}
+            autoplay={{ delay: 2500, disableOnInteraction: false }}
             style={{
               paddingBottom: "48px",
               paddingTop: "32px",
