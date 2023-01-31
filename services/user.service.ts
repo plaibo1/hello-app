@@ -32,8 +32,8 @@ export const signOut = async (token?: string) => {
       },
     })
     .then((res) => {
-      document.cookie = `access_token=`;
-      document.cookie = `refresh_token=`;
+      document.cookie = `access_token=; path=/;`;
+      document.cookie = `refresh_token=; path=/;`;
       return res.data.response;
     });
 };
@@ -93,8 +93,8 @@ export const getSelfInfo = async (token?: string) => {
       return res.data.response;
     })
     .catch((error) => {
-      document.cookie = `access_token=`;
-      document.cookie = `refresh_token=`;
+      document.cookie = `access_token=; path=/;`;
+      document.cookie = `refresh_token=; path=/;`;
       return Promise.reject(error);
     });
 };
@@ -136,15 +136,19 @@ export const changeTariff = async (tariff: string) => {
 };
 
 export const tariffPayment = async (tariff: string) => {
+  // console.log("tariffPayment", tariff);
   return await apiClient
-    .get(`${baseUrl}/api/pay/url`, {
-      params: {
-        section: tariff,
+    .post(
+      `${baseUrl}/api/pay/url/tariff`,
+      {
+        tariff
       },
-      headers: {
-        Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
-      },
-    })
+      {
+        headers: {
+          Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
+        },
+      }
+    )
     .then((res) => {
       return res.data.response;
     });

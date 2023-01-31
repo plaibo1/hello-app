@@ -21,8 +21,8 @@ function getInstance() {
               await refreshToken();
               return api(originalConfig);
             } catch (_error: any) {
-              document.cookie = `access_token=`;
-              document.cookie = `refresh_token=`;
+              document.cookie = `access_token=; path=/;`;
+              document.cookie = `refresh_token=; path=/;`;
               return Promise.reject(_error);
             }
           }

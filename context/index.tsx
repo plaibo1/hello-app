@@ -168,8 +168,13 @@ const Provider = ({
   );
 
   const tariffPayment = useCallback(async (tariff: string) => {
-    const paymentUrl = await _tariffPayment(tariff);
-    return paymentUrl;
+    try {
+      const paymentUrl = await _tariffPayment(tariff);
+      return paymentUrl;
+    }
+    catch(err) {
+      console.log(err)
+    }
   }, []);
 
   const cancelTariff = useCallback(async () => {
