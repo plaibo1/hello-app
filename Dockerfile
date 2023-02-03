@@ -30,7 +30,7 @@ COPY . .
 RUN yarn build
 
 ### 3. Production image, copy all the files and run next
-FROM 16.19.0-alpine AS runner
+FROM node:16.19.0-alpine AS runner
 
 WORKDIR /app
 
