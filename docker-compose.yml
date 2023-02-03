@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  hello-front:
+    image: hello-front:latest
+    build:
+      context: .
+    ports:
+      - 3000:3000
+    restart: on-failure
