@@ -82,7 +82,7 @@ const Footer = () => {
               >
                 {t("footer.privacyPolicy")}
               </StyledLink>
-              <span>{t("footer.copyright")}</span>
+              <span> © {`${new Date().getFullYear()}`} {t("footer.copyright")}</span>
             </div>
           </Col>
         </Row>
