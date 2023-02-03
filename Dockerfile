@@ -1,5 +1,5 @@
 ### 1. Install dependencies only when needed
-FROM registry.zuzex.com/dockerhub/node:16.19.0-alpine AS deps
+FROM node:16.19.0-alpine AS deps
 
 WORKDIR /app
 
@@ -18,7 +18,7 @@ RUN \
   fi
 
 ### 2. Rebuild the source code only when needed
-FROM registry.zuzex.com/dockerhub/node:16.19.0-alpine AS builder
+FROM node:16.19.0-alpine AS builder
 
 WORKDIR /app
 
@@ -30,7 +30,7 @@ COPY . .
 RUN yarn build
 
 ### 3. Production image, copy all the files and run next
-FROM registry.zuzex.com/dockerhub/node:16.19.0-alpine AS runner
+FROM 16.19.0-alpine AS runner
 
 WORKDIR /app
 
