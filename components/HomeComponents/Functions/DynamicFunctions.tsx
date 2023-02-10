@@ -9,12 +9,14 @@ import { Col, Row } from "react-flexbox-grid";
 import classes from "./Functions.module.scss";
 import { MOC_FUNCTIONS } from "../../../constants/functions";
 import useTranslation from "next-translate/useTranslation";
+import { useRouter } from "next/router";
 
 const DynamicFunctions = () => {
   const { t } = useTranslation("home");
   const matches = useMediaQuery("(max-width:765px)");
   const [activeSlide, setActiveSlide] = useState<number>(1);
   const [swiper, setSwiper] = useState<any>(null);
+  const { locale } = useRouter()
   const slideTo = (index: number) => {
     swiper.slideTo(index);
   };
@@ -48,7 +50,7 @@ const DynamicFunctions = () => {
                 <SwiperSlide key={item.title}>
                   <div className={classes.sliderImage}>
                     <Image
-                      src={item.phoneImage}
+                      src={locale === "en" ? `${item.phoneImage.split('.')[0]}_en.png` : item.phoneImage}
                       width={220}
                       height={450}
                       alt="Function image"
@@ -180,7 +182,7 @@ const DynamicFunctions = () => {
                   <SwiperSlide key={item.title} className={classes.swiperSlide}>
                     <div className={classes.sliderImage}>
                       <Image
-                        src={item.phoneImage}
+                        src={locale === "en" ? `${item.phoneImage.split('.')[0]}_en.png` : item.phoneImage}
                         width={220}
                         height={450}
                         alt="Function image"

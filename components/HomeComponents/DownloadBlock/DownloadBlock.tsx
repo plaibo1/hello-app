@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import Image from "next/image";
 import classes from "./DownloadBlock.module.scss";
 import useTranslation from "next-translate/useTranslation";
+import { useRouter } from "next/router";
 
 interface IProps {
   color?: "white" | "black";
@@ -9,6 +10,8 @@ interface IProps {
 
 export const DownloadBlock: FC<IProps> = ({ color = "black" }) => {
   const { t } = useTranslation("home");
+  const { locale } = useRouter()
+
   return (
     <div className={classes.wrapper}>
       <div className={classes.qrWrap}>
@@ -26,14 +29,14 @@ export const DownloadBlock: FC<IProps> = ({ color = "black" }) => {
         <div className={classes.storesWrap}>
           <div className={classes.storeItem}>
             <Image
-              src="/images/app_store.svg"
+              src={`/images/app_store${locale === "en" ? "_en.svg" : ".svg"}`}
               layout="fill"
               alt="App store link"
             />
           </div>
           <div className={classes.storeItem}>
             <Image
-              src="/images/google_play.png"
+              src={`/images/google_play${locale === "en" ? "_en.svg" : ".png"}`}
               layout="fill"
               alt="App store link"
             />

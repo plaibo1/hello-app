@@ -3,7 +3,7 @@ module.exports = {
   jumbotron: {
     title: "Meet new people near you",
     subtitle:
-      "Look for new people and useful acquaintances via bluetooth, in the Hello",
+      "Look for new people and useful contacts via bluetooth, in Hello",
     downloadText: "Download the app and join the Hello community",
     downloadLink: "Download app",
     qrText: "Use camera for QR code to download Hello app",
@@ -12,9 +12,9 @@ module.exports = {
     title: "How does <span>Hello</span> work",
     items: {
       0: "Download the app on your phone",
-      1: "Sign up and create your personal or business profile",
+      1: "Sign up and create a personal or business profile",
       2: "Turn on bluetooth and start searching for interesting people nearby",
-      3: "Grow the Hello community by telling your friends and colleagues about us",
+      3: "Grow Hello community by telling your friends and colleagues about the app",
     },
   },
   whatIsIt: {
@@ -22,18 +22,18 @@ module.exports = {
     items: {
       0: {
         title: "Simple search",
-        text: "Simple and convenient search for people nearby using bluetooth and working in the background",
+        text: "Simple and quick search for people next to you using Bluetooth working in the background",
       },
       1: {
         title: "Filters by categories",
-        text: "The filtering system with search settings helps to find only interesting people for you", 
+        text: "The filtering system with search settings helps finding only interesting people for you", 
       },
       2: {
         title: "Messaging",
-        text: "Short push messages to quickly share your profile with other people",
+        text: "Short push messages to share your profile with other people quickly ",
       },
       3: {
-        title: "Different settings",
+        title: "Custom settings",
         text: "Profile and account settings to customize the app",
       },
     },
@@ -43,19 +43,19 @@ module.exports = {
     items: {
       0: {
         title: "Favorite Profiles",
-        text: "List of favorite profiles searchable and alphabetically sorted",
+        text: "Save your favorite contacts to an easily accessible list",
       },
       1: {
         title: "Search",
-        text: "Bluetooth search for users nearby with a delayed view function",
+        text: "Check the list all the people met during the day",
       },
       2: {
         title: "Filters",
-        text: "Set up search for users in different categories with search in the background",
+        text: "Set up search filters to find best matches in the background",
       },
       3: {
         title: "Two types of profiles",
-        text: "You can create a business and personal profile for different purposes",
+        text: "You can create business profile for work, personal for fun",
       },
       4: {
         title: "Visibility Settings",
@@ -63,7 +63,7 @@ module.exports = {
       },
       5: {
         title: "Short messages",
-        text: "Send short messages, chat and share your profile with people nearby",
+        text: "Chat via short messages and share your contacts with people nearby",
       },
     },
   },
@@ -75,10 +75,10 @@ module.exports = {
     items: {
       0: "Profile customization",
       1: "Favorites without limits",
-      2: "Unlimited profile view",
-      3: "Black List",
+      2: "Unlimited profile views",
+      3: "Blacklist",
       4: "Export profile to contacts",
-      5: "and 10+ privileges",
+      5: "and 10 more amazing features",
     },
   },
   connect: {

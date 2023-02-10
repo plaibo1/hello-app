@@ -3,7 +3,7 @@ module.exports = {
   jumbotron: {
     title: "Hello Premium",
     subtitle:
-      "Blacklist, privacy settings, unlimited profile viewing and more features.",
+      "Blacklist, privacy settings, unlimited profile views and more features.",
     button: {
       withTrial: "Subscribing",
       withoutTrial: "Try for free",
@@ -12,10 +12,10 @@ module.exports = {
       "1 month free is not available for users<br>who have already tried Premium",
   },
   benefits: {
-    title: "Unlock all benefits <span>Hello Premium</span>",
+    title: "Unlock all benefits of <span>Hello Premium</span>",
     items: {
       0: {
-        title: "Unlimited profile viewing",
+        title: "Unlimited profile views",
         text: "Watch and meet without limits.",
       },
       1: {
@@ -23,7 +23,7 @@ module.exports = {
         text: "Add the user to Favorites to have access to his profile at any time.",
       },
       2: {
-        title: "Black list",
+        title: "Blacklist",
         text: "Protect yourself from unwanted communication.",
       },
       3: {
@@ -65,7 +65,7 @@ module.exports = {
     },
   },
   chooseTariff: {
-    title: "Choose tariff",
+    title: "Choose plan",
     button: {
       withTrial: "Go",
       withoutTrial: "Try for free",
@@ -74,31 +74,31 @@ module.exports = {
       month: {
         title: "1 month",
       	free: "1 month free",
-      	freeDescription: "every next month - at the rate",
+      	freeDescription: "every next month - per rate",
    	modalTitle: "Switch to a monthly subscription?",
-   	modalDescription: "Then every month - according to the tariff",
+   	modalDescription: "Then every month - according to the plan",
    	benefitPercent: "%",
     	benefitDescription: "No benefit",
       },
       quarter: {
    	title: "3 months",
       	free: "1 month free",
-      	freeDescription: "every next 3 months - at the rate",
+      	freeDescription: "every next 3 months - per rate",
       	benefitPercent: "-10%",
-        benefitDescription: "benefit compared to 1 month tariff",
+        benefitDescription: "benefit compared to 1 month plan",
         benefitBackground: "#F56E51",
         modalTitle: "Switch to a 3-month subscription?",
-        modalDescription: "Then every 3 months - according to the tariff",
+        modalDescription: "Then every 3 months - according to the plan",
       },
       year: {
         title: "1 year",
         free: "1 month free",
-        freeDescription: "every next year - at the rate",
+        freeDescription: "every next year - per rate",
         benefitPercent: "-20%",
-        benefitDescription: "benefit compared to 1 month tariff",
+        benefitDescription: "benefit compared to 1 month plan",
         benefitBackground: "#A351F5",
         modalTitle: "Switch to an annual subscription?",
-        modalDescription: "Then every year - according to the tariff",
+        modalDescription: "Then every year - according to the plan",
       },
     },
   },

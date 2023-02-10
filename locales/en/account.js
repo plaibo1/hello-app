@@ -16,14 +16,14 @@ module.exports = {
     freeUntil: "Free up to",
     nextPayment: "Next payment",
     bindCardAndPay:
-      "Link the card to your account and pay the tariff to renew the subscription",
+      "Link the card to your account and pay the plan to renew the subscription",
     activeUntil: "Valid until",
-    afterOnTariff: ", further on the tariff",
+    afterOnTariff: ", further on the plan",
     paymentFailedText:
       "The subscription fee was not paid, please check the selected payment method and try again",
     bindCardForTrial:
       "Link the card to your account to use the subscription after the trial period",
-    changeTariffButton: "Change tariff",
+    changeTariffButton: "Change plan",
     bindCardButton: "Link card",
     bindCardAndPayButton: "Link card and pay",
     renewSubscribeButton: "Renew subscription",
@@ -37,7 +37,7 @@ module.exports = {
     },
     items: {
       0: {
-        title: "Unlimited profile viewing",
+        title: "Unlimited profile views",
         text: "Watch and meet without limits.",
       },
       1: {
@@ -45,7 +45,7 @@ module.exports = {
         text: "Add the user to Favorites to have access to his profile at any time.",
       },
       2: {
-        title: "Black list",
+        title: "Blacklist",
         text: "Protect yourself from unwanted communication.",
       },
       3: {
