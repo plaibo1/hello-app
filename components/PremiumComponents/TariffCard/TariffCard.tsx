@@ -65,7 +65,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
   return (
     <div className={classes.wrapper}>
       <div className={classes.textWrap}>
-        <h3 className={classes.title}>{title}</h3>
+        <h3 className={classes.title}>{t(`chooseTariff.items.${id}.title`)}</h3>
         <div className={classes.description}>
           <StyledSubhead
             display="inline"
