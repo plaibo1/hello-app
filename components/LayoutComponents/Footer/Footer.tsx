@@ -23,7 +23,7 @@ const Footer = () => {
   const [termsModalOpen, setTermsModalOpen] = useState<boolean>(false);
   const [policyModalOpen, setPolicyModalOpen] = useState<boolean>(false);
 
-  const {push, query, replace, pathname} = useRouter();
+  const {push, query, replace, pathname, locale} = useRouter();
 
   useEffect(() => {
     if (query?.policy === 'open') {
@@ -36,13 +36,13 @@ const Footer = () => {
 
   const handleTermsModalOpen = (event: any) => {
     event?.preventDefault();
-    push('?terms=open')
+    push('?terms=open', undefined, { scroll: false })
     setTermsModalOpen(true);
   };
 
   const handlePolicyModalOpen = (event: any) => {
     event?.preventDefault();
-    push('?policy=open')
+    push('?policy=open', undefined, { scroll: false })
     setPolicyModalOpen(true);
   };
 
@@ -102,7 +102,11 @@ const Footer = () => {
               />
             </div>
 
-            <TermsContent />
+            <StyledTitle1>
+              {t("footer.termsOfUseHeading")}
+            </StyledTitle1>
+
+            <TermsContent locale={locale} />
           </div>
         )}
       ></Dialog>
@@ -124,11 +128,11 @@ const Footer = () => {
               />
             </div>
             <StyledTitle1>
-              Политика в отношении обработки персональных данных
+              {t("footer.privacyPolicyHeading")}
             </StyledTitle1>
             
             <div className={classes.linksMDStyles}>
-              <PrivacyContent />
+              <PrivacyContent locale={locale}/>
             </div>
           </div>
         )}

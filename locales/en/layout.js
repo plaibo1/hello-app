@@ -1,11 +1,13 @@
 module.exports = {
   header: {
-    loginText: "Войти",
-    logoutText: "Выйти",
+    loginText: "Login",
+    logoutText: "Logout",
   },
   footer: {
-    termsOfUse: "Пользовательское соглашение",
-    privacyPolicy: "Политика конфиденциальности",
+    termsOfUse: "User Agreement",
+    termsOfUseHeading: "Terms & Conditions",
+    privacyPolicy: "Privacy Policy",
+    privacyPolicyHeading: "Processing of personal data",
     copyright: "«Hello» 14+",
   },
 };

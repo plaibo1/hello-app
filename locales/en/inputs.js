@@ -1,5 +1,5 @@
 module.exports = {
-  phoneLabel: "Телефон",
-  passwordLabel: "Пароль",
-  passwordPlaceholder: "Введите пароль",
+  phoneLabel: "Phone number",
+  passwordLabel: "Password",
+  passwordPlaceholder: "Enter password",
 };
