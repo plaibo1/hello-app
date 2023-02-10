@@ -29,7 +29,7 @@ const DynamicFunctions = () => {
             centeredSlides={true}
             loop={true}
             modules={[Pagination, Autoplay]}
-            autoplay={{ delay: 2500, disableOnInteraction: false }}
+            autoplay={{ delay: 3500, disableOnInteraction: false }}
             style={{
               paddingBottom: "48px",
               paddingTop: "32px",
@@ -173,7 +173,7 @@ const DynamicFunctions = () => {
               modules={[Autoplay]}
               onSlideChange={(item) => setActiveSlide(item.realIndex)}
               scrollbar={{ draggable: true }}
-              autoplay={{ delay: 2500, disableOnInteraction: false }}
+              autoplay={{ delay: 3500, disableOnInteraction: false }}
             >
               {MOC_FUNCTIONS.map((item) => {
                 return (

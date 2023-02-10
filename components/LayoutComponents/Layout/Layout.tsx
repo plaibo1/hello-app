@@ -28,7 +28,7 @@ export const Layout: FC<IProps> = ({
   fullHeight = false,
 }) => {
   const { t } = useTranslation("common");
-  const { pathname, push } = useRouter();
+  const { pathname, push, locale } = useRouter();
   const { state, cancelTariff } = useContext<any>(Context);
   const [resultStatus, setResultStatus] = useState<Record<string, any> | null>(null);
 
@@ -69,13 +69,24 @@ export const Layout: FC<IProps> = ({
     }
   }, [resultStatus, push, pathname, page, isHaveAccess]);
 
+  const metaDescription = {
+    descriptionEn: `
+    An app allowing users located in one area to find each other and share contact information. 
+    It can be just on the street or at any event. Meeting new people had never been that easy.
+  `,
+    descriptionRu: `
+    Приложение, позволяющее пользователям, находящимся рядом, 
+    обмениваться контактами в любом месте. Знакомиться с новыми людьми стало проще, чем когда-либо прежде.
+  `,
+  };
+
   return (
     <>
       <Head>
         <title>{meta.title || "Hello"}</title>
         <meta
           name="description"
-          content={meta.description || "meta description"}
+          content={locale === "en" ? metaDescription.descriptionEn : metaDescription.descriptionRu}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
