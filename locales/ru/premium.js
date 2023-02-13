@@ -1,5 +1,6 @@
 module.exports = {
   pageTitle: "Личный кабинет - Hello",
+  noAuthPageTitle: "Премиум - Hello",
   jumbotron: {
     title: "Hello Premium",
     subtitle:

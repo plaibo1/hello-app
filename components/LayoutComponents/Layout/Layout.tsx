@@ -76,11 +76,11 @@ export const Layout: FC<IProps> = ({
 
   let desription: string;
 
-  if (locale === "en") {
-    desription = metaDescription.descriptionEn
-  } else [
+  if (locale !== "en") {
     desription = metaDescription.descriptionRu
-  ]
+  } else {
+    desription = metaDescription.descriptionEn
+  }
 
   return (
     <>
