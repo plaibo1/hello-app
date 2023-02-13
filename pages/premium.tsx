@@ -23,8 +23,9 @@ const Premium: NextPage = () => {
       });
     }
   };
+
   return (
-    <Layout meta={{ title: (isAuth ? t("pageTitle") : t("noAuthPageTitle")) }}>
+    <Layout meta={{ title: (!isAuth ? t("noAuthPageTitle") : t("pageTitle") ) }}>
       <Jumbotron onButtonClick={handleButtonClick} />
       <Benefits />
       <ChooseTariff containerRef={chooseTariffRef} />
