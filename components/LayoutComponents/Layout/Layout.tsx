@@ -89,7 +89,7 @@ export const Layout: FC<IProps> = ({
           content={locale === "en" ? metaDescription.descriptionEn : metaDescription.descriptionRu}
         />
         <meta
-          name="og:title"
+          name="title"
           content={`lalalala ${meta.title}`}
         />
         <meta
