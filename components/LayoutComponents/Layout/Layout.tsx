@@ -74,6 +74,8 @@ export const Layout: FC<IProps> = ({
     descriptionRu: "Приложение, позволяющее пользователям, находящимся рядом, обмениваться контактами в любом месте. Знакомиться с новыми людьми стало проще, чем когда-либо прежде.",
   };
 
+  console.log("metatatatta", meta)
+
   return (
     <>
       <Head>
@@ -85,6 +87,10 @@ export const Layout: FC<IProps> = ({
         <meta
           name="og:description"
           content={locale === "en" ? metaDescription.descriptionEn : metaDescription.descriptionRu}
+        />
+        <meta
+          name="og:title"
+          content={`lalalala ${meta.title}`}
         />
         <meta
           name="og:title"
