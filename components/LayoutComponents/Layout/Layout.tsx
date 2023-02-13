@@ -82,6 +82,14 @@ export const Layout: FC<IProps> = ({
           name="description"
           content={locale === "en" ? metaDescription.descriptionEn : metaDescription.descriptionRu}
         />
+        <meta
+          name="og:description"
+          content={locale === "en" ? metaDescription.descriptionEn : metaDescription.descriptionRu}
+        />
+        <meta
+          name="og:title"
+          content={`lalalala ${meta.title}`}
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {isHaveAccess ? (
