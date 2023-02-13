@@ -9,9 +9,8 @@ import { HowItWork } from "../components/HomeComponents/HowItWork";
 import { WhatIsIt } from "../components/HomeComponents/WhatIsIt";
 import useTranslation from "next-translate/useTranslation";
 
-const Home: NextPage<any> = ({__lang}) => {
+const Home: NextPage<any> = () => {
   const { t } = useTranslation("home");
-  console.log(__lang)
   return (
     <Layout meta={{ title: t("pageTitle") }}>
       <Jumbotron />

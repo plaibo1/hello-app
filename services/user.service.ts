@@ -136,7 +136,6 @@ export const changeTariff = async (tariff: string) => {
 };
 
 export const tariffPayment = async (tariff: string) => {
-  // console.log("tariffPayment", tariff);
   return await apiClient
     .post(
       `${baseUrl}/api/pay/url/tariff`,

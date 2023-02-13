@@ -32,8 +32,6 @@ export const Layout: FC<IProps> = ({
   const { state, cancelTariff } = useContext<any>(Context);
   const [resultStatus, setResultStatus] = useState<Record<string, any> | null>(null);
 
-  console.log(locale);
-
   const page = pathname.split("?")[0];
   const isHaveAccess = !(
     !resultStatus?.access?.includes(page) &&
@@ -76,24 +74,13 @@ export const Layout: FC<IProps> = ({
     descriptionRu: "Приложение, позволяющее пользователям, находящимся рядом, обмениваться контактами в любом месте. Знакомиться с новыми людьми стало проще, чем когда-либо прежде.",
   };
 
-  let desription: string;
-
-  if (locale === "ru") {
-    desription = metaDescription.descriptionRu
-  } else if (locale === "en") {
-    desription = metaDescription.descriptionEn
-  } else {
-    desription = metaDescription.descriptionRu
-  }
-
   return (
     <>
       <Head>
         <title>{meta.title || "Hello"}</title>
         <meta
           name="description"
-          // content={locale === "en" ? metaDescription.descriptionEn : metaDescription.descriptionRu}
-          content={desription}
+          content={locale === "en" ? metaDescription.descriptionEn : metaDescription.descriptionRu}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
