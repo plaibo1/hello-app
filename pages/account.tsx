@@ -166,7 +166,7 @@ const Account: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async ({
   req,
   res,
-  resolvedUrl,
+  resolvedUrl
 }) => {
   return checkAuth(req, res, resolvedUrl);
 };

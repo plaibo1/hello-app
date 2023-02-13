@@ -32,6 +32,8 @@ export const Layout: FC<IProps> = ({
   const { state, cancelTariff } = useContext<any>(Context);
   const [resultStatus, setResultStatus] = useState<Record<string, any> | null>(null);
 
+  console.log(locale);
+
   const page = pathname.split("?")[0];
   const isHaveAccess = !(
     !resultStatus?.access?.includes(page) &&
@@ -76,10 +78,12 @@ export const Layout: FC<IProps> = ({
 
   let desription: string;
 
-  if (locale !== "en") {
+  if (locale === "ru") {
     desription = metaDescription.descriptionRu
-  } else {
+  } else if (locale === "en") {
     desription = metaDescription.descriptionEn
+  } else {
+    desription = metaDescription.descriptionRu
   }
 
   return (
