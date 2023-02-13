@@ -70,14 +70,8 @@ export const Layout: FC<IProps> = ({
   }, [resultStatus, push, pathname, page, isHaveAccess]);
 
   const metaDescription = {
-    descriptionEn: `
-    An app allowing users located in one area to find each other and share contact information. 
-    It can be just on the street or at any event. Meeting new people had never been that easy.
-  `,
-    descriptionRu: `
-    Приложение, позволяющее пользователям, находящимся рядом, 
-    обмениваться контактами в любом месте. Знакомиться с новыми людьми стало проще, чем когда-либо прежде.
-  `,
+    descriptionEn: "An app allowing users located in one area to find each other and share contact information. It can be just on the street or at any event. Meeting new people had never been that easy.",
+    descriptionRu: "Приложение, позволяющее пользователям, находящимся рядом, обмениваться контактами в любом месте. Знакомиться с новыми людьми стало проще, чем когда-либо прежде.",
   };
 
   return (
