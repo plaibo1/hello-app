@@ -74,13 +74,22 @@ export const Layout: FC<IProps> = ({
     descriptionRu: "Приложение, позволяющее пользователям, находящимся рядом, обмениваться контактами в любом месте. Знакомиться с новыми людьми стало проще, чем когда-либо прежде.",
   };
 
+  let desription: string;
+
+  if (locale === "en") {
+    desription = metaDescription.descriptionEn
+  } else [
+    desription = metaDescription.descriptionRu
+  ]
+
   return (
     <>
       <Head>
         <title>{meta.title || "Hello"}</title>
         <meta
           name="description"
-          content={locale === "en" ? metaDescription.descriptionEn : metaDescription.descriptionRu}
+          // content={locale === "en" ? metaDescription.descriptionEn : metaDescription.descriptionRu}
+          content={desription}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
