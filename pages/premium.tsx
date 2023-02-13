@@ -8,8 +8,7 @@ import { ChooseTariff } from "../components/PremiumComponents/ChooseTariff";
 import useTranslation from "next-translate/useTranslation";
 import { Context } from "context";
 
-const Premium: NextPage = () => {
-
+const Premium: NextPage<any> = (props) => {
   const { state } = useContext<any>(Context);
   const isAuth = state.user.auth;
 
@@ -25,7 +24,7 @@ const Premium: NextPage = () => {
   };
 
   return (
-    <Layout meta={{ title: (!isAuth ? t("noAuthPageTitle") : t("pageTitle") ) }}>
+    <Layout meta={{ title: ((!isAuth || !props.initialState.user.auth) ? t("noAuthPageTitle") : t("pageTitle") ) }}>
       <Jumbotron onButtonClick={handleButtonClick} />
       <Benefits />
       <ChooseTariff containerRef={chooseTariffRef} />
