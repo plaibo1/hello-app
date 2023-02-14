@@ -24,7 +24,7 @@ const Premium: NextPage<any> = (props) => {
   };
 
   return (
-    <Layout meta={{ title: ((!isAuth || !props.initialState.user.auth) ? t("noAuthPageTitle") : t("pageTitle") ) }}>
+    <Layout meta={{ title: (t("noAuthPageTitle")) }}>
       <Jumbotron onButtonClick={handleButtonClick} />
       <Benefits />
       <ChooseTariff containerRef={chooseTariffRef} />
