@@ -74,8 +74,6 @@ export const Layout: FC<IProps> = ({
     descriptionRu: "Приложение, позволяющее пользователям, находящимся рядом, обмениваться контактами в любом месте. Знакомиться с новыми людьми стало проще, чем когда-либо прежде.",
   };
 
-  console.log("metatatatta", meta)
-
   return (
     <>
       <Head>
@@ -90,11 +88,11 @@ export const Layout: FC<IProps> = ({
         />
         <meta
           name="title"
-          content={`lalalala ${meta.title}`}
+          content={meta.title}
         />
         <meta
           name="og:title"
-          content={`lalalala ${meta.title}`}
+          content={meta.title}
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>

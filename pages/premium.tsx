@@ -8,9 +8,9 @@ import { ChooseTariff } from "../components/PremiumComponents/ChooseTariff";
 import useTranslation from "next-translate/useTranslation";
 import { Context } from "context";
 
-const Premium: NextPage<any> = (props) => {
-  const { state } = useContext<any>(Context);
-  const isAuth = state.user.auth;
+const Premium: NextPage<any> = () => {
+  // const { state } = useContext<any>(Context);
+  // const isAuth = state.user.auth;
 
   const { t } = useTranslation("premium");
   const chooseTariffRef = useRef<HTMLElement>(null);
@@ -22,6 +22,8 @@ const Premium: NextPage<any> = (props) => {
       });
     }
   };
+
+  //  meta={{ title: ((!isAuth || !props.initialState.user.auth) ? t("noAuthPageTitle") : t("pageTitle") ) }}
 
   return (
     <Layout meta={{ title: (t("noAuthPageTitle")) }}>
