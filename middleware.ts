@@ -11,7 +11,7 @@ export async function middleware(req: NextRequest) {
     return;
   }
 
-  if (req.nextUrl.locale === 'default') {
+  if (req.nextUrl.locale === 'default' && !(req.nextUrl.pathname.includes('/account'))) {
     return NextResponse.redirect(
       new URL(`/ru${req.nextUrl.pathname}`, req.url)
     );

@@ -166,9 +166,10 @@ const Account: NextPage = () => {
 export const getServerSideProps: GetServerSideProps = async ({
   req,
   res,
-  resolvedUrl
+  resolvedUrl,
+  locale
 }) => {
-  return checkAuth(req, res, resolvedUrl);
+  return checkAuth(req, res, resolvedUrl, locale);
 };
 
 export default Account;
