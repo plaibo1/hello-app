@@ -22,8 +22,9 @@ export const getServerSideProps: GetServerSideProps = async ({
   req,
   res,
   resolvedUrl,
+  locale
 }) => {
-  return checkAuth(req, res, resolvedUrl);
+  return checkAuth(req, res, resolvedUrl, locale);
 };
 
 export default Login;

@@ -8,11 +8,13 @@ import { getSelfInfo } from "../services";
 export const redirect = (
   page: string,
   profileStatus: string,
-  res: ServerResponse
+  res: ServerResponse,
+  locale: string
 ) => {
   const statusObject = accessLinks[profileStatus];
+
   if (!statusObject.access.includes(page)) {
-    res.setHeader("location", statusObject.redirect);
+    res.setHeader("location", `/${locale}/${statusObject.redirect}`);
     res.statusCode = 302;
     res.end();
   }
@@ -21,7 +23,8 @@ export const redirect = (
 export const checkAuth = async (
   req: IncomingMessage & { cookies: Partial<{ [key: string]: string }> },
   res: ServerResponse,
-  query: string
+  query: string,
+  locale: string = "en",
 ) => {
   let initialState: StateSchema = {
     user: {
@@ -67,7 +70,7 @@ export const checkAuth = async (
       profileStatus = "withoutPremium";
     }
   }
-  redirect(page, profileStatus, res);
+  redirect(page, profileStatus, res, locale);
 
   return {
     props: { initialState },
