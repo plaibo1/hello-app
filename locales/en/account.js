@@ -37,12 +37,12 @@ module.exports = {
     },
     items: {
       0: {
-        title: "Unlimited profile views",
+        title: "Unlimited profiles view",
         text: "Watch and meet without limits.",
       },
       1: {
         title: "Favorites without limits",
-        text: "Add the user to Favorites to have access to his profile at any time.",
+        text: "Add as many contacts to your Favorites as you wish.",
       },
       2: {
         title: "Blacklist",
@@ -50,7 +50,7 @@ module.exports = {
       },
       3: {
         title: "Extended retention of found profiles",
-        text: "View all found profiles whenever you want.",
+        text: "All found profiles are stored for 7 days in the Found tab.",
       },
       4: {
         title: "Show gender and orientation only at your discretion",
@@ -61,24 +61,24 @@ module.exports = {
         text: "Stand out with a custom profile card.",
       },
       6: {
-        title: "Disable incoming messages",
-        text: "Limit sending you messages for quiet work or relaxation.",
+        title: "Limit the ability sending messages",
+        text: "Manage who and when can send you messages.",
       },
       7: {
-        title: "Showing your profile only to the people you need",
+        title: "Limit showing your profiles",
         text: "Hide your profile from unwanted categories of users.",
       },
       8: {
-        title: "Adding all useful acquaintances to the phone book",
-        text: "Export all useful information from found profiles to your device.",
+        title: "Export profile to phonebook",
+        text: "Export information from found profiles to your device.",
       },
       9: {
         title: "Hyperlinks in profiles",
-        text: "Go to colleagues and partners of the people you are interested in in one click.",
+        text: "Navigate through the displayed profile preview.",
       },
       10: {
         title: "Unique Subscriber Icon",
-        text: "Add a Premium icon next to the name.",
+        text: "Unique icon next to name.",
       },
       11: {
         title: "Working on new features",

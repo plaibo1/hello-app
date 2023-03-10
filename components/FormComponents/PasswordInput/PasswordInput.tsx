@@ -45,7 +45,7 @@ export const PasswordInput: FC<IProps> = ({ value, onChange, error }) => {
         </div>
       </div>
       {error.length > 0 && (
-        <div className={classes.errorTitle}>{t(error[0])}</div>
+        <div className={classes.errorTitle}>{t(error)}</div>
       )}
     </label>
   );

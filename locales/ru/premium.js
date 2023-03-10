@@ -1,5 +1,5 @@
 module.exports = {
-  pageTitle: "Личный кабинет - Hello",
+  pageTitle: "Премиум - Hello",
   jumbotron: {
     title: "Hello Premium",
     subtitle:

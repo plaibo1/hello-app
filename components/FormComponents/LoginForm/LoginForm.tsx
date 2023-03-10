@@ -7,91 +7,89 @@ import {
 } from "../../GlobalComponents";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { PhoneInput } from "../PhoneInput";
 import { PasswordInput } from "../PasswordInput";
-import { E164Number } from "libphonenumber-js/types.d";
-import { isValidPhoneNumber, parsePhoneNumber } from "react-phone-number-input";
 import classes from "./LoginForm.module.scss";
 import { Context } from "../../../context";
 import useTranslation from "next-translate/useTranslation";
+import { EmailInput } from "../EmailInput";
+import { emailScheme, passwordSchema } from "Schemas/Login";
+import { ValidationError } from "yup";
 
 export const LoginForm = () => {
   const { t } = useTranslation("login");
   const { push, query, back, basePath } = useRouter();
   const { login } = useContext<any>(Context);
   const [disabledButton, setDisabledButton] = useState(false);
-  const [phoneValue, setPhoneValue] = useState<E164Number | undefined>("");
-  const [phoneError, setPhoneError] = useState<string>("");
+  const [emailValue, setEmailValue] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
-  const [loginError, setLoginError] = useState<string>("");
+  const [loginError, setLoginError] = useState<boolean>(false);
   const phoneInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handlePhoneInput = (value: E164Number | undefined) => {
-    setPhoneValue(value);
+  const handleEmailInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailValue(event.target.value);
 
-    if (phoneInputRef.current?.value && isValidPhoneNumber(phoneInputRef.current?.value)) {
-      setPhoneError("");
-      setDisabledButton(false);
+    if (event.target.value) {
+      setEmailError("");
     }
   };
 
   const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPasswordValue(event.target.value);
-  };
-
-  const handleFirstFocus = () => {
-    if (!phoneValue) {
-      setPhoneValue("+7");
+    if (event.target.value) {
+      setPasswordError("");
     }
   };
 
   const handleFocusOut = () => {
-    if (!(phoneValue && isValidPhoneNumber(phoneValue))) {
-      setPhoneError("Неверный формат телефона");
+    if (!emailValue) {
+      setEmailError(t("invalidEmail"));
       setDisabledButton(true);
     } else {
-      setPhoneError("");
+      setEmailError("");
       setDisabledButton(false);
     }
-  }
+  };
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setDisabledButton(true);
-    setLoginError("");
-    setPhoneError("");
+    setLoginError(false);
+    setEmailError("");
     setPasswordError("");
-    if (phoneValue && isValidPhoneNumber(phoneValue)) {
-      const phoneParse = parsePhoneNumber(phoneValue);
 
-      try {
+    try {
+      const vaildEmail = await emailScheme.validate({ email: emailValue });
+
+      if (vaildEmail) {
         await login(
           {
+            email: vaildEmail.email,
             password: passwordValue,
-            phone: {
-              country: `+${phoneParse?.countryCallingCode}`,
-              number: phoneParse?.nationalNumber,
-            },
           },
           query.start_trial,
           query.tariff
         );
-      } catch (error: any) {
-        setLoginError(error);
-        setDisabledButton(false);
       }
-    } else {
-      setPhoneError("Неверный формат телефона");
+    } catch (err) {
+      console.error(err);
+
+      if (err instanceof ValidationError && err.path === "email") {
+        setEmailError(t("invalidEmail"));
+      } else {
+        setLoginError(true)
+      }
+
       setDisabledButton(false);
     }
   };
 
   const handleBack = async () => {
-    if (typeof window !== 'undefined' && + window?.history?.length > 1) {
-      back()
+    if (typeof window !== "undefined" && +window?.history?.length > 1) {
+      back();
     } else {
-      await push('/')
+      await push("/");
     }
   };
 
@@ -111,11 +109,11 @@ export const LoginForm = () => {
           {t("title")}
         </StyledTitle2>
         <form onSubmit={(event) => handleSubmit(event)} autoComplete="off">
-          <PhoneInput
-            value={phoneValue}
-            onChange={handlePhoneInput}
-            onFocusIn={handleFirstFocus}
-            error={phoneError}
+          <EmailInput
+            value={emailValue}
+            onChange={handleEmailInput}
+            onFocusIn={() => {}}
+            error={emailError}
             onFocusOut={handleFocusOut}
             ref={phoneInputRef}
           />
@@ -130,7 +128,7 @@ export const LoginForm = () => {
           <StyledButton
             type="submit"
             color="white"
-            disabled={!(phoneValue && passwordValue) || disabledButton}
+            disabled={!(emailValue && passwordValue) || disabledButton}
             mt="12px"
             mb="15px"
           >

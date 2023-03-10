@@ -1,33 +1,46 @@
-import React, { FC } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 
-const useTimer = ({seconds}: {seconds: number}) => {
+const useTimer = () => {
 
-  const [over, setOver] = React.useState(false);
+  const TIME = 59;
 
-  const [time, setTime] = React.useState(seconds);
+  const [time, setTimer] = useState(TIME);
+
+  useEffect(() => {
+    const lastTime = Number(localStorage.getItem('lastTime'));
+
+    if (lastTime) {
+      const currentTime = Math.floor(Date.now() / 1000)
+      const deltaTime = Number(currentTime - lastTime);
+
+      if (TIME - deltaTime >= 0) {
+        setTimer(Number(TIME - deltaTime))
+      }
+    }
+  }, []);
 
   const tick = () => {
-    setTime(prev => prev - 1)
+    setTimer(prev => prev - 1)
   }
 
   const reset = () => {
-    setTime(seconds);
-    setOver(false);
+    setTimer(TIME);
   };
 
   React.useEffect(() => {
-    const timerID = setInterval(() => tick(), 1000);
+    const timerID = setInterval(tick, 1000);
     if (time === 0 || time < 0) {
       clearInterval(timerID)
     }
-    return () => clearInterval(timerID);
+
+    return () => {
+      clearInterval(timerID)
+    }
   });
 
   return {
-    time,
     reset,
-    over,
-    setOver
+    time,
   }
 }
 

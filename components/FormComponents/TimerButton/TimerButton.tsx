@@ -4,13 +4,17 @@ import React from "react";
 import { FC } from "react";
 import useTimer from "../useTimer/useTimer";
 
-const Timer:FC<{sendNumber: () => Promise<true | undefined>}> = ({ sendNumber }) => {
+type TimerType = {
+  sendFunction: () => Promise<true | false | undefined>
+}
+
+const Timer:FC<TimerType> = ({ sendFunction }) => {
   const { t } = useTranslation("recovery");
-  const { time, reset } = useTimer({ seconds: 20 });
+  const { reset, time } = useTimer();
 
   const sendAgain = () => {
+    sendFunction();
     reset();
-    sendNumber();
   }
 
   const timerComplete = !(time <= 0);
