@@ -9,10 +9,10 @@ import { apiClient } from "./api";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_HOST;
 
-export const signIn = async ({ password, phone }: LoginSchema) => {
+export const signIn = async ({ password, email }: LoginSchema) => {
   return apiClient
     .post(`${baseUrl}/api/auth/session`, {
-      phone,
+      email,
       password,
       web: true,
     })
@@ -38,10 +38,11 @@ export const signOut = async (token?: string) => {
     });
 };
 
-export const restorePassword = (phone: PhoneSchema) => {
+export const restorePassword = (body: {email: string, language: string}) => {
   return apiClient
     .post(`${baseUrl}/api/auth/restore`, {
-      phone: { ...phone },
+      email: body.email,
+      language: body.language
     })
     .then((res) => {
       return res.data.response;
@@ -53,7 +54,7 @@ export const codeConfirm = async (body: CodeConfirmSchema) => {
     .post(`${baseUrl}/api/auth/codeConfirm`, {
       code: body.code,
       confirmType: body.confirmType,
-      phone: body.phone,
+      email: body.email,
       web: true,
     })
     .then((res) => {
@@ -136,7 +137,6 @@ export const changeTariff = async (tariff: string) => {
 };
 
 export const tariffPayment = async (tariff: string) => {
-  // console.log("tariffPayment", tariff);
   return await apiClient
     .post(
       `${baseUrl}/api/pay/url/tariff`,

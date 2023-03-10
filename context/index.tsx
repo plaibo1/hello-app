@@ -107,11 +107,11 @@ const Provider = ({
 
   const login = useCallback(
     async (
-      { phone, password }: LoginSchema,
+      { email, password }: LoginSchema,
       start_trial?: boolean,
       tariff?: string
     ) => {
-      await signIn({ phone, password });
+      await signIn({ email, password });
       const userInfo = await getSelfInfo();
 
       if (start_trial) {
