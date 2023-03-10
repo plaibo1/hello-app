@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useRef, useState } from "react";
+import React, { useCallback, useContext, useEffect, useRef, useState } from "react";
 import {
   StyledTitle2,
   StyledButton,
@@ -17,19 +17,23 @@ import {
 import { E164Number } from "libphonenumber-js/types.d";
 import classes from "./RecoveryForm.module.scss";
 import { restorePassword, newPassword } from "../../../services";
-import { passwordSchema } from "../../../Schemas/Login";
+import { emailScheme, passwordSchema } from "../../../Schemas/Login";
 import { Context } from "../../../context";
 import useTranslation from "next-translate/useTranslation";
 import TimerButton from "../TimerButton/TimerButton";
+import { EmailInput } from "../EmailInput";
+import { ValidationError } from "yup";
+import useTimer from "../useTimer/useTimer";
 
 export const RecoveryForm = () => {
   const { t } = useTranslation("recovery");
+  const { locale } = useRouter();
   const { codeConfirm } = useContext<any>(Context);
   const { push } = useRouter();
   const [step, setStep] = useState<number>(1);
   const [disabledButton, setDisabledButton] = useState(false);
-  const [phoneValue, setPhoneValue] = useState<E164Number | undefined>("");
-  const [phoneError, setPhoneError] = useState<string>("");
+  const [emailValue, setEmailValue] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
   const [passwordValue, setPasswordValue] = useState<string>("");
   const [passwordError, setPasswordError] = useState<string>("");
   const [codeValue, setCodeValue] = useState<
@@ -38,14 +42,23 @@ export const RecoveryForm = () => {
   const [codeError, setCodeError] = useState<string>("");
   const phoneInputRef = useRef<HTMLInputElement | null>(null);
 
-  const handlePhoneInput = useCallback((value: E164Number | undefined) => {
-    setPhoneValue(value);
+  const handleEmailInput = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmailValue(event.target.value);
 
-    if (phoneInputRef.current?.value && isValidPhoneNumber(phoneInputRef.current?.value)) {
-      setPhoneError("");
+    if (event.target.value) {
+      setEmailError("");
+    }
+  };
+
+  const handleFocusOut = () => {
+    if (!emailValue) {
+      setEmailError(t("invalidEmail"));
+      setDisabledButton(true);
+    } else {
+      setEmailError("");
       setDisabledButton(false);
     }
-  }, []);
+  };
 
   const handlePasswordInput = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,22 +66,6 @@ export const RecoveryForm = () => {
     },
     []
   );
-
-  const handleFirstFocus = () => {
-    if (!phoneValue) {
-      setPhoneValue("+7");
-    }
-  };
-
-  const handleFocusOut = () => {
-    if (!(phoneValue && isValidPhoneNumber(phoneValue))) {
-      setPhoneError("Неверный формат телефона");
-      setDisabledButton(true);
-    } else {
-      setPhoneError("");
-      setDisabledButton(false);
-    }
-  }
 
   const handleCodeInput = useCallback(
     (index: number, target: HTMLInputElement) => {
@@ -123,48 +120,49 @@ export const RecoveryForm = () => {
     }
   }, [step, push]);
 
-  const sendNumber = async () => {
-    if (phoneValue && isValidPhoneNumber(phoneValue)) {
-      const phoneParse = parsePhoneNumber(phoneValue);
-      try {
-        await restorePassword({
-          country: `+${phoneParse?.countryCallingCode}`,
-          number: phoneParse?.nationalNumber,
-        });
+  const sendEmail = async () => {
+    try {
+      const validEmail = await emailScheme.validate({email: emailValue})
+      if (validEmail) {
+        await restorePassword({email: validEmail.email, language: locale || "en"});
+        localStorage.setItem('lastTime', JSON.stringify(Math.floor(Date.now() / 1000)));
         return true;
-      } catch (error: any) {
-        setPhoneError(error.response.data.error.message);
       }
-    } else {
-      setPhoneError(t("phoneError"));
+    } catch (error: any) {
+      if (error instanceof ValidationError) {
+        setEmailError(t("invalidEmail"));
+        return false;
+      }
+      
+      if (error.response.data.error.code === 11) {        
+        return true;
+      }
+
+      setEmailError(error.response.data?.error.message);
     }
-  }
+  };
 
-  const handlePhoneForm = useCallback(async () => {
+  const handleEmailForm = useCallback(async () => {
     setDisabledButton(true);
-    setPhoneError("");
+    setEmailError("");
 
-    const successNumberSent = await sendNumber();
-    if (successNumberSent) {
+    const successEmailSend = await sendEmail();
+    if (successEmailSend) {
       setStep(2);
     }
 
     setDisabledButton(false);
-  }, [phoneValue, t]);
+  }, [emailValue, t]);
 
   const handleCodeForm = useCallback(async () => {
     setDisabledButton(true);
     setCodeError("");
-    if (phoneValue && !(codeValue.length < 4 || codeValue.includes(""))) {
-      const phoneParse = parsePhoneNumber(phoneValue);
+    if (emailValue && !(codeValue.length < 4 || codeValue.includes(""))) {
       try {
         await codeConfirm({
           code: codeValue.join(""),
           confirmType: "restore",
-          phone: {
-            country: `+${phoneParse?.countryCallingCode}`,
-            number: phoneParse?.nationalNumber,
-          },
+          email: emailValue,
         });
         setStep(3);
       } catch (error: any) {
@@ -174,7 +172,7 @@ export const RecoveryForm = () => {
       setCodeError(t("codeError"));
     }
     setDisabledButton(false);
-  }, [codeConfirm, codeValue, phoneValue, t]);
+  }, [codeConfirm, codeValue, emailValue, t]);
 
   const handlePasswordForm = useCallback(async () => {
     setDisabledButton(true);
@@ -185,7 +183,11 @@ export const RecoveryForm = () => {
       await newPassword({ newPassword: passwordValue });
       push("/account");
     } catch (error: any) {
-      setPasswordError(error?.response?.data.error.message || error.errors);
+      if (error instanceof ValidationError && error.path === "password") {
+        setPasswordError(t(error.message));
+      } else {
+        setPasswordError(error?.response?.data.error.message || error.errors);
+      }
       setDisabledButton(false);
     }
   }, [passwordValue, push]);
@@ -194,15 +196,22 @@ export const RecoveryForm = () => {
     (event: React.FormEvent) => {
       event.preventDefault();
       if (step === 1) {
-        handlePhoneForm();
+        handleEmailForm();
       } else if (step === 2) {
         handleCodeForm();
       } else if (step === 3) {
         handlePasswordForm();
       }
     },
-    [handleCodeForm, handlePasswordForm, handlePhoneForm, step]
+    [handleCodeForm, handlePasswordForm, handleEmailForm, step]
   );
+
+  const replaceMiddleOfEmail = (string: string) => {
+    const arr = [...Array.from(string)];
+    arr.splice(Math.round(string.length / 4), Math.round(string.length / 2), "...")
+
+    return arr.join('');
+  }
 
   const StepOne = () => {
     return (
@@ -213,11 +222,11 @@ export const RecoveryForm = () => {
         <StyledSubhead color="#848592" textAlign="center">
           {t("subtitle")}
         </StyledSubhead>
-        <PhoneInput
-          value={phoneValue}
-          onChange={handlePhoneInput}
-          error={phoneError}
-          onFocusIn={handleFirstFocus}
+        <EmailInput
+          value={emailValue}
+          onChange={handleEmailInput}
+          onFocusIn={() => {}}
+          error={emailError}
           onFocusOut={handleFocusOut}
           ref={phoneInputRef}
         />
@@ -225,7 +234,7 @@ export const RecoveryForm = () => {
           type="submit"
           color="white"
           disabled={
-            (phoneValue ? phoneValue.length < 1 : true) || disabledButton
+            (emailValue ? emailValue.length < 1 : true) || disabledButton
           }
           mt="12px"
           mb="15px"
@@ -245,11 +254,12 @@ export const RecoveryForm = () => {
         </StyledTitle2>
         <StyledSubhead color="#848592" textAlign="center">
           {t("codeSubtitle")}{" "}
-          {phoneValue
+          {emailValue.length >= 65 ? replaceMiddleOfEmail(emailValue) : emailValue}
+          {/* {phoneValue
             ? formatPhoneNumber(phoneValue).replace(/(\d[ .-]?){6}$/, (x) =>
                 x.replace(/\d/g, "*")
               )
-            : "codeTestPhone"}
+            : "codeTestPhone"} */}
         </StyledSubhead>
         <CodeInput
           value={codeValue}
@@ -257,7 +267,7 @@ export const RecoveryForm = () => {
           onFocus={handleCodeFocus}
         />
         {codeError && (
-          <div className={classes.errorTitle}>{t("Введен неверный код")}</div>
+          <div className={classes.errorTitle}>{t("codeError")}</div>
         )}
         <StyledButton
           type="submit"
@@ -272,7 +282,9 @@ export const RecoveryForm = () => {
           {t("nextButton")}
         </StyledButton>
 
-        <TimerButton sendNumber={sendNumber} />
+        <TimerButton 
+          sendFunction={sendEmail}
+        />
       </>
     );
   };

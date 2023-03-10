@@ -5,13 +5,13 @@ export interface PhoneSchema {
 
 export interface LoginSchema {
   password: string;
-  phone: PhoneSchema;
+  email: string;
 }
 
 export interface CodeConfirmSchema {
   code: string;
   confirmType: string;
-  phone: PhoneSchema;
+  email: string;
 }
 
 export interface NewPasswordScheme {
