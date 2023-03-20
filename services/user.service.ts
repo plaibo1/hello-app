@@ -195,6 +195,5 @@ export const getBindCardUrl = async (tariff: string) => {
     .then((res) => {
       return res.data.response;
     })
-    .catch(err => console.log(err))
 };
   
