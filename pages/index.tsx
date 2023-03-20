@@ -1,4 +1,6 @@
+import { useEffect } from "react";
 import type { GetServerSideProps, NextPage } from "next";
+import { isDesktop } from 'react-device-detect';
 import { Layout } from "../components/LayoutComponents/Layout";
 import { checkAuth } from "../helpers/checkAuth";
 import { Functions } from "../components/HomeComponents/Functions";
@@ -9,8 +11,18 @@ import { HowItWork } from "../components/HomeComponents/HowItWork";
 import { WhatIsIt } from "../components/HomeComponents/WhatIsIt";
 import useTranslation from "next-translate/useTranslation";
 
-const Home: NextPage = () => {
+
+const Home: NextPage<{prevPath: string }> = ({ prevPath }) => {
   const { t } = useTranslation("home");
+
+  useEffect(() => {
+    if (prevPath.includes("business") ||  prevPath.includes("personal")) {
+      if (!isDesktop) {
+        window.location.href = `hello://hellomobile.app${prevPath}`;
+      }
+    }
+  }, [])
+
   return (
     <Layout meta={{ title: t("pageTitle") }}>
       <Jumbotron />

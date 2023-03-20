@@ -6,6 +6,7 @@ import {
 } from "./user.d";
 import * as cookie from "cookie";
 import { apiClient } from "./api";
+import tariff from "pages/tariff";
 
 const baseUrl = process.env.NEXT_PUBLIC_API_HOST;
 
@@ -179,14 +180,21 @@ export const cancelTariff = async () => {
     });
 };
 
-export const getBindCardUrl = async () => {
+export const getBindCardUrl = async (tariff: string) => {
   return await apiClient
-    .get(`${baseUrl}/api/pay/url/bindCard`, {
-      headers: {
-        Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
+    .post(
+      `${baseUrl}/api/pay/url/bindCard`,
+      {
+        tariff
       },
-    })
+      {
+        headers: {
+          Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
+        },
+      })
     .then((res) => {
       return res.data.response;
-    });
+    })
+    .catch(err => console.log(err))
 };
+  

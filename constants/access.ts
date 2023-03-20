@@ -16,6 +16,8 @@ interface AccessSchema {
   };
 }
 
+const redirectToAppLinks = ["/business", "/personal"]
+
 export const accessLinks: AccessSchema = {
   withPremium: {
     access: ["/account", "/tariff", "/recovery", "/privacy"],
