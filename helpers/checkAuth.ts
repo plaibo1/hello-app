@@ -13,7 +13,9 @@ export const redirect = (
 ) => {
   const statusObject = accessLinks[profileStatus];
 
-  if (!statusObject.access.includes(page)) {
+  const isRedirectToAppLinks = page.includes("business") || page.includes("personal") 
+
+  if (!statusObject.access.includes(page) && !isRedirectToAppLinks) {
     res.setHeader("location", `/${locale}/${statusObject.redirect}`);
     res.statusCode = 302;
     res.end();
