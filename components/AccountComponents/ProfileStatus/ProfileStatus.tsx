@@ -31,7 +31,7 @@ export const ProfileStatus: FC<IProps> = ({ handleModalOpen }) => {
   } = useContext<any>(Context);
 
   const handleBindCard = () => {
-    getBindCardUrl().then((url) => {
+    getBindCardUrl("").then((url) => {
       push(url.paymentUrl);
     });
   };

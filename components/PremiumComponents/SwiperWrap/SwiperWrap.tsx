@@ -13,14 +13,15 @@ import useTranslation from "next-translate/useTranslation";
 
 export const SwiperWrap = () => {
   const { t } = useTranslation("premium");
-  const matches = useMediaQuery("(min-width:1201px)");
+  // const matches = useMediaQuery("(min-width:1201px)");
   return (
     <Swiper
       slidesPerView={1}
       spaceBetween={20}
       slidesPerGroup={1}
+      speed={800}
       modules={[Pagination, Autoplay]}
-      autoplay={{ delay: 2500 }}
+      autoplay={{ delay: 2500, disableOnInteraction: false }}
       loop={true}
       pagination={{
         clickable: true,
@@ -31,10 +32,14 @@ export const SwiperWrap = () => {
         992: {
           slidesPerView: 2,
           slidesPerGroup: 2,
+          autoplay: {delay: 4000, disableOnInteraction: false},
+          speed: 1100
         },
         765: {
           slidesPerView: 1,
           slidesPerGroup: 1,
+          autoplay: {delay: 3500, disableOnInteraction: false},
+          speed: 1500
         },
       }}
     >
@@ -52,13 +57,14 @@ export const SwiperWrap = () => {
                           height={36}
                           width={36}
                           alt="icon"
+                          priority
                         />
                       }
                       title={t(
                         `benefits.items.${index * 2 + benefitIndex}.title`
                       )}
                       text={t(
-                        `benefits.items.${index * 2 + benefitIndex}.text`
+                        `benefits.items.${index * 2 + benefitIndex}.text` 
                       )}
                       iconPosition="top"
                       padding="0px"

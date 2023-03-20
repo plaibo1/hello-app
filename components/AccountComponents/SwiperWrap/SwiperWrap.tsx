@@ -36,7 +36,8 @@ export const SwiperWrap = () => {
       slidesPerView={1}
       spaceBetween={20}
       modules={[Pagination, Autoplay]}
-      autoplay={{ delay: 2500 }}
+      autoplay={{ delay: 2500, disableOnInteraction: false }}
+      speed={800}
       loop={true}
       slidesPerGroup={1}
       pagination={{
@@ -48,10 +49,14 @@ export const SwiperWrap = () => {
         992: {
           slidesPerView: 2,
           slidesPerGroup: 2,
+          autoplay: {delay: 4000, disableOnInteraction: false},
+          speed: 1100
         },
         765: {
           slidesPerView: 1,
           slidesPerGroup: 1,
+          autoplay: {delay: 3500, disableOnInteraction: false},
+          speed: 1500
         },
       }}
     >

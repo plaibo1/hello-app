@@ -24,6 +24,7 @@
     "rc-dialog": "^8.9.0",
     "react": "18.2.0",
     "react-content-loader": "^6.2.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "18.2.0",
     "react-flexbox-grid": "^2.1.2",
     "react-input-mask": "^2.0.4",
