@@ -24,7 +24,7 @@ export const accessLinks: AccessSchema = {
     redirect: "/account",
   },
   withoutPremium: {
-    access: ["/premium", "/recovery", "/privacy"],
+    access: ["/premium", "/recovery", "/privacy",],
     redirect: "/premium",
   },
   withoutLogin: {

@@ -11,7 +11,7 @@ import {
 import classes from "../styles/Account.module.scss";
 import "rc-dialog/assets/index.css";
 import { useContext, useState, useEffect } from "react";
-
+import { isDesktop } from 'react-device-detect';
 import { Context } from "../context";
 import { checkAuth } from "../helpers/checkAuth";
 import { ProfileStatus } from "../components/AccountComponents/ProfileStatus";
@@ -19,12 +19,20 @@ import { Benefits } from "../components/AccountComponents/Benefits";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
 
-const Account: NextPage = () => {
+const Account:NextPage<{prevPath: string }> = ({ prevPath }) => {
   const { t } = useTranslation("account");
   const { query } = useRouter();
   const { state, cancelTariff } = useContext<any>(Context);
   const [cancelModalOpen, setCancelModalOpen] = useState<boolean>(false);
   const [trialModalOpen, setTrialModalOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (prevPath.includes("business") ||  prevPath.includes("personal")) {
+      if (!isDesktop) {
+        window.location.href = `hello://hellomobile.app${prevPath}`;
+      }
+    }
+  }, [])
 
   const handleCancelModalOpen = () => {
     setCancelModalOpen(true);
