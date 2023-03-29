@@ -12,8 +12,8 @@ export const Connect = () => {
   return (
     <section className={classes.wrapper}>
       <Container>
-        <Row middle="xs">
-          <Col lg={6} lgOffset={3} xl={5} xlOffset={2}>
+        <Row middle="xs" style={{ justifyContent: "center" }}>
+          <Col lg={7} xl={6} xlOffset={0}>
             <StyledTitle2
               xl={{ textAlign: "center" }}
               dangerouslySetInnerHTML={{
@@ -31,7 +31,7 @@ export const Connect = () => {
             </StyledSubhead>
             <DownloadBlock />
           </Col>
-          <Col lg={6} lgOffset={3} xl={3} first="xs" last="xl" xlOffset={0}>
+          <Col lg={6} lgOffset={0} xl={3} first="xs" last="xl" xlOffset={0}>
             <div className={classes.imageWrap}>
               <Image
                 src="/images/connect_image.png"

@@ -29,16 +29,23 @@ export const DownloadBlock: FC<IProps> = ({ color = "black" }) => {
         <div className={classes.storesWrap}>
           <div className={classes.storeItem}>
             <Image
-              src={`/images/app_store${locale === "en" ? "_en.svg" : ".svg"}`}
+              src={`/images/app_store${locale === "en" ? "_en.svg" : "_ru.svg"}`}
               layout="fill"
               alt="App store link"
             />
           </div>
           <div className={classes.storeItem}>
             <Image
-              src={`/images/google_play${locale === "en" ? "_en.svg" : ".png"}`}
+              src={`/images/google_play${locale === "en" ? "_en.svg" : "_ru.png"}`}
               layout="fill"
               alt="App store link"
+            />
+          </div>
+          <div className={classes.storeItem}>
+            <Image
+              src={`/images/rustore${locale === "en" ? "_en.svg" : ".svg"}`}
+              layout="fill"
+              alt="ru store store link"
             />
           </div>
         </div>

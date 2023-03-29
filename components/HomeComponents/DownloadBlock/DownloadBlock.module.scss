@@ -38,20 +38,44 @@
   letter-spacing: 0.1px;
   color: #FFFFFF;
   margin: 0px;
-  margin-bottom: 11px;
+  // margin-bottom: 11px;
   @media (max-width: $xl) {
     display: none;
   }
 }
 .storesWrap {
   display: flex;
+  flex-wrap: wrap;
+  
+  @media screen and (max-width: 457px) {
+    justify-content: center;
+  }
 }
 .storeItem {
   width: 130px;
   height: 40px;
   position: relative;
+  margin-top: 11px;
   cursor: pointer;
+  img {
+    object-fit: cover;
+  }
+
   &:not(:last-child) {
-    margin-right: 20px;
+    margin-right: 15px;
+
+    @media screen and (max-width: 457px) {
+      margin-left: 7.5px;
+      margin-right: 7.5px;
+    }
+  }
+
+  &:last-child {
+    @media screen and (max-width: 1349px) {
+      margin-left: calc(145px / 2);
+    }
+    @media screen and (max-width: 1199px) {
+      margin-left: 0;
+    }
   }
 }
