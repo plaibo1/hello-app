@@ -1,60 +1,15 @@
-import React, { useEffect, useState } from "react";
-import Image from "next/image";
-import {
-  StyledLink,
-  StyledLanguageSwitcher,
-  StyledTitle3,
-  StyledSubhead,
-  StyledButton,
-  StyledTitle1,
-} from "../../GlobalComponents";
-import Dialog from "rc-dialog";
+import React from "react";
+import { StyledLink, StyledLanguageSwitcher } from "../../GlobalComponents";
+import { default as NextLink } from "next/link";
 import "rc-dialog/assets/index.css";
 import Container from "../Container";
 import classes from "./Footer.module.scss";
 import { Row, Col } from "react-flexbox-grid";
 import useTranslation from "next-translate/useTranslation";
-import { useRouter } from "next/router";
-import { PrivacyContent, TermsContent } from "components/PrivacyAndTermsContent";
-
 
 const Footer = () => {
   const { t } = useTranslation("layout");
-  const [termsModalOpen, setTermsModalOpen] = useState<boolean>(false);
-  const [policyModalOpen, setPolicyModalOpen] = useState<boolean>(false);
 
-  const {push, query, replace, pathname, locale} = useRouter();
-
-  useEffect(() => {
-    if (query?.policy === 'open') {
-      setPolicyModalOpen(true);
-    }
-    if (query?.terms === 'open') {
-      setTermsModalOpen(true);
-    }
-  }, [])
-
-  const handleTermsModalOpen = (event: any) => {
-    event?.preventDefault();
-    push('?terms=open', undefined, { scroll: false })
-    setTermsModalOpen(true);
-  };
-
-  const handlePolicyModalOpen = (event: any) => {
-    event?.preventDefault();
-    push('?policy=open', undefined, { scroll: false })
-    setPolicyModalOpen(true);
-  };
-
-  const handleTermsModalClose = () => {
-    replace(pathname, undefined, {shallow: true})
-    setTermsModalOpen(false);
-  };
-
-  const handlePolicyModalClose = () => {
-    replace(pathname, undefined, {shallow: true})
-    setPolicyModalOpen(false);
-  };
   return (
     <footer className={classes.footer}>
       <Container>
@@ -64,79 +19,35 @@ const Footer = () => {
           </Col>
           <Col md={8} xl={5}>
             <div className={classes.copyrightWrapper}>
-              <StyledLink
-                fontSize="11px"
-                underline
-                mr="4px"
-                md={{ mb: "4px" }}
-                onClick={handleTermsModalOpen}
-              >
-                {t("footer.termsOfUse")}
-              </StyledLink>
-              <StyledLink
-                fontSize="11px"
-                underline
-                mr="4px"
-                md={{ mb: "4px" }}
-                onClick={handlePolicyModalOpen}
-              >
-                {t("footer.privacyPolicy")}
-              </StyledLink>
-              <span> © {`${new Date().getFullYear()}`} {t("footer.copyright")}</span>
+              <NextLink href="/user_agreement">
+                <StyledLink
+                  fontSize="11px"
+                  underline
+                  mr="4px"
+                  md={{ mb: "4px" }}
+                >
+                  {t("footer.termsOfUse")}
+                </StyledLink>
+              </NextLink>
+
+              <NextLink href="/privacy_policy">
+                <StyledLink
+                  fontSize="11px"
+                  underline
+                  mr="4px"
+                  md={{ mb: "4px" }}
+                >
+                  {t("footer.privacyPolicy")}
+                </StyledLink>
+              </NextLink>
+              <span>
+                {" "}
+                © {`${new Date().getFullYear()}`} {t("footer.copyright")}
+              </span>
             </div>
           </Col>
         </Row>
       </Container>
-      <Dialog
-        onClose={handleTermsModalClose}
-        visible={termsModalOpen}
-        className={classes.modalWrapper}
-        modalRender={() => (
-          <div className={classes.modalContent}>
-            <div className={classes.modalClose} onClick={handleTermsModalClose}>
-              <Image
-                src="/images/icons/dismiss.svg"
-                width={24}
-                height={24}
-                alt="Close modal"
-              />
-            </div>
-
-            <StyledTitle1>
-              {t("footer.termsOfUseHeading")}
-            </StyledTitle1>
-
-            <TermsContent locale={locale} />
-          </div>
-        )}
-      ></Dialog>
-      <Dialog
-        onClose={handlePolicyModalClose}
-        visible={policyModalOpen}
-        className={classes.modalWrapper}
-        modalRender={() => (
-          <div className={classes.modalContent}>
-            <div
-              className={classes.modalClose}
-              onClick={handlePolicyModalClose}
-            >
-              <Image
-                src="/images/icons/dismiss.svg"
-                width={24}
-                height={24}
-                alt="Close modal"
-              />
-            </div>
-            <StyledTitle1>
-              {t("footer.privacyPolicyHeading")}
-            </StyledTitle1>
-            
-            <div className={classes.linksMDStyles}>
-              <PrivacyContent locale={locale}/>
-            </div>
-          </div>
-        )}
-      ></Dialog>
     </footer>
   );
 };
