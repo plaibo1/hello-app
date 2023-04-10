@@ -4,5 +4,5 @@ module.exports = {
   title: "Вход",
   submitButton: "Войти",
   recoveryPassword: "Забыли пароль?",
-  invalidEmail: "Неверный формат эелектронной почты",
+  invalidEmail: "Неверный формат электронной почты",
 };
