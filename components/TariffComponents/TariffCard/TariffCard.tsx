@@ -10,12 +10,12 @@ import Image from "next/image";
 import { Context } from "../../../context";
 import Dialog from "rc-dialog";
 
-import classes from "./TariffCard.module.scss";
 import "rc-dialog/assets/index.css";
 import { TARIFFS } from "../../../constants/tariffs";
 import { useRouter } from "next/router";
 import { iif } from "rxjs";
 import useTranslation from "next-translate/useTranslation";
+import classes from "./TariffCard.module.scss";
 
 interface IProps {
   tariff: {
@@ -28,6 +28,7 @@ interface IProps {
     benefitDescription?: string;
     modalTitle: string;
     modalDescription: string;
+    notBenefitPrice: boolean | null;
   };
 }
 
@@ -38,7 +39,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
   const [error, setError] = useState<string>("");
   const [disabledButton, setDisabledButton] = useState(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const { id, title, benefitPercent, benefitBackground, benefitDescription } =
+  const { id, title, benefitPercent, benefitBackground, benefitDescription, notBenefitPrice } =
     tariff;
 
   const handleModalOpen = () => {
@@ -82,6 +83,17 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
           >{`, ${t(`items.${id}.freeDescription`)}`}</StyledSubhead>
         </div>
         <StyledDivider />
+        <div className={classes.price}>
+            {
+              notBenefitPrice &&
+              <span className={classes.benefitPrice}>
+                {t(`items.${id}.notBenefitPrice`)
+              }</span>
+            }
+            <span className={classes.defaultPrice}>
+              {t(`items.${id}.price`)}
+            </span>
+        </div>
         {benefitPercent && benefitDescription && (
           <div className={classes.benefits}>
             <span

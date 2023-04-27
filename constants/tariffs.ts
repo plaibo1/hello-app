@@ -9,6 +9,7 @@ export const MOC_TARIFFS = [
     id: "month",
     modalTitle: "Перейти на ежемесячную подписку?",
     modalDescription: "Далее каждый месяц — по тарифу",
+    notBenefitPrice: null,
   },
   {
     title: "3 месяца",
@@ -20,6 +21,7 @@ export const MOC_TARIFFS = [
     id: "quarter",
     modalTitle: "Перейти на 3-х месячную подписку?",
     modalDescription: "Далее каждые 3 месяца — по тарифу",
+    notBenefitPrice: true,
   },
   {
     title: "1 год",
@@ -31,6 +33,7 @@ export const MOC_TARIFFS = [
     id: "year",
     modalTitle: "Перейти на ежегодную подписку?",
     modalDescription: "Далее каждый год — по тарифу",
+    notBenefitPrice: true,
   },
 ];
 
