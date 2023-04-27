@@ -11,11 +11,10 @@ import { WhatIsIt } from "../components/HomeComponents/WhatIsIt";
 import useTranslation from "next-translate/useTranslation";
 import { useCheckRedirectToApp } from "hooks/useCheckRedirectToApp";
 
-
 const Home: NextPage<{prevPath: string }> = ({ prevPath }) => {
   const { t } = useTranslation("home");
   useCheckRedirectToApp({prevPath});
-  
+
   return (
     <Layout meta={{ title: t("pageTitle") }}>
       <Jumbotron />
