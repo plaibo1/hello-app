@@ -5,9 +5,9 @@ import {
   StyledSubhead,
 } from "../../GlobalComponents";
 import { Context } from "../../../context";
-import classes from "./TariffCard.module.scss";
 import { useRouter } from "next/router";
 import useTranslation from "next-translate/useTranslation";
+import classes from "./TariffCard.module.scss";
 
 interface IProps {
   tariff: {
@@ -20,6 +20,7 @@ interface IProps {
     benefitDescription?: string;
     modalTitle: string;
     modalDescription: string;
+    notBenefitPrice: boolean | null;
   };
 }
 
@@ -35,6 +36,7 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
     freeDescription,
     benefitBackground,
     benefitDescription,
+    notBenefitPrice
   } = tariff;
 
   const isEndedPremium = () => {
@@ -84,6 +86,17 @@ export const TariffCard: FC<IProps> = ({ tariff }) => {
           )}`}</StyledSubhead>
         </div>
         <StyledDivider />
+        <div className={classes.price}>
+            {
+              notBenefitPrice &&
+              <span className={classes.benefitPrice}>
+                {t(`chooseTariff.items.${id}.notBenefitPrice`)
+              }</span>
+            }
+            <span className={classes.defaultPrice}>
+              {t(`chooseTariff.items.${id}.price`)}
+            </span>
+        </div>
         {benefitPercent && benefitDescription && (
           <div className={classes.benefits}>
             <span

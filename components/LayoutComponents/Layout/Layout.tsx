@@ -41,7 +41,7 @@ export const Layout: FC<IProps> = ({
 
   useEffect(() => {
     let profileStatus = "withoutLogin";
-    
+
     if (state.user.auth) {
       if (
         (state.user.data && state.user.data.premium) ||
@@ -62,7 +62,7 @@ export const Layout: FC<IProps> = ({
     }
     setResultStatus(accessLinks[profileStatus]);
   }, [state, state.user.auth, state.user.data]);
-  
+
   useEffect(() => {
     if (!isHaveAccess) {
       push(resultStatus.redirect);

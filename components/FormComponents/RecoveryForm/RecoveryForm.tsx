@@ -133,12 +133,12 @@ export const RecoveryForm = () => {
         setEmailError(t("invalidEmail"));
         return false;
       }
-      
-      if (error.response.data.error.code === 11) {        
+
+      if (error.response.data.error.code === 11) {
         return true;
       }
 
-      setEmailError(error.response.data?.error.message);
+      setEmailError(error.response.data?.error.message || "Unknown error");
     }
   };
 
