@@ -22,11 +22,11 @@ export const accessLinks: AccessSchema = {
     redirect: "/account",
   },
   withoutPremium: {
-    access: ["/premium", "/recovery", "/privacy_policy", "/user_agreement"],
+    access: ["/premium", "/recovery", "/privacy_policy", "/user_agreement", "/unsubscribe"],
     redirect: "/premium",
   },
   withoutLogin: {
-    access: ["/", "/premium", "/login", "/recovery", "/privacy_policy", "/user_agreement"],
+    access: ["/", "/premium", "/login", "/recovery", "/privacy_policy", "/user_agreement", "/unsubscribe"],
     redirect: "/premium",
   },
 };

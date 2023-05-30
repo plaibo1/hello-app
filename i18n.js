@@ -9,5 +9,6 @@ module.exports = {
     "/premium": ["premium"],
     "/account": ["account"],
     "/tariff": ["tariff"],
+    "/unsubscribe": ["unsubscribe"],
   },
 };

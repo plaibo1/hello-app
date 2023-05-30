@@ -5,13 +5,13 @@ import { checkAuth } from "../helpers/checkAuth";
 import { Layout } from "components/LayoutComponents/Layout";
 import useTranslation from "next-translate/useTranslation";
 
-const Login: NextPage = () => {
+const Login: NextPage<{ prevPath: string }> = ({ prevPath }) => {
   const { t } = useTranslation("login");
   return (
     <Layout meta={{ title: t("metaTitle") }} fullHeight={true}>
       <section className={classes.signIn}>
         <div className={classes.formWrap}>
-          <LoginForm />
+          <LoginForm prevPath={prevPath}/>
         </div>
       </section>
     </Layout>

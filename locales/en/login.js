@@ -5,4 +5,5 @@ module.exports = {
   submitButton: "Login",
   recoveryPassword: "Forgot your password?",
   invalidEmail: "Invalid email format",
+  loginFromNewsLetter: "Login to unsubscribe from the newsletter"
 };

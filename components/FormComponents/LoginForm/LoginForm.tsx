@@ -12,12 +12,12 @@ import classes from "./LoginForm.module.scss";
 import { Context } from "../../../context";
 import useTranslation from "next-translate/useTranslation";
 import { EmailInput } from "../EmailInput";
-import { emailScheme, passwordSchema } from "Schemas/Login";
+import { emailScheme } from "Schemas/Login";
 import { ValidationError } from "yup";
 
-export const LoginForm = () => {
+export const LoginForm = ({ prevPath }: { prevPath: string }) => {
   const { t } = useTranslation("login");
-  const { push, query, back, basePath } = useRouter();
+  const { push, query, back } = useRouter();
   const { login } = useContext<any>(Context);
   const [disabledButton, setDisabledButton] = useState(false);
   const [emailValue, setEmailValue] = useState<string>("");
@@ -60,18 +60,23 @@ export const LoginForm = () => {
     setPasswordError("");
 
     try {
-      const vaildEmail = await emailScheme.validate({ email: emailValue });
+      const validEmail = await emailScheme.validate({ email: emailValue });
 
-      if (vaildEmail) {
+      if (validEmail) {
         await login(
           {
-            email: vaildEmail.email,
+            email: validEmail.email,
             password: passwordValue,
           },
           query.start_trial,
           query.tariff
         );
       }
+
+      if (prevPath === "/unsubscribe") {
+        back()
+      }
+
     } catch (err) {
       console.error(err);
 
@@ -106,7 +111,11 @@ export const LoginForm = () => {
       <div className={classes.loginFormWrap}>
         <Logo size="mini" />
         <StyledTitle2 textAlign="center" mt="4px">
-          {t("title")}
+          {prevPath !== "/unsubscribe" ? (
+            <>{t("title")}</>
+          ) : (
+            <>{t("loginFromNewsLetter")}</>
+          )}
         </StyledTitle2>
         <form onSubmit={(event) => handleSubmit(event)} autoComplete="off">
           <EmailInput

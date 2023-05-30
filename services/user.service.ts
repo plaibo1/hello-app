@@ -196,4 +196,21 @@ export const getBindCardUrl = async (tariff: string) => {
       return res.data.response;
     })
 };
-  
+
+export const toggleSubscribeEmailLetter = async (status: boolean) => {
+  return await apiClient
+    .patch(
+      `${baseUrl}/api/user/mailing`,
+      {
+        mailingDisabled: status,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + cookie.parse(document.cookie).access_token,
+        },
+      }
+    )
+    .then((res) => {
+      return res.data.response;
+    });
+};

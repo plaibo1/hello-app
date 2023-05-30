@@ -1,4 +1,4 @@
-import React, { FC, useContext, useEffect, useState } from "react";
+import React, { FC, useContext } from "react";
 import Image from "next/image";
 import dayjs from "dayjs";
 import { Col, Row } from "react-flexbox-grid";
@@ -10,12 +10,11 @@ import {
   StyledTitle4,
 } from "../../GlobalComponents";
 import Container from "../../LayoutComponents/Container";
-import classes from "./ProfileStatus.module.scss";
-import { TARIFFS } from "../../../constants/tariffs";
 import { Context } from "../../../context";
 import { useRouter } from "next/router";
 import { getBindCardUrl } from "../../../services";
 import useTranslation from "next-translate/useTranslation";
+import classes from "./ProfileStatus.module.scss";
 
 interface IProps {
   handleModalOpen: () => void;

@@ -3,7 +3,6 @@ import React, { FC, ReactNode, useContext, useEffect, useState } from "react";
 
 import Header from "../Header";
 import Footer from "../Footer";
-import useTranslation from "next-translate/useTranslation";
 import { useRouter } from "next/router";
 import { Context } from "context";
 import { accessLinks } from "constants/access";
@@ -27,9 +26,8 @@ export const Layout: FC<IProps> = ({
   meta = initialMeta,
   fullHeight = false,
 }) => {
-  const { t } = useTranslation("common");
   const { pathname, push, locale } = useRouter();
-  const { state, cancelTariff } = useContext<any>(Context);
+  const { state } = useContext<any>(Context);
   const [resultStatus, setResultStatus] = useState<Record<string, any> | null>(null);
 
   const page = pathname.split("?")[0];
